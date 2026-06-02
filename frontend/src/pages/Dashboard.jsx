@@ -159,33 +159,33 @@ const Painel = () => {
 
   const insightCards = [
     {
-      title: 'Weekly Consistency',
+      title: 'Consistência Semanal',
       value: `${productivityInsights.consistencyScore}%`,
-      detail: `${productivityInsights.heatmap.filter(day => day.value >= 70).length}/${productivityInsights.heatmap.length} strong days`,
+      detail: `${productivityInsights.heatmap.filter(day => day.value >= 70).length}/${productivityInsights.heatmap.length} dias produtivos`,
       icon: <Flame size={22} />,
       accent: 'from-amber-500/25 to-orange-500/10',
       text: 'text-amber-300',
     },
     {
-      title: 'Habit Completion',
+      title: 'Conclusão de Hábitos',
       value: `${productivityInsights.habitCompletion}%`,
-      detail: `${habits.filter(habit => habit.completed).length}/${habits.length || 0} habits done`,
+      detail: `${habits.filter(habit => habit.completed).length}/${habits.length || 0} hábitos concluídos`,
       icon: <Activity size={22} />,
       accent: 'from-emerald-500/25 to-teal-500/10',
       text: 'text-emerald-300',
     },
     {
-      title: 'Progresso das metas',
+      title: 'Progresso de Metas',
       value: `${productivityInsights.avgGoalProgress}%`,
-      detail: `${goals.length} active goals tracked`,
+      detail: `${goals.length} metas ativas rastreadas`,
       icon: <Target size={22} />,
       accent: 'from-sky-500/25 to-cyan-500/10',
       text: 'text-sky-300',
     },
     {
-      title: 'Task Completion',
+      title: 'Conclusão de Tarefas',
       value: `${productivityInsights.taskCompletion}%`,
-      detail: `${productivityInsights.completedDailyTasks}/${todayPlannedTasks.length || 0} planned today`,
+      detail: `${productivityInsights.completedDailyTasks}/${todayPlannedTasks.length || 0} planejados para hoje`,
       icon: <BarChart3 size={22} />,
       accent: 'from-fuchsia-500/25 to-rose-500/10',
       text: 'text-fuchsia-300',
@@ -312,13 +312,13 @@ const Painel = () => {
 
               <div className="text-center">
                 <p className="text-lg font-bold text-green-400">{disciplineScore}%</p>
-                <p className="text-xs text-gray-400">Discipline</p>
+                <p className="text-xs text-gray-400">Disciplina</p>
               </div>
             </div>
 
             <GradientButton className="w-full h-full flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(99,102,241,0.5)]">
               <UserPlus2 size={20} />
-              <span>Connect</span>
+              <span>Conectar</span>
             </GradientButton>
 
           </Card>
@@ -347,13 +347,13 @@ const Painel = () => {
                 data-testid="productivity-score-card"
               />
               <StatCard
-                title="Discipline"
+                title="Disciplina"
                 value={`${disciplineScore}%`}
                 icon={<TrendingUp size={24} />}
                 data-testid="discipline-score-card"
               />
               <StatCard
-                title="Active Goals"
+                title="Metas Ativas"
                 value={goals.length.toString()}
                 icon={<Target size={24} />}
                 data-testid="active-goals-card"

@@ -338,17 +338,17 @@ hover:scale-[1.02] hover:bg-white/10 transition-all duration-300 hover:drop-shad
               <ul className="space-y-2 text-gray-400 text-sm">
                 <li>
                   <Link to="/about" className="hover:text-white transition cursor-pointer">
-                    About
+                    Sobre
                   </Link>
                 </li>
                 <li>
                   <Link to="/careers" className="hover:text-white transition cursor-pointer">
-                    Careers
+                    Carreiras
                   </Link>
                 </li>
                 <li>
                   <Link to="/contact" className="hover:text-white transition cursor-pointer">
-                    Contact
+                    Contato
                   </Link>
                 </li>
               </ul>
@@ -361,14 +361,14 @@ hover:scale-[1.02] hover:bg-white/10 transition-all duration-300 hover:drop-shad
               <Link to="/signup">
                 <GradientButton className="bg-white text-black hover:bg-gray-200 w-full mb-4">
                   <span className="flex items-center justify-center gap-2">
-                    Start Free
+                    Comece Grátis
                     <ArrowRight size={18} />
                   </span>
                 </GradientButton>
               </Link>
 
               <p className="text-gray-400 text-sm">
-                Join thousands building better habits.
+                Junte-se a milhares construindo melhores hábitos.
               </p>
             </div>
 
@@ -376,7 +376,7 @@ hover:scale-[1.02] hover:bg-white/10 transition-all duration-300 hover:drop-shad
 
           {/* Bottom Line */}
           <div className="mt-12 pt-6 border-t border-gray-700 text-center text-gray-400 text-sm">
-            Â© 2026 <span className="text-white font-semibold">OrkestOS</span>. All rights reserved.
+            © 2026 <span className="text-white font-semibold">OrkestOS</span>. Todos os direitos reservados.
           </div>
 
         </div>

@@ -8,54 +8,54 @@ import GradientButton from '../components/GradientButton';
 const plans = [
   {
     name: 'Starter',
-    description: 'For building a personal planning rhythm.',
+    description: 'Para construir um ritmo de planejamento pessoal.',
     monthly: 0,
     yearly: 0,
-    cta: 'Start Free',
+    cta: 'Comece Grátis',
     accent: 'from-indigo-500 to-blue-500',
     features: [
-      '21-day habit tracking',
-      'Daily task and goal boards',
-      'Basic productivity insights',
-      'FutureTwin trial prompts',
+      'Rastreamento de hábitos de 21 dias',
+      'Painéis de tarefas e metas diários',
+      'Insights básicos de produtividade',
+      'Prompts de teste FutureTwin',
     ],
   },
   {
     name: 'Pro',
-    description: 'For serious habit, goal, and project systems.',
+    description: 'Para sistemas sérios de hábitos, metas e projetos.',
     monthly: 12,
     yearly: 96,
-    cta: 'Choose Pro',
+    cta: 'Escolha Pro',
     accent: 'from-purple-500 to-indigo-500',
     highlighted: true,
     features: [
-      'Advanced analytics and reports',
-      'Unlimited goals and projects',
-      'FutureTwin scenario simulations',
-      'Priority habit and focus insights',
+      'Analytics avançado e relatórios',
+      'Metas e projetos ilimitados',
+      'Simulações de cenários FutureTwin',
+      'Insights prioritários de hábito e foco',
     ],
   },
   {
     name: 'Team',
-    description: 'For accountability groups and guided cohorts.',
+    description: 'Para grupos de responsabilidade e coortes orientadas.',
     monthly: 29,
     yearly: 240,
-    cta: 'Plan Together',
+    cta: 'Planeje Juntos',
     accent: 'from-fuchsia-500 to-purple-500',
     features: [
-      'Shared progress dashboards',
-      'Team planning rooms',
-      'Admin-ready member controls',
-      'Guided onboarding support',
+      'Painéis de progresso compartilhados',
+      'Salas de planejamento em equipe',
+      'Controles de membros prontos para admin',
+      'Suporte de integração orientado',
     ],
   },
 ];
 
 const comparisonRows = [
-  ['Habit and task tracking', 'Included', 'Unlimited', 'Unlimited'],
-  ['FutureTwin simulations', 'Trial', 'Advanced', 'Team scenários'],
-  ['Analytics depth', 'Basic', 'Advanced', 'Group reporting'],
-  ['Support priority', 'Community', 'Priority', 'Dedicated'],
+  ['Rastreamento de hábitos e tarefas', 'Incluído', 'Ilimitado', 'Ilimitado'],
+  ['Simulações FutureTwin', 'Teste', 'Avançado', 'Cenários de equipe'],
+  ['Profundidade de análise', 'Básico', 'Avançado', 'Relatório de grupo'],
+  ['Prioridade de suporte', 'Comunidade', 'Prioridade', 'Dedicado'],
 ];
 
 const MotionHeader = motion.header;
@@ -81,13 +81,13 @@ const Preços = () => {
             </Link>
             <div className="flex w-fit max-w-full items-start gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-indigo-200 mb-5">
               <Sparkles size={16} className="mt-0.5 flex-shrink-0" />
-              <span className="min-w-0">Flexible plans for every growth system</span>
+              <span className="min-w-0">Planos flexíveis para cada sistema de crescimento</span>
             </div>
             <h1 className="max-w-full text-4xl md:text-6xl font-extrabold tracking-normal text-white mb-5">
-              Preços that scales with your discipline.
+              Preços que escalam com sua disciplina.
             </h1>
             <p className="max-w-full text-lg md:text-xl text-gray-400 leading-relaxed">
-              Start with personal tracking, then unlock deeper analytics, simulations, and shared planning when your system matures.
+              Comece com rastreamento pessoal, depois desbloqueie análise mais profunda, simulações e planejamento compartilhado quando seu sistema amadurecer.
             </p>
           </div>
 
@@ -104,11 +104,11 @@ const Preços = () => {
                       : 'text-gray-400 hover:text-white hover:bg-white/5'
                   }`}
                 >
-                  {option === 'monthly' ? 'Monthly' : 'Yearly'}
+                  {option === 'monthly' ? 'Mensal' : 'Anual'}
                 </button>
               ))}
             </div>
-            <p className="text-xs text-gray-500 mt-3 text-center">Yearly billing includes two months free.</p>
+            <p className="text-xs text-gray-500 mt-3 text-center">Faturamento anual inclui dois meses grátis.</p>
           </div>
         </MotionHeader>
 
