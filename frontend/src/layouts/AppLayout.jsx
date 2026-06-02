@@ -1,9 +1,9 @@
 import { Outlet, Navigate } from 'react-router-dom';
 import BottomNav from '../components/BottomNav';
-import { useApp } from '../store/AppContext';
+import { useAuth } from '../context/AuthContext';
 
 const AppLayout = () => {
-  const { token } = useApp();
+  const { token } = useAuth();
 
   // Protect all routes inside this layout
   if (!token) {

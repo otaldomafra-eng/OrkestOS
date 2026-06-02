@@ -5,7 +5,7 @@ import ProgressBar from './ProgressBar';
 const GoalCard = ({ goal, progress, onClick }) => {
 
   const handleGoalClick = (goal) => {
-    setSelectedGoal(goal);
+    onClick?.(goal);
   };
 
   const getTypeColor = (type) => {

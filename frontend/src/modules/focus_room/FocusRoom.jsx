@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Play, Pause, RotateCcw, CheckCircle2, CalendarDays, LucideTrophy } from 'lucide-react';
-import { useApp } from '../../store/AppContext';
+import { useDailyPlan } from '../../context/DailyPlanContext';
 import Card from '../../components/Card';
 import { motion } from 'framer-motion'
 import Bag from '../../components/Bag';
@@ -8,7 +8,7 @@ import GradientButton from '../../components/GradientButton';
 import { Link } from 'react-router-dom';
 
 const FocusRoom = () => {
-  const { dailyPlan, toggleDailyPlanTaskCompletion, navigate } = useApp();
+  const { dailyPlan, toggleDailyPlanTaskCompletion } = useDailyPlan();
 
   // Pomodoro Timer State
   const [minutes, setMinutes] = useState(25);
@@ -18,12 +18,39 @@ const FocusRoom = () => {
   const [pomodoroCount, setPomodoroCount] = useState(0);
 
   useEffect(() => {
+    const handleTimerComplete = () => {
+      setIsActive(false);
+
+      if (mode === 'work') {
+        const newCount = pomodoroCount + 1;
+        setPomodoroCount(newCount);
+
+        if (newCount % 4 === 0) {
+          setModo('longBreak');
+          setMinutes(15);
+        } else {
+          setModo('shortBreak');
+          setMinutes(5);
+        }
+      } else {
+        setModo('work');
+        setMinutes(25);
+      }
+
+      setSeconds(0);
+
+      if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification('Timer Complete!', {
+          body: mode === 'work' ? 'Time for a break!' : 'Time to work!',
+        });
+      }
+    };
+
     let interval = null;
     if (isActive) {
       interval = setInterval(() => {
         if (seconds === 0) {
           if (minutes === 0) {
-            // Timer complete
             handleTimerComplete();
           } else {
             setMinutes(minutes - 1);
@@ -37,42 +64,11 @@ const FocusRoom = () => {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [isActive, minutes, seconds]);
-
-  const handleTimerComplete = () => {
-    setIsActive(false);
-
-    if (mode === 'work') {
-      const newCount = pomodoroCount + 1;
-      setPomodoroCount(newCount);
-
-      // After 4 pomodoros, long break
-      if (newCount % 4 === 0) {
-        setModo('longBreak');
-        setMinutes(15);
-      } else {
-        setModo('shortBreak');
-        setMinutes(5);
-      }
-    } else {
-      setModo('work');
-      setMinutes(25);
-    }
-
-    setSeconds(0);
-
-    // Play notification sound (optional)
-    if ('Notification' in window && Notification.permission === 'granted') {
-      new Notification('Timer Complete!', {
-        body: mode === 'work' ? 'Time for a break!' : 'Time to work!',
-      });
-    }
-  };
+  }, [isActive, minutes, seconds, mode, pomodoroCount]);
 
   const toggleTimer = () => {
     setIsActive(!isActive);
 
-    // Request notification permission
     if ('Notification' in window && Notification.permission === 'default') {
       Notification.requestPermission();
     }

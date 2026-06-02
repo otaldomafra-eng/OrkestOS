@@ -1,4 +1,4 @@
-﻿import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LabelList } from 'recharts';
 import { TrendingUp, Target, CheckCircle, Zap, ArrowRight, UserPlus2, Camera, CalendarDays, Star, AlertTriangle, UserPen, LucideTrophy, Pencil, Activity, Flame, BarChart3 } from 'lucide-react';
 import { useApp } from '../store/AppContext';
@@ -159,7 +159,7 @@ const Painel = () => {
 
   const insightCards = [
     {
-      title: 'Consistência Semanal',
+      title: 'Consist�ncia Semanal',
       value: `${productivityInsights.consistencyScore}%`,
       detail: `${productivityInsights.heatmap.filter(day => day.value >= 70).length}/${productivityInsights.heatmap.length} dias produtivos`,
       icon: <Flame size={22} />,
@@ -167,9 +167,9 @@ const Painel = () => {
       text: 'text-amber-300',
     },
     {
-      title: 'Conclusão de Hábitos',
+      title: 'Conclus�o de H�bitos',
       value: `${productivityInsights.habitCompletion}%`,
-      detail: `${habits.filter(habit => habit.completed).length}/${habits.length || 0} hábitos concluídos`,
+      detail: `${habits.filter(habit => habit.completed).length}/${habits.length || 0} h�bitos conclu�dos`,
       icon: <Activity size={22} />,
       accent: 'from-emerald-500/25 to-teal-500/10',
       text: 'text-emerald-300',
@@ -183,7 +183,7 @@ const Painel = () => {
       text: 'text-sky-300',
     },
     {
-      title: 'Conclusão de Tarefas',
+      title: 'Conclus�o de Tarefas',
       value: `${productivityInsights.taskCompletion}%`,
       detail: `${productivityInsights.completedDailyTasks}/${todayPlannedTasks.length || 0} planejados para hoje`,
       icon: <BarChart3 size={22} />,
@@ -210,7 +210,7 @@ const Painel = () => {
       updates.bio = newProfile.bio;
     }
 
-    // If nothing changed â†’ don't call API
+    // If nothing changed → don't call API
     if (Object.keys(updates).length === 0) {
       setShowEditProfile(false);
       return;
@@ -238,7 +238,7 @@ const Painel = () => {
     const formData = new FormData();
     let hasChanges = false;
 
-    // ðŸ”¥ IMAGE FIELD (IMPORTANT)
+    // �"� IMAGE FIELD (IMPORTANT)
     if (newProfilePic) {
       formData.append("profile", newProfilePic);
       hasChanges = true;
@@ -579,7 +579,7 @@ const Painel = () => {
               {importantTasks.length > 0 && (
                 <div className="bg-transparent flex-1 p-4">
                   <h2 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                    {/* <span className="text-orange-400">â­</span> */}
+                    {/* <span className="text-orange-400">⭐</span> */}
                     <Star className="text-orange-400 " size={18} />
                     Importante Tasks
                   </h2>
@@ -884,10 +884,10 @@ const Painel = () => {
             data-testid="profile-name-input"
           />
           <InputField
-            label="Usuário"
+            label="Usu�rio"
             value={newProfile.username}
             onChange={(e) => setNewProfile({ ...newProfile, username: e.target.value })}
-            placeholder="Usuário"
+            placeholder="Usu�rio"
             required
             data-testid="profile-username-input"
           />

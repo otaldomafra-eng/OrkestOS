@@ -4,13 +4,13 @@ import InputField from '../components/InputField';
 import GradientButton from '../components/GradientButton';
 import Card from '../components/Card';
 import { motion } from 'framer-motion';
-import { useApp } from '../store/AppContext';
+import { useAuth } from '../context/AuthContext';
 import { authAPI } from '../api/apiService';
 import { showToast } from '../utils/toastHelper';
 import { GoogleLogin } from '@react-oauth/google';
 
 const Entrar = () => {
-  const { token, setToken, user, setUser, navigate } = useApp()
+  const { token, setToken, user, setUser, navigate } = useAuth()
   const [formData, setFormData] = useState({
     identifier: '',
     password: ''

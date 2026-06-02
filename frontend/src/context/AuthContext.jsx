@@ -26,20 +26,12 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   // Autenticação
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState(() => localStorage.getItem('token') || '');
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem('orkestos_user');
     return saved ? JSON.parse(saved) : null;
   });
   const [loading, setLoading] = useState(false);
-
-  // Recuperar token ao montar
-  useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    if (storedToken) {
-      setToken(storedToken);
-    }
-  }, []);
 
   // Persistir user no localStorage
   useEffect(() => {

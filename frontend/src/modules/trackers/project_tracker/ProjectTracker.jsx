@@ -14,7 +14,6 @@ const ProjectTracker = () => {
   const {
     projects,
     goals,
-    navigate,
     addProject,
     calculateProjectProgress,
     getTasksByProject,

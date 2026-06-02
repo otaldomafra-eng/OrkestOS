@@ -291,8 +291,72 @@ Status Geral da Sessao:
 - Codebase mais organizado e estruturado
 
 Proximos passos imediatos:
-1. Completar refatoração AppContext (FASE 2-4 do plano de refatoração)
-2. Corrigir erros de lint identificados (imports, hooks, componentes)
-3. Testar fluxos críticos após refatoração de contextos
+1. ~~Completar refatoração AppContext (FASE 2-4 do plano de refatoração)~~ ✅ CONCLUÍDO
+2. Corrigir erros de lint identificados (imports, hooks, componentes) — 33 erros pré-existentes
+3. Testar fluxos críticos após refatoração de contextos — build e testes OK
 4. Deploy em staging para validar Telegram real
 5. Melhorias de design visual (reduzir gradientes, padronizar)
+
+---
+
+12. SESSAO 2026-06-02 (CONTINUACAO) - REFATORACAO APPCOMPLET COMPLETA
+
+Nesta sessao foi completada a FASE 4 (Refatoracao AppContext) nas etapas 2-4:
+
+A. FASE 4.2: Criado DailyPlanContext (COMPLETO)
+- Arquivo: frontend/src/context/DailyPlanContext.jsx (~200 linhas)
+- Responsabilidades: dailyPlan, dailyTasks, scores, stats
+- Funções: addToDailyPlan, removeFromDailyPlan, createManualDailyTask, toggleDailyPlanTaskCompletion, updateDailyPlanTask, clearDailyPlan, calculateProductivityScore, calculateDisciplineScore
+- Auto-save de stats via useEffect
+- Usa useData() internamente para refetchTasks/refetchHabits ao alternar tarefas do plano
+
+B. FASE 4.3: Criado DataContext (COMPLETO)
+- Arquivo: frontend/src/context/DataContext.jsx (~440 linhas)
+- Responsabilidades: goals, projects, tasks, habits, notebooks, pages
+- CRUD completo para cada entidade + loadInitialData (requer token do AuthContext)
+- Funções auxiliares: calculateGoalProgress, calculateProjectProgress, getTasksByGoal, getTasksByProject, getProjectsByGoal, getImportantTasks, getBehindTasks
+- refetchTasks/refetchHabits expostos para DailyPlanContext
+
+C. FASE 4.4: Arquitetura de Providers (COMPLETO)
+Hierarquia final em main.jsx:
+  AuthProvider (token, user, login/logout/profile)
+    DataProvider (goals, projects, tasks, habits, notebooks)
+      DailyPlanProvider (daily plan, scores, stats)
+        AppProvider (composição: funções cross-context)
+          App
+
+D. FASE 4.5: Migracao de Componentes (COMPLETO)
+Componentes migrados para hooks específicos (9/14):
+  → useAuth(): App.jsx, AppLayout, BottomNav, Login, Signup
+  → useData(): Onboarding, Bag
+  → useDailyPlan() + useNavigate(): FocusRoom
+  → useData() + useDailyPlan(): DailyTaskTracker
+
+Componentes mantidos em useApp() (5/14 — usam funções cross-context):
+  Dashboard, SoloTaskTracker, ProjectTracker, GoalTracker, HabitTracker
+  Estes usam toggleTaskCompletion ou handleCompleteHabit que cruzam
+  fronteiras entre DataContext e DailyPlanContext.
+
+E. AppContext reescrito como camada de composição (~80 linhas):
+  - Importa useAuth, useData, useDailyPlan
+  - Adiciona funções cross-context: toggleTaskCompletion, handleCompleteHabit, clearAllData
+  - Re-exporta tudo via useApp() — retrocompatível
+
+F. Correcoes adicionais:
+  - Curly quotes ("") corrigidos para aspas retas em 6 arquivos JSX
+  - Hoisting de loadInitialData corrigido em DataContext
+  - dailyPlanAPI.getToday() removido de DataContext (pertence ao DailyPlanContext)
+
+G. Estado tecnico atual:
+  - Frontend build: ✅ 3210 modulos, 0 erros
+  - Backend tests: ✅ 12/12 passando
+  - Lint: 33 erros restantes (todos pré-existentes, nenhum introduzido pela refatoração)
+  - Bundle: ~1.06 MB JS (aviso de chunk grande, pré-existente)
+
+Proximos passos recomendados:
+1. Melhorias de design visual (reduzir gradientes neon, padronizar cards)
+2. Corrigir 33 erros de lint pré-existentes (imports nao usados, hooks deps, componentes em render)
+3. Configurar backend real (MongoDB, .env, login real)
+4. Finalizar Telegram real (bot, webhook, cron)
+5. Popular dados demo automaticamente
+6. Preparar deploy (Vercel + Supabase/MongoDB Atlas)

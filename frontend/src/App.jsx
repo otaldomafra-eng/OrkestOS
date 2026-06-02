@@ -22,11 +22,11 @@ import DailyTaskTracker from './modules/trackers/daily_task_tracker/DailyTaskTra
 import FocusRoom from './modules/focus_room/FocusRoom';
 import Library from './modules/library_room/Library';
 
-import { useApp } from './store/AppContext';
+import { useAuth } from './context/AuthContext';
 import { ToastContainer } from 'react-toastify';
 
   function App() {
-    const { token } = useApp();
+    const { token } = useAuth();
     return (
       <>
         <ToastContainer position="top-right" autoClose={3000} />

@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Plus, Trash2, Search, Pencil, Book, FileText, Edit } from "lucide-react";
-import { useApp } from "../store/AppContext";
+import { useData } from "../context/DataContext";
 import { showToast } from "../utils/toastHelper";
 
 const Bag = () => {
@@ -14,7 +14,7 @@ const Bag = () => {
     updatePage,
     updateNotebook,
     deletePage
-  } = useApp();
+  } = useData();
   const [search, setSearch] = useState("");
   const [pageSearch, setPageSearch] = useState("");
   const [editingNotebook, setEditingNotebook] = useState(null);
@@ -23,11 +23,6 @@ const Bag = () => {
   const [activeNotebook, setActiveNotebook] = useState(null);
   const [activePage, setActivePage] = useState(null);
   const [editorContent, setEditorContent] = useState("");
-  useEffect(() => {
-    if (currentPage) {
-      setEditorContent(currentPage.content || "");
-    }
-  }, [activePage]);
 
   
   const updateContent = (value) => {
@@ -53,7 +48,7 @@ const Bag = () => {
   // VIEWS
   // =========================
 
-  const NotebooksView = () => (
+  const renderNotebooksView = () => (
     <div className="h-full flex flex-col">
       <div className="flex justify-between items-center mb-4 px-3">
         <h2 className="text-white text-xl font-semibold">Notebooks</h2>
@@ -142,7 +137,7 @@ const Bag = () => {
     </div>
   );
 
-  const PagesView = () => {
+  const renderPagesView = () => {
     if (!currentNotebook) {
       return (
         <div className="flex items-center justify-center h-full text-gray-400">
@@ -243,63 +238,60 @@ const Bag = () => {
 
       {/* MAIN VIEW */}
       <div className="flex-1 overflow-hidden">
-        {view === "notebooks" && <NotebooksView />}
-        {view === "pages" && <PagesView />}
-        {view === "editor" && (<div className="h-full flex flex-col">
+        {view === "notebooks" && renderNotebooksView()}
+        {view === "pages" && renderPagesView()}
+        {view === "editor" && currentPage && (<div key={activePage} className="h-full flex flex-col">
           <h2 className="text-white text-lg font-semibold mb-3">
-            {currentNotebook?.name} {currentPage ? `> ${currentPage.title}` : ""}
+            {currentNotebook?.name} &gt; {currentPage.title}
           </h2>
 
-          {currentPage ? (
-            <>
-              <div className="flex gap-2 mb-3">
-                <button
-                  onClick={() =>
-                    updateContent(currentPage.content + "**bold**")
-                  }
-                  className="text-xs px-2 py-1 bg-gray-700 rounded"
-                >
-                  B
-                </button>
-                <button
-                  onClick={() =>
-                    updateContent(currentPage.content + "_italic_")
-                  }
-                  className="text-xs px-2 py-1 bg-gray-700 rounded"
-                >
-                  I
-                </button>
-              </div>
+          <div className="flex gap-2 mb-3">
+            <button
+              onClick={() =>
+                updateContent(editorContent + "**bold**")
+              }
+              className="text-xs px-2 py-1 bg-gray-700 rounded"
+            >
+              B
+            </button>
+            <button
+              onClick={() =>
+                updateContent(editorContent + "_italic_")
+              }
+              className="text-xs px-2 py-1 bg-gray-700 rounded"
+            >
+              I
+            </button>
+          </div>
 
-              <textarea
-                value={currentPage.content}
-                onChange={(e) => {
-                  setEditorContent(e.target.value);
-                  updateContent(e.target.value);
-                }}
-                className="flex-1 w-full bg-gray-800 text-white rounded-lg p-4 focus:outline-none resize-none"
-              />
-              <button
-                onClick={async() => {
-                  try {
-                    if (!activePage) return;
-                    await updatePage(activePage, editorContent);
-                    showToast({ message: "Saved Content", status: "success" }); 
-                  } catch (error) {
-                    showToast({ message: error.message || "Error Saving", status: "success" });
-                  }
-                }}
-                className="mt-3 px-4 py-2 cursor-pointer bg-green-600 hover:bg-green-700 text-white rounded-lg self-end"
-              >
-                Save
-              </button>
-            </>
-          ) : (
-            <div className="flex items-center justify-center flex-1 text-gray-400">
-              Select a page to start writing...
-            </div>
-          )}
+          <textarea
+            value={editorContent}
+            onChange={(e) => {
+              setEditorContent(e.target.value);
+              updateContent(e.target.value);
+            }}
+            className="flex-1 w-full bg-gray-800 text-white rounded-lg p-4 focus:outline-none resize-none"
+          />
+          <button
+            onClick={async() => {
+              try {
+                if (!activePage) return;
+                await updatePage(activePage, editorContent);
+                showToast({ message: "Saved Content", status: "success" }); 
+              } catch (error) {
+                showToast({ message: error.message || "Error Saving", status: "success" });
+              }
+            }}
+            className="mt-3 px-4 py-2 cursor-pointer bg-green-600 hover:bg-green-700 text-white rounded-lg self-end"
+          >
+            Save
+          </button>
         </div>)}
+        {view === "editor" && !currentPage && (
+          <div className="flex items-center justify-center flex-1 text-gray-400 h-full">
+            Select a page to start writing...
+          </div>
+        )}
       </div>
     </div>
   );

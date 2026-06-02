@@ -175,7 +175,7 @@ const FutureTwin = () => {
           >
             <div className="space-y-6" data-testid="futuretwin-result">
               <div className="text-center text-indigo-400 text-sm mb-2 animate-pulse">
-                Simulation Complete âœ”
+                Simulation Complete âœ"
               </div>
               <Card className="bg-white/5 backdrop-blur-xl border border-white/10 hover:scale-[1.02] transition-all duration-300">
                 <div className="flex items-start gap-3">
@@ -249,7 +249,7 @@ const FutureTwin = () => {
                       transition={{ delay: index * 0.1 }}
                       className="flex items-start gap-3 text-gray-200"
                     >
-                      <span className="text-green-400 mt-1 text-xl flex-shrink-0">âœ“</span>
+                      <span className="text-green-400 mt-1 text-xl flex-shrink-0">âœ"</span>
                       <span className="text-base">{benefit}</span>
                     </motion.li>
                   ))}

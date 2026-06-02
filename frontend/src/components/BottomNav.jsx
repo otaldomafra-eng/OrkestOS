@@ -1,12 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Home, ListChecks, Focus, Sparkles, Library, Plug, LogOut } from 'lucide-react';
 import { motion as Motion } from 'framer-motion';
-import { useApp } from '../store/AppContext';
+import { useAuth } from '../context/AuthContext';
 
 const BottomNav = () => {
   const location = useLocation();
 
-  const { setToken, navigate } = useApp();
+  const { setToken, navigate } = useAuth();
 
   const logout = () => {
     navigate('/login')

@@ -1,6 +1,7 @@
-Ôªøimport { useState } from 'react';
+import { useState } from 'react';
 import { Calendar, Clock, Plus, ListTodo, X, CheckCircle2, CalendarSyncIcon, CheckSquare, CalendarClock } from 'lucide-react';
-import { useApp } from '../../../store/AppContext';
+import { useData } from '../../../context/DataContext';
+import { useDailyPlan } from '../../../context/DailyPlanContext';
 import Card from '../../../components/Card';
 import DonutChart from '../../../components/DonutChart';
 import GradientButton from '../../../components/GradientButton';
@@ -12,11 +13,9 @@ import { showToast } from '../../../utils/toastHelper';
 import { PlannerSkeleton } from '../../../components/LoadingSkeleton';
 
 const DailyTaskTracker = () => {
+  const { tasks, habits, loading } = useData();
   const {
-    tasks,
-    habits,
     dailyPlan,
-    loading,
     addToDailyPlan,
     removeFromDailyPlan,
     createManualDailyTask,
@@ -24,7 +23,7 @@ const DailyTaskTracker = () => {
     clearDailyPlan,
     calculateProductivityScore,
     calculateDisciplineScore
-  } = useApp();
+  } = useDailyPlan();
 
   const [activeTab, setActiveTab] = useState('timeline'); // 'timeline' | 'add'
   const [addModo, setAddModo] = useState('tasks'); // 'tasks' | 'habits' | 'manual'
@@ -181,7 +180,7 @@ const DailyTaskTracker = () => {
           />
           <div className="max-w-4xl mx-auto relative z-10">
             <div className="mb-6">
-              <h1 className="text-3xl young-serif-regular font-bold text-gray-200 mb-2">Planejador di√°rio</h1>
+              <h1 className="text-3xl young-serif-regular font-bold text-gray-200 mb-2">Planejador di·rio</h1>
               <div className="flex items-center gap-2 text-gray-400">
                 <Calendar size={20} />
                 <p>{format(new Date(), 'EEEE, MMMM d, yyyy')}</p>
@@ -216,7 +215,7 @@ const DailyTaskTracker = () => {
             animate={{ opacity: 1, y: 0 }}
             className="mb-6"
           >
-            <h1 className="text-3xl young-serif-regular font-bold text-gray-200 mb-2\">Planejador di√°rio</h1>
+            <h1 className="text-3xl young-serif-regular font-bold text-gray-200 mb-2\">Planejador di·rio</h1>
             <div className="flex items-center gap-2 text-gray-400">
               <Calendar size={20} />
               <p>{format(new Date(), 'EEEE, MMMM d, yyyy')}</p>
@@ -333,7 +332,7 @@ const DailyTaskTracker = () => {
                       data-testid="timeline-view-tab"
                     >
                       <CalendarClock size={20} className="inline mr-2" />
-                      Visualiza√ß√£o em linha do tempo ({dailyPlan.plannedTasks.length})
+                      VisualizaÁ„o em linha do tempo ({dailyPlan.plannedTasks.length})
                     </button>
                     <button
                       onClick={() => setActiveView('list')}
@@ -344,7 +343,7 @@ const DailyTaskTracker = () => {
                       data-testid="tasks-list-view-tab"
                     >
                       <CheckSquare size={20} className="inline mr-2" />
-                      Visualiza√ß√£o em lista
+                      VisualizaÁ„o em lista
                     </button>
                   </div>
 
@@ -405,7 +404,7 @@ const DailyTaskTracker = () => {
                           const top = (startInHours - START_HOUR) * HOUR_HEIGHT;
                           const height = (endInHours - startInHours) * HOUR_HEIGHT;
 
-                          // √∞≈∏‚Äù¬• Adaptive UI logic
+                          // ü"• Adaptive UI logic
                           const isSmall = height < 60;
                           const isMedium = height >= 30 && height < 40;
 
@@ -429,7 +428,7 @@ const DailyTaskTracker = () => {
                               }}
                             >
 
-                              {/* √∞≈∏‚Äù¬• ACTION BUTTONS (FIXED) */}
+                              {/* ü"• ACTION BUTTONS (FIXED) */}
                               <div
                                 className="absolute top-1 right-1 flex gap-1 transition z-20 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
                               >
@@ -457,7 +456,7 @@ const DailyTaskTracker = () => {
                                 </button>
                               </div>
 
-                              {/* √∞≈∏‚Äù¬• CONTENT */}
+                              {/* ü"• CONTENT */}
                               <div className="h-full flex flex-col justify-start overflow-hidden">
 
                                 {/* TITLE (ALWAYS VISIBLE) */}
@@ -647,7 +646,7 @@ const DailyTaskTracker = () => {
                     }`}
                   data-testid="add-from-habits-tab"
                 >
-                  H√°bitos sugeridos ({suggestedHabits.length})
+                  H·bitos sugeridos ({suggestedHabits.length})
                 </button>
                 <button
                   onClick={() => setAddModo('manual')}
@@ -700,17 +699,17 @@ const DailyTaskTracker = () => {
                     </>
                   ) : (
                     <div className="text-center py-8">
-                      <p className="text-gray-400">Nenhuma tarefa dispon√≠vel para adicionar</p>
-                      <p className="text-sm text-gray-500 mt-1">Todas as tarefas est√£o conclu√≠das ou ja est√£o no plano</p>
+                      <p className="text-gray-400">Nenhuma tarefa disponÌvel para adicionar</p>
+                      <p className="text-sm text-gray-500 mt-1">Todas as tarefas est„o concluÌdas ou ja est„o no plano</p>
                     </div>
                   )}
                 </Card>
               )}
 
-              {/* H√°bitos sugeridos */}
+              {/* H·bitos sugeridos */}
               {addModo === 'habits' && (
                 <Card className='bg-white/5 border backdrop-blur-2xl border-white/10'>
-                  <h3 className="text-lg font-semibold text-white mb-4">H√°bitos sugeridos</h3>
+                  <h3 className="text-lg font-semibold text-white mb-4">H·bitos sugeridos</h3>
                   {suggestedHabits.length > 0 ? (
                     <div className="space-y-3 mb-6 max-h-96 overflow-y-auto px-3">
                       {suggestedHabits.map(habit => (
@@ -742,8 +741,8 @@ const DailyTaskTracker = () => {
                     </div>
                   ) : (
                     <div className="text-center py-8">
-                      <p className="text-gray-400">Nenhum h√°bito dispon√≠vel</p>
-                      <p className="text-sm text-gray-500 mt-1">H√°bitos sem hor√°rio ou ja adicionados ao plano ficam ocultos</p>
+                      <p className="text-gray-400">Nenhum h·bito disponÌvel</p>
+                      <p className="text-sm text-gray-500 mt-1">H·bitos sem hor·rio ou ja adicionados ao plano ficam ocultos</p>
                     </div>
                   )}
                 </Card>
@@ -804,7 +803,7 @@ const DailyTaskTracker = () => {
         <Modal
           isOpen={showTimeModal}
           onClose={() => setShowTimeModal(false)}
-          title={`Definir hor√°rio para ${selectedTask.title}`}
+          title={`Definir hor·rio para ${selectedTask.title}`}
         >
           <div className="space-y-4">
 

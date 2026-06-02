@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useApp } from '../store/AppContext';
+import { useData } from '../context/DataContext';
 import Card from '../components/Card';
 import GradientButton from '../components/GradientButton';
 import InputField from '../components/InputField';
@@ -9,7 +9,8 @@ import { motion } from 'framer-motion';
 const Onboarding = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const { addGoal, addProject, addTask } = useApp();
+  const { addGoal, addProject, addTask } = useData();
+  const idCounter = useRef(0);
   const [step, setStep] = useState(1);
   const [goals, setGoals] = useState([]);
   const [currentGoal, setCurrentGoal] = useState({ title: '', type: 'mid-term' });
@@ -31,7 +32,7 @@ const Onboarding = () => {
   const handleAddGoal = () => {
     if (!currentGoal.title.trim()) return;
     const newGoal = {
-      id: `temp-${Date.now()}`,
+      id: `temp-${++idCounter.current}`,
       title: currentGoal.title,
       type: currentGoal.type
     };
@@ -41,7 +42,7 @@ const Onboarding = () => {
 
   const handleAddPredefinedGoal = (goalTitle) => {
     const newGoal = {
-      id: `temp-${Date.now()}`,
+      id: `temp-${++idCounter.current}`,
       title: goalTitle,
       type: 'mid-term'
     };
@@ -73,13 +74,13 @@ const Onboarding = () => {
 
     if (currentExecution.type === 'project') {
       goalMap.projects.push({
-        id: `temp-${Date.now()}`,
+        id: `temp-${++idCounter.current}`,
         title: currentExecution.title,
         deadline: currentExecution.deadline
       });
     } else {
       goalMap.tasks.push({
-        id: `temp-${Date.now()}`,
+        id: `temp-${++idCounter.current}`,
         title: currentExecution.title,
         deadline: currentExecution.deadline
       });
@@ -110,7 +111,7 @@ const Onboarding = () => {
 
       // Create projects
       projects.forEach(project => {
-        const createdProject = addProject({
+        addProject({
           ...project,
           goalId: realGoalId
         });
@@ -497,15 +498,15 @@ text-white rounded-lg
 
                   <div className="mb-6 space-y-2">
                     <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-sm">âœ“</div>
+                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-sm">â�""</div>
                       <p className="text-white">Rastreador de metas populated</p>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-sm">âœ“</div>
+                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-sm">â�""</div>
                       <p className="text-white">Rastreador de projetos initialized</p>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-sm">âœ“</div>
+                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-sm">â�""</div>
                       <p className="text-white">Tarefas avulsas ready</p>
                     </div>
                   </div>

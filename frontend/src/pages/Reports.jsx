@@ -12,29 +12,29 @@ const Relatorios = () => {
         <h1 className="text-3xl font-bold text-white mb-6">Análises e relatórios</h1>
 
         {/* Summary Cards */}
-        <div className=”grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6”>
-          <Card className=”bg-gradient-to-br from-indigo-900/30 to-indigo-800/30”>
-            <p className=”text-gray-400 text-sm mb-1”>Média Semanal</p>
-            <p className=”text-3xl font-bold text-white”>78%</p>
-            <p className=”text-green-400 text-sm mt-1”>+12% da semana passada</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <Card className="bg-gradient-to-br from-indigo-900/30 to-indigo-800/30">
+            <p className="text-gray-400 text-sm mb-1">Média Semanal</p>
+            <p className="text-3xl font-bold text-white">78%</p>
+            <p className="text-green-400 text-sm mt-1">+12% da semana passada</p>
           </Card>
 
-          <Card className=”bg-gradient-to-br from-violet-900/30 to-violet-800/30”>
-            <p className=”text-gray-400 text-sm mb-1”>Hábitos Concluídos</p>
-            <p className=”text-3xl font-bold text-white”>42</p>
-            <p className=”text-green-400 text-sm mt-1”>Esta semana</p>
+          <Card className="bg-gradient-to-br from-violet-900/30 to-violet-800/30">
+            <p className="text-gray-400 text-sm mb-1">Hábitos Concluídos</p>
+            <p className="text-3xl font-bold text-white">42</p>
+            <p className="text-green-400 text-sm mt-1">Esta semana</p>
           </Card>
 
-          <Card className=”bg-gradient-to-br from-purple-900/30 to-purple-800/30”>
-            <p className=”text-gray-400 text-sm mb-1”>Sequência Atual</p>
-            <p className=”text-3xl font-bold text-white”>15 🔥</p>
-            <p className=”text-gray-400 text-sm mt-1”>Dias</p>
+          <Card className="bg-gradient-to-br from-purple-900/30 to-purple-800/30">
+            <p className="text-gray-400 text-sm mb-1">Sequência Atual</p>
+            <p className="text-3xl font-bold text-white">15 �"�</p>
+            <p className="text-gray-400 text-sm mt-1">Dias</p>
           </Card>
 
-          <Card className=”bg-gradient-to-br from-pink-900/30 to-pink-800/30”>
-            <p className=”text-gray-400 text-sm mb-1”>Progresso de Metas</p>
-            <p className=”text-3xl font-bold text-white”>65%</p>
-            <p className=”text-yellow-400 text-sm mt-1”>3 metas ativas</p>
+          <Card className="bg-gradient-to-br from-pink-900/30 to-pink-800/30">
+            <p className="text-gray-400 text-sm mb-1">Progresso de Metas</p>
+            <p className="text-3xl font-bold text-white">65%</p>
+            <p className="text-yellow-400 text-sm mt-1">3 metas ativas</p>
           </Card>
         </div>
 
@@ -173,7 +173,7 @@ const Relatorios = () => {
           <h2 className="text-2xl font-bold text-white mb-4">Key Insights</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-gradient-to-br from-green-900/20 to-green-800/20 border border-green-500/30 rounded-lg p-4">
-              <p className="text-green-400 font-semibold mb-2">âœ“ Strengths</p>
+              <p className="text-green-400 font-semibold mb-2">â�"" Strengths</p>
               <ul className="text-gray-300 space-y-1 text-sm">
                 <li>â€¢ Consistent meditation practice (90% completion)</li>
                 <li>â€¢ Strong productivity on weekends</li>
@@ -182,11 +182,11 @@ const Relatorios = () => {
             </div>
             
             <div className="bg-gradient-to-br from-yellow-900/20 to-yellow-800/20 border border-yellow-500/30 rounded-lg p-4">
-              <p className="text-yellow-400 font-semibold mb-2">âš  Areas to Improve</p>
+              <p className="text-yellow-400 font-semibold mb-2">Areas to Improve</p>
               <ul className="text-gray-300 space-y-1 text-sm">
-                <li>â€¢ Study hours below target on Wed</li>
-                <li>â€¢ Reading habit needs attention (70%)</li>
-                <li>â€¢ Mid-week productivity dip</li>
+                <li>- Study hours below target on Wed</li>
+                <li>- Reading habit needs attention (70%)</li>
+                <li>- Mid-week productivity dip</li>
               </ul>
             </div>
           </div>

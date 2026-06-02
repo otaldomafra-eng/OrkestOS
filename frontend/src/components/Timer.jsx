@@ -9,15 +9,19 @@ const Timer = ({ defaultMinutes = 25 }) => {
   const [mode, setModo] = useState('focus'); // 'focus' or 'break'
 
   useEffect(() => {
+    if (timeLeft === 0 && isRunning) {
+      const id = setTimeout(() => setIsRunning(false), 0);
+      return () => clearTimeout(id);
+    }
+  }, [timeLeft, isRunning]);
+
+  useEffect(() => {
     let interval = null;
     
     if (isRunning && timeLeft > 0) {
       interval = setInterval(() => {
         setTimeLeft(time => time - 1);
       }, 1000);
-    } else if (timeLeft === 0) {
-      setIsRunning(false);
-      // Timer completed
     }
     
     return () => clearInterval(interval);

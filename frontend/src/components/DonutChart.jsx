@@ -1,6 +1,6 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
-const DonutChart = ({ value, size = 120, strokeWidth = 10, color = '#6366f1', label = '' }) => {
+const DonutChart = ({ value, size = 120, color = '#6366f1', label = '' }) => {
   const percentage = Math.min(Math.max(value, 0), 100);
   const data = [
     { name: 'completed', value: percentage },

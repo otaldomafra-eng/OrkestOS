@@ -5,13 +5,13 @@ import GradientButton from '../components/GradientButton';
 import Card from '../components/Card';
 import { validateEmail } from '../utils/helpers';
 import { motion } from 'framer-motion'
-import { useApp } from '../store/AppContext';
+import { useAuth } from '../context/AuthContext';
 import { authAPI } from '../api/apiService';
 import { showToast } from '../utils/toastHelper';
 
 
 const Signup = () => {
-  const { setToken, setUser, navigate } = useApp();
+  const { setToken, setUser, navigate } = useAuth();
   const [formData, setFormData] = useState({
     name: '',
     username: '',
@@ -181,10 +181,10 @@ shadow-[0_0_40px_rgba(99,102,241,0.2)]'>
                 placeholder="Crie uma senha forte"
                 required
               />
-              <div className=”space-y-1 text-sm”>
+              <div className="space-y-1 text-sm">
                 {passwordRules.map((rule) => (
                   <p key={rule.label} className={rule.isValid ? 'text-green-400' : 'text-gray-500'}>
-                    {rule.isValid ? '✓' : '•'} {rule.label}
+                    {rule.isValid ? '�"' : '•'} {rule.label}
                   </p>
                 ))}
               </div>

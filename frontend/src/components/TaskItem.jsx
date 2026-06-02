@@ -1,7 +1,7 @@
 ﻿import { Check, Calendar, Flag } from 'lucide-react';
 import { format } from 'date-fns';
 
-const TaskItem = ({ task, onToggle, onDelete, showGoal = true, showProject = true }) => {
+const TaskItem = ({ task, onToggle, onDelete }) => {
   const isLate = task.deadline && new Date(task.deadline) < new Date() && !task.completed;
 
   return (
