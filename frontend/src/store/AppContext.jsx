@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+﻿import { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { goalAPI, projectAPI, taskAPI, habitAPI, dailyPlanAPI, statsAPI, notebookAPI, pageAPI, authAPI } from '../api/apiService';
 import { showToast } from '../utils/toastHelper';
@@ -23,7 +23,7 @@ export const AppProvider = ({ children }) => {
 
   // User state
   const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem('wisemind_user');
+    const saved = localStorage.getItem('orkestos_user');
     return saved ? JSON.parse(saved) : null;
   });
 
@@ -38,7 +38,7 @@ export const AppProvider = ({ children }) => {
   // Persist user to localStorage
   useEffect(() => {
     if (user) {
-      localStorage.setItem('wisemind_user', JSON.stringify(user));
+      localStorage.setItem('orkestos_user', JSON.stringify(user));
     }
   }, [user]);
 
@@ -47,37 +47,37 @@ export const AppProvider = ({ children }) => {
 
   // HYBRID: Load initial data from localStorage or use defaults (fallback)
   const [goals, setGoals] = useState(() => {
-    const saved = localStorage.getItem('wisemind_goals');
+    const saved = localStorage.getItem('Orkest_goals');
     return saved ? JSON.parse(saved) : [];
   });
 
   const [projects, setProjects] = useState(() => {
-    const saved = localStorage.getItem('wisemind_projects');
+    const saved = localStorage.getItem('Orkest_projects');
     return saved ? JSON.parse(saved) : [];
   });
 
   const [tasks, setTasks] = useState(() => {
-    const saved = localStorage.getItem('wisemind_tasks');
+    const saved = localStorage.getItem('Orkest_tasks');
     return saved ? JSON.parse(saved) : [];
   });
 
   const [habits, setHabits] = useState(() => {
-    const saved = localStorage.getItem('wisemind_habits');
+    const saved = localStorage.getItem('Orkest_habits');
     return saved ? JSON.parse(saved) : [];
   });
 
   const [dailyTasks, setDailyTasks] = useState(() => {
-    const saved = localStorage.getItem('wisemind_daily_tasks');
+    const saved = localStorage.getItem('Orkest_daily_tasks');
     return saved ? JSON.parse(saved) : [];
   });
 
   // NEW: Daily Plan with date-specific structure
   const [dailyPlan, setDailyPlan] = useState(() => {
-    const saved = localStorage.getItem('wisemind_daily_plan');
+    const saved = localStorage.getItem('Orkest_daily_plan');
     if (saved) {
       const parsed = JSON.parse(saved);
       const today = new Date().toISOString().split('T')[0];
-      // Reset if date changed
+      // Reiniciar if date changed
       if (parsed.date !== today) {
         return { date: today, plannedTasks: [] };
       }
@@ -90,7 +90,7 @@ export const AppProvider = ({ children }) => {
   });
 
   const [scores, setScores] = useState(() => {
-    const saved = localStorage.getItem('wisemind_scores');
+    const saved = localStorage.getItem('Orkest_scores');
     return saved ? JSON.parse(saved) : { productivity: 0, discipline: 0 };
   });
 
@@ -197,7 +197,7 @@ export const AppProvider = ({ children }) => {
         }));
 
         showToast({
-          message: response.message || 'Profile updated successfully',
+          message: response.message || 'Perfil atualizado com sucesso',
           status: 'success'
         });
 
@@ -236,7 +236,7 @@ export const AppProvider = ({ children }) => {
         }));
 
         showToast({
-          message: response.message || 'Profile Pic updated successfully',
+          message: response.message || 'Foto de perfil atualizada com sucesso',
           status: 'success'
         });
 
@@ -272,7 +272,7 @@ export const AppProvider = ({ children }) => {
           id: response.goal._id
         };
         setGoals([...goals, newGoal]);
-        showToast({ message: response.message || 'Goal created successfully', status: 'success' })
+        showToast({ message: response.message || 'Meta criada com sucesso', status: 'success' })
         return newGoal;
       } else {
         showToast({ message: response.message || 'Failed to create goal', status: 'error' })
@@ -295,7 +295,7 @@ export const AppProvider = ({ children }) => {
           id: response.project._id
         };
         setProjects([...projects, newProject]);
-        showToast({ message: response.message || 'Project created successfully', status: 'success' })
+        showToast({ message: response.message || 'Projeto criado com sucesso', status: 'success' })
         return newProject;
       } else {
         showToast({ message: response.message || 'Failed to create project', status: 'error' })
@@ -308,7 +308,7 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  // Add Task - Backend Integration
+  // Adicionar tarefa - Backend Integration
   const addTask = async (task) => {
     try {
       const response = await taskAPI.create(task);
@@ -318,7 +318,7 @@ export const AppProvider = ({ children }) => {
           id: response.task._id
         };
         setTasks([...tasks, newTask]);
-        showToast({ message: response.message || 'Task created successfully', status: 'success' })
+        showToast({ message: response.message || 'Tarefa criada com sucesso', status: 'success' })
         return newTask;
       } else {
         showToast({ message: response.message || 'Failed to create task', status: 'error' })
@@ -341,7 +341,7 @@ export const AppProvider = ({ children }) => {
           id: response.habit._id
         };
         setHabits([...habits, newHabit]);
-        showToast({ message: response.message || 'Habit created successfully', status: 'success' })
+        showToast({ message: response.message || 'Hábito criado com sucesso', status: 'success' })
         return newHabit;
       } else {
         showToast({ message: response.message || 'Failed to create habit', status: 'error' })
@@ -428,7 +428,7 @@ export const AppProvider = ({ children }) => {
           // task.id === taskId ? { ...task, ...updates } : task
           task.id === taskId ? updatedTask : task
         ));
-        showToast({ message: response.message || 'Task updated successfully', status: 'success' })
+        showToast({ message: response.message || 'Tarefa atualizada com sucesso', status: 'success' })
       } else {
         showToast({ message: response.message || 'Failed to update task', status: 'error' })
       }
@@ -446,7 +446,7 @@ export const AppProvider = ({ children }) => {
       if (response.success) {
         setTasks(tasks.filter(task => task.id !== taskId));
         setDailyTasks(dailyTasks.filter(task => task.id !== taskId));
-        showToast({ message: response.message || 'Task deleted successfully', status: 'success' })
+        showToast({ message: response.message || 'Tarefa excluida com sucesso', status: 'success' })
       } else {
         showToast({ message: response.message || 'Failed to delete task', status: 'error' })
       }
@@ -469,7 +469,7 @@ export const AppProvider = ({ children }) => {
           // goal.id === goalId ? { ...goal, ...updates } : goal
           goal.id === goalId ? updatedGoal : goal
         ));
-        showToast({ message: response.message || 'Goal updated successfully', status: 'success' })
+        showToast({ message: response.message || 'Meta atualizada com sucesso', status: 'success' })
       } else {
         showToast({ message: response.message || 'Failed to update goal', status: 'error' })
       }
@@ -485,7 +485,7 @@ export const AppProvider = ({ children }) => {
       const response = await goalAPI.delete(goalId);
       if (response.success) {
         setGoals(goals.filter(goal => goal.id !== goalId));
-        showToast({ message: response.message || 'Goal deleted successfully', status: 'success' })
+        showToast({ message: response.message || 'Meta excluida com sucesso', status: 'success' })
       } else {
         showToast({ message: response.message || 'Failed to delete goal', status: 'error' })
       }
@@ -524,7 +524,7 @@ export const AppProvider = ({ children }) => {
       const response = await projectAPI.delete(projectId);
       if (response.success) {
         setProjects(projects.filter(project => project.id !== projectId));
-        showToast({ message: response.message || 'Project deleted successfully', status: 'success' })
+        showToast({ message: response.message || 'Projeto excluido com sucesso', status: 'success' })
       } else {
         showToast({ message: response.message || 'Failed to delete project', status: 'error' })
       }
@@ -571,7 +571,7 @@ export const AppProvider = ({ children }) => {
           h.id === habitId ? updatedHabit : h
         ));
 
-        // ✅ REFETCH DAILY PLAN
+        // âœ… REFETCH DAILY PLAN
         const dailyPlanRes = await dailyPlanAPI.getToday();
 
         if (dailyPlanRes.success) {
@@ -587,7 +587,7 @@ export const AppProvider = ({ children }) => {
           setDailyPlan(updatedPlan);
         }
 
-        showToast({ message: response.message || 'Habit completed successfully', status: 'success' })
+        showToast({ message: response.message || 'Hábito concluido com sucesso', status: 'success' })
       } else {
         showToast({ message: response.message || 'Failed to update habit', status: 'error' })
       }
@@ -603,7 +603,7 @@ export const AppProvider = ({ children }) => {
       const response = await habitAPI.delete(habitId);
       if (response.success) {
         setHabits(habits.filter(habit => habit.id !== habitId));
-        showToast({ message: response.message || 'Habit deleted successfully', status: 'success' })
+        showToast({ message: response.message || 'Hábito excluido com sucesso', status: 'success' })
       } else {
         showToast({ message: response.message || 'Failed to delete habit', status: 'error' })
       }
@@ -744,7 +744,7 @@ export const AppProvider = ({ children }) => {
 
     if (tasks.length === 0) return 0;
 
-    let onTimeCompleted = 0;
+    let onTimeConcluido = 0;
 
     tasks.forEach(task => {
       if (task.completed && task.completedAt) {
@@ -757,12 +757,12 @@ export const AppProvider = ({ children }) => {
         const endMinutes = eh * 60 + em;
 
         if (completedMinutes <= endMinutes) {
-          onTimeCompleted++;
+          onTimeConcluido++;
         }
       }
     });
 
-    return Math.round((onTimeCompleted / tasks.length) * 100);
+    return Math.round((onTimeConcluido / tasks.length) * 100);
   };
 
   const setDailyTasksList = (tasksList) => {

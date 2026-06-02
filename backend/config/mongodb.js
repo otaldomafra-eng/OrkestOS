@@ -5,7 +5,7 @@ const connectDB = async()=> {
         console.log("DataBase Connected Successfully!")
     })
     const connectionOptions = {};
-    connectionOptions.dbName = process.env.DB_NAME || "wise-mind-os";
+    connectionOptions.dbName = process.env.DB_NAME || "orkestos";
     await mongoose.connect(process.env.MONGODB_URI, connectionOptions)
 }
 

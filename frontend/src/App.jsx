@@ -7,8 +7,9 @@ import Signup from './pages/Signup';
 import Onboarding from './pages/Onboarding';
 import AppLayout from './layouts/AppLayout';
 import Dashboard from './pages/Dashboard';
-import Reports from './pages/Reports';
+import Relatorios from './pages/Reports';
 import Roadmap from './pages/Roadmap';
+import Integrations from './pages/Integrations';
 
 
 import FutureTwin from './modules/simulator_room/FutureTwin';
@@ -35,7 +36,7 @@ import { ToastContainer } from 'react-toastify';
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/onboarding" element={<Onboarding />} />
-          <Route path="/report" element={<Reports />} />
+          <Route path="/report" element={<Relatorios />} />
           <Route path="/roadmap" element={<Roadmap />} />
 
           {/* Protected Routes with AppLayout */}
@@ -51,6 +52,7 @@ import { ToastContainer } from 'react-toastify';
             <Route path="/future-twin" element={<FutureTwin />} />
             <Route path="/future" element={<FutureTwin />} />
             <Route path="/library" element={<Library />} />
+            <Route path="/integrations" element={<Integrations />} />
 
           </Route>
 

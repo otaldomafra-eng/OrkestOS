@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Plus, ArrowLeft, ChevronRight, Target } from 'lucide-react';
 import { useApp } from '../../../store/AppContext';
@@ -100,7 +100,7 @@ const GoalTracker = () => {
   };
 
   // Calculate overall goals progress
-  const overallProgress = goals.length > 0
+  const overallProgresso = goals.length > 0
     ? Math.round(goals.reduce((sum, goal) => sum + calculateGoalProgress(goal.id), 0) / goals.length)
     : 0;
 
@@ -146,7 +146,7 @@ const GoalTracker = () => {
                     </h1>
 
                     <p className="text-sm text-emerald-400 mt-1">
-                      Progress: {progress}%
+                      Progresso: {progress}%
                     </p>
 
                     {linkedGoal && (
@@ -175,7 +175,7 @@ const GoalTracker = () => {
                 className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] hover:-translate-y-1 active:scale-95 text-white px-4 py-2 rounded-lg transition-all cursor-pointer"
               >
                 <Plus size={20} className="inline mr-2" />
-                Add Task
+                Adicionar tarefa
               </button>
             </div>
             {projectTasks.length > 0 ? (
@@ -201,11 +201,11 @@ const GoalTracker = () => {
           </Card>
         </div>
 
-        {/* Add Task Modal */}
-        <Modal isOpen={showAddProjectTask} onClose={() => setShowAddProjectTask(false)} title="Add Task to Project">
+        {/* Adicionar tarefa Modal */}
+        <Modal isOpen={showAddProjectTask} onClose={() => setShowAddProjectTask(false)} title="Adicionar tarefa to Project">
           <div className="space-y-4">
             <InputField
-              label="Task Title"
+              label="Titulo da tarefa"
               value={newProjectTask.title}
               onChange={(e) => setNewProjectTask({ ...newProjectTask, title: e.target.value })}
               placeholder="Enter task title"
@@ -220,7 +220,7 @@ const GoalTracker = () => {
             />
             <div className="flex items-center justify-between bg-white/5 border border-white/10 rounded-lg px-4 py-3">
               <label htmlFor="important" className="text-gray-300 text-sm">
-                Mark as Important
+                Mark as Importante
               </label>
 
               <input
@@ -233,7 +233,7 @@ const GoalTracker = () => {
               />
             </div>
             <GradientButton onClick={handleAddProjectTask} className="w-full" data-testid="submit-task-btn">
-              Add Task
+              Adicionar tarefa
             </GradientButton>
           </div>
         </Modal>
@@ -386,7 +386,7 @@ const GoalTracker = () => {
                   className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] hover:-translate-y-1 active:scale-95 text-white px-4 py-2 rounded-lg transition-all cursor-pointer"
                 >
                   <Plus size={20} className="inline mr-2" />
-                  Add Task
+                  Adicionar tarefa
                 </button>
               </div>
               <div className="space-y-3">
@@ -418,7 +418,7 @@ const GoalTracker = () => {
                 className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] hover:-translate-y-1 active:scale-95 text-white px-4 py-2 rounded-lg transition-all cursor-pointer"
               >
                 <Plus size={20} className="inline mr-2" />
-                Add Task
+                Adicionar tarefa
               </button>
             </Card>
           )}
@@ -446,17 +446,17 @@ const GoalTracker = () => {
                   className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] hover:-translate-y-1 active:scale-95 text-white px-4 py-2 rounded-lg transition-all cursor-pointer"
                 >
                   <Plus size={20} className="inline mr-2" />
-                  Add Task
+                  Adicionar tarefa
                 </button>
               </div>
             </Card>
           )}
         </div>
-        {/* Add Task Modal */}
-        <Modal isOpen={showAddTask} onClose={() => setShowAddTask(false)} title="Add Task to Project">
+        {/* Adicionar tarefa Modal */}
+        <Modal isOpen={showAddTask} onClose={() => setShowAddTask(false)} title="Adicionar tarefa to Project">
           <div className="space-y-4">
             <InputField
-              label="Task Title"
+              label="Titulo da tarefa"
               value={newTask.title}
               onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
               placeholder="Enter task title"
@@ -485,7 +485,7 @@ const GoalTracker = () => {
             />
             <div className="flex items-center justify-between bg-white/5 border border-white/10 rounded-lg px-4 py-3">
               <label htmlFor="important" className="text-gray-300 text-sm">
-                Mark as Important
+                Mark as Importante
               </label>
 
               <input
@@ -498,15 +498,15 @@ const GoalTracker = () => {
               />
             </div>
             <GradientButton onClick={handleAddTask} className="w-full" data-testid="submit-task-btn">
-              Add Task
+              Adicionar tarefa
             </GradientButton>
           </div>
         </Modal>
         {/* Add Project Modal */}
-        <Modal isOpen={showAddProject} onClose={() => setShowAddProject(false)} title="Create New Project">
+        <Modal isOpen={showAddProject} onClose={() => setShowAddProject(false)} title="Criar novo projeto">
           <div className="space-y-4">
             <InputField
-              label="Project Title"
+              label="Titulo do projeto"
               value={newProject.title}
               onChange={(e) => setNewProject({ ...newProject, title: e.target.value })}
               placeholder="Enter project title"
@@ -536,7 +536,7 @@ const GoalTracker = () => {
             </div>
 
             <GradientButton onClick={handleAddProject} className="w-full" data-testid="submit-project-btn">
-              Create Project
+              Criar projeto
             </GradientButton>
           </div>
         </Modal>
@@ -564,7 +564,7 @@ const GoalTracker = () => {
           className="flex justify-between items-center mb-6"
         >
           <div>
-            <h1 className="text-3xl young-serif-regular font-bold text-gray-200">Goal Tracker</h1>
+            <h1 className="text-3xl young-serif-regular font-bold text-gray-200">Rastreador de metas</h1>
             <p className="text-gray-400">Track your final, long-term, and mid-term goals</p>
           </div>
           <button
@@ -576,7 +576,7 @@ const GoalTracker = () => {
           </button>
         </Motion.div>
 
-        {/* Overall Progress */}
+        {/* Progresso geral */}
         {loading ? (
           <SkeletonCard className="mb-6">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -600,7 +600,7 @@ const GoalTracker = () => {
               {/* Left */}
               <div>
                 <h2 className="text-xl font-bold text-white mb-1">
-                  Overall Progress
+                  Progresso geral
                 </h2>
                 <p className="text-gray-400 text-sm">
                   Keep pushing — consistency builds success 🚀
@@ -613,7 +613,7 @@ const GoalTracker = () => {
 
               {/* Center Donut */}
               <div>
-                <DonutChart value={overallProgress} size={140} color="#6366f1" />
+                <DonutChart value={overallProgresso} size={140} color="#6366f1" />
               </div>
 
               {/* Right Stats */}
@@ -632,7 +632,7 @@ const GoalTracker = () => {
                       return p >= 50 && p < 80;
                     }).length}
                   </p>
-                  <p className="text-xs text-gray-400">In Progress</p>
+                  <p className="text-xs text-gray-400">Em andamento</p>
                 </div>
 
                 <div>
@@ -679,10 +679,10 @@ const GoalTracker = () => {
       </div>
 
       {/* Add Goal Modal */}
-      <Modal isOpen={showAddGoal} onClose={() => setShowAddGoal(false)} title="Create New Goal">
+      <Modal isOpen={showAddGoal} onClose={() => setShowAddGoal(false)} title="Criar nova meta">
         <form onSubmit={handleAddGoal} className="space-y-4">
           <InputField
-            label="Goal Title"
+            label="Titulo da meta"
             value={newGoal.title}
             onChange={(e) => setNewGoal({ ...newGoal, title: e.target.value })}
             placeholder="Enter goal title"
@@ -726,7 +726,7 @@ const GoalTracker = () => {
           />
 
           <GradientButton type="submit" className="w-full" data-testid="submit-goal-btn">
-            Create Goal
+            Criar meta
           </GradientButton>
         </form>
       </Modal>

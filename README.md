@@ -1,4 +1,4 @@
-# WiseMindOS
+# OrkestOS
 
 <div align="center">
 
@@ -10,7 +10,7 @@
 [![Open Source](https://img.shields.io/badge/Open%20Source-GSSoC-orange?style=for-the-badge)]()
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)]()
 
-### Full-Stack Productivity & Life Management Platform
+### Full-Stack Produtividade & Life Management Platform
 
 Transform long-term goals into structured daily execution through interconnected planning systems, habit tracking, productivity analytics, and focused workflow management.
 
@@ -22,15 +22,15 @@ Transform long-term goals into structured daily execution through interconnected
 
 | Platform | Link |
 |---|---|
-| Live Application | https://wise-mind-os.vercel.app |
-| GitHub Repository | https://github.com/aaryan498/WiseMindOS.git |
+| Live Application | https://orkestos.vercel.app |
+| GitHub Repository | https://github.com/aaryan498/OrkestOS.git |
 
 ---
 
 # Overview
-**WiseMindOS** is an open-source, modular full-stack "Life Operating System" designed to align daily execution with long-term ambitions. 
+**OrkestOS** is an open-source, modular full-stack "Life Operating System" designed to align daily execution with long-term ambitions. 
 
-While traditional tools offer fragmented task tracking, WiseMindOS unifies goals, projects, habits, deep-work systems, and bi-directional analytics into a single, cohesive engine. The platform is architected to transition personal growth from passive tracking to an active, data-driven workflow.
+While traditional tools offer fragmented task tracking, OrkestOS unifies goals, projects, habits, deep-work systems, and bi-directional analytics into a single, cohesive engine. The platform is architected to transition personal growth from passive tracking to an active, data-driven workflow.
 
 ### The FutureTwin 
 The ecosystem is scaling toward an intelligent productivity framework powered by **FutureTwin**—a personalized AI assistant that evaluates user analytics, counters behavioral friction, and continuously optimizes your daily trajectory toward high-level milestones.
@@ -39,13 +39,13 @@ The ecosystem is scaling toward an intelligent productivity framework powered by
 # Screenshots
 <div align="center">
    
-## Dashboard
-![Dashboard](assets/screenshots/Dashboard.jpeg)
+## Painel
+![Painel](assets/screenshots/Painel.jpeg)
 *A central view that shows overall productivity insights, including goals progress, tasks, habits, and performance analytics in one place.*
 
 
-## Trackers
-![Trackers](assets/screenshots/Trackers.jpeg)
+## Rastreadores
+![Rastreadores](assets/screenshots/Rastreadores.jpeg)
 *It monitors habits, tasks, and goals to measure consistency, progress, and productivity over time.*
 
 
@@ -54,15 +54,15 @@ The ecosystem is scaling toward an intelligent productivity framework powered by
 *An intelligent assistant that analyzes user behavior and productivity patterns to provide personalized recommendations and improve daily performance.*
 
 
-## Library
-![Library](assets/screenshots/YourLibrary.jpeg)
+## Biblioteca
+![Biblioteca](assets/screenshots/YourBiblioteca.jpeg)
 *A personal knowledge space to store, organize, and revisit notes, ideas, and important information in a structured way.*
 
 </div>
 
 ---
 
-# Core Features
+# Core Recursos
 
 | Module | Description |
 |---|---|
@@ -71,9 +71,9 @@ The ecosystem is scaling toward an intelligent productivity framework powered by
 | Task Management | Manage solo tasks and productivity workflows |
 | Daily Planner | Structured daily execution planning |
 | Habit Tracking | Track habits and maintain productivity streaks |
-| Productivity Dashboard | Visual analytics and productivity insights |
+| Produtividade Painel | Visual analytics and productivity insights |
 | Focus Room | Dedicated distraction-free focus workspace |
-| Library & Notes | Notebook and page-based knowledge management |
+| Biblioteca & Notes | Notebook and page-based knowledge management |
 | Authentication System | Secure JWT-based authentication and protected routes |
 | Progress Analytics | Weekly productivity statistics and tracking systems |
 
@@ -106,7 +106,7 @@ The ecosystem is scaling toward an intelligent productivity framework powered by
 # Project Architecture
 
 ```text
-WiseMindOS/
+OrkestOS/
 │
 ├── .github/
 │   ├── ISSUE_TEMPLATE/
@@ -154,7 +154,7 @@ WiseMindOS/
 
 ---
 
-# Productivity Workflow Structure
+# Produtividade Workflow Structure
 
 ```text
 Goals
@@ -167,7 +167,7 @@ Daily Planning
    ↓
 Habit Consistency
    ↓
-Analytics & Productivity Tracking
+Analytics & Produtividade Tracking
 ```
 
 ---
@@ -182,10 +182,10 @@ Analytics & Productivity Tracking
 | Completed | Solo Tasks |
 | Completed | Daily Planner |
 | Completed | Habit Tracker |
-| Completed | Dashboard Analytics |
+| Completed | Painel Analytics |
 | Completed | Focus Room |
-| Completed | Library & Notebook System |
-| Completed | Productivity Streak System |
+| Completed | Biblioteca & Notebook System |
+| Completed | Produtividade Streak System |
 | Planned | FutureTwin AI Assistant |
 | Planned | Reward & Ranking System |
 | Planned | Finance Tracker |
@@ -196,7 +196,7 @@ Analytics & Productivity Tracking
 
 ## Prerequisites
 
-Before running WiseMindOS locally, ensure you have the following installed:
+Before running OrkestOS locally, ensure you have the following installed:
 
 - Node.js (v18 or later)
 - npm (comes with Node.js)
@@ -217,15 +217,15 @@ Then immediately follow it with:
 
 ## Quick Start
 
-Follow these steps to run WiseMindOS on your local machine.
+Follow these steps to run OrkestOS on your local machine.
 
 ### 1. Clone the Repository
 
 Open a terminal and run:
 
 ```bash
-git clone https://github.com/aaryan498/WiseMindOS.git
-cd WiseMindOS
+git clone https://github.com/aaryan498/OrkestOS.git
+cd OrkestOS
 ```
 
 ### 2. Create Backend Environment Variables
@@ -241,7 +241,7 @@ Add the following:
 ```env 
 PORT=4000
 MONGODB_URI=your_mongodb_connection_string
-DB_NAME="wise-mind-os"
+DB_NAME="orkestos"
 JWT_SECRET=replace_with_a_secure_random_string
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
@@ -292,7 +292,7 @@ npm install
 Open **Terminal 1**:
 
 ```bash
-cd WiseMindOS/backend
+cd OrkestOS/backend
 npm run dev
 ```
 
@@ -303,7 +303,7 @@ Wait until the backend starts successfully.
 Open **Terminal 2**:
 
 ```bash
-cd WiseMindOS/frontend
+cd OrkestOS/frontend
 npm run dev
 ```
 
@@ -369,12 +369,12 @@ npm install
 | `/planner` | Daily planner APIs |
 | `/habits` | Habit tracking APIs |
 | `/library` | Notebook and notes APIs |
-| `/dashboard` | Productivity analytics APIs |
+| `/dashboard` | Produtividade analytics APIs |
 
 ---
 # Contribution Areas
 
-WiseMindOS is built with a modular architecture, allowing contributors to work on different parts of the platform independently. Whether you're a beginner exploring open source or an experienced developer, there are multiple ways to contribute.
+OrkestOS is built with a modular architecture, allowing contributors to work on different parts of the platform independently. Whether you're a beginner exploring open source or an experienced developer, there are multiple ways to contribute.
 
 ## Available Contribution Areas
 
@@ -390,13 +390,13 @@ WiseMindOS is built with a modular architecture, allowing contributors to work o
 * Database integration and optimization
 * Authentication and authorization features
 
-### Productivity Systems
+### Produtividade Systems
 
 * Goal management enhancements
 * Task and habit tracking improvements
-* Productivity analytics and reporting
+* Produtividade analytics and reporting
 
-### AI & Smart Features
+### AI & Smart Recursos
 
 * FutureTwin AI assistant development
 * Intelligent productivity recommendations
@@ -441,23 +441,23 @@ If you're looking for a place to start, consider contributing to:
 * Accessibility improvements
 * Testing and quality assurance
 
-- Every contribution, no matter how small, helps improve WiseMindOS.
+- Every contribution, no matter how small, helps improve OrkestOS.
 ---
-# Why WiseMindOS?
+# Why OrkestOS?
 
 Most productivity apps help you manage tasks.
 
-WiseMindOS helps you manage progress.
+OrkestOS helps you manage progress.
 
-By connecting goals, projects, tasks, habits, planning, focus systems, and analytics into one ecosystem, WiseMindOS turns long-term ambitions into consistent daily action.
+By connecting goals, projects, tasks, habits, planning, focus systems, and analytics into one ecosystem, OrkestOS turns long-term ambitions into consistent daily action.
 
-Rather than tracking productivity in isolated modules, WiseMindOS creates a structured workflow where every action contributes to a larger objective. The platform is designed to help users build momentum, maintain consistency, and stay aligned with their long-term vision.
+Rather than tracking productivity in isolated modules, OrkestOS creates a structured workflow where every action contributes to a larger objective. The platform is designed to help users build momentum, maintain consistency, and stay aligned with their long-term vision.
 
 - The goal is simple: stay focused, stay consistent, and make measurable progress every day.
 ---
-# Future Roadmap
+# Future Roteiro
 
-WiseMindOS is continuously evolving to become a comprehensive productivity and life-management platform. Upcoming features and planned enhancements include:
+OrkestOS is continuously evolving to become a comprehensive productivity and life-management platform. Upcoming features and planned enhancements include:
 
 ## AI & Intelligence
 
@@ -466,7 +466,7 @@ WiseMindOS is continuously evolving to become a comprehensive productivity and l
 * Behavioral analytics and insights
 * Burnout prediction system
 
-## Productivity & Planning
+## Produtividade & Planning
 
 * Smart scheduling assistant
 * Calendar integrations
@@ -481,7 +481,7 @@ WiseMindOS is continuously evolving to become a comprehensive productivity and l
 
 ## Community & Engagement
 
-* Productivity rankings and leaderboards
+* Produtividade rankings and leaderboards
 
 ## Platform Expansion
 
@@ -490,7 +490,7 @@ WiseMindOS is continuously evolving to become a comprehensive productivity and l
 * Desktop application
 * Cross-platform synchronization
 
-These features are part of the long-term vision of making WiseMindOS an intelligent, data-driven platform for productivity, personal growth, and goal achievement.
+These features are part of the long-term vision of making OrkestOS an intelligent, data-driven platform for productivity, personal growth, and goal achievement.
 
 
 # Repository Structure
@@ -515,16 +515,16 @@ See the `LICENSE` file for more information.
 
 Aaryan Kumar
 
-Building WiseMindOS with the vision of creating an intelligent productivity ecosystem where goals, habits, planning, and analytics work together to turn ambition into measurable progress.
+Building OrkestOS with the vision of creating an intelligent productivity ecosystem where goals, habits, planning, and analytics work together to turn ambition into measurable progress.
 
 ---
 # Support the Project
 
-If you find WiseMindOS useful, consider supporting the project by:
+If you find OrkestOS useful, consider supporting the project by:
 
 * Starring the repository
 * Forking the project
 * Contributing features, fixes, or improvements
 * Sharing feedback and suggestions
 
-Every contribution, whether it's code, documentation, testing, or feedback, helps make WiseMindOS better for the entire community.
+Every contribution, whether it's code, documentation, testing, or feedback, helps make OrkestOS better for the entire community.

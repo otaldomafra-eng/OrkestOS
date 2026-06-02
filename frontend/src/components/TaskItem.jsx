@@ -1,4 +1,4 @@
-import { Check, Calendar, Flag } from 'lucide-react';
+﻿import { Check, Calendar, Flag } from 'lucide-react';
 import { format } from 'date-fns';
 
 const TaskItem = ({ task, onToggle, onDelete, showGoal = true, showProject = true }) => {
@@ -48,7 +48,7 @@ const TaskItem = ({ task, onToggle, onDelete, showGoal = true, showProject = tru
             {task.isImportant && (
               <div className="flex items-center text-xs text-orange-400">
                 <Flag size={12} className="mr-1" />
-                Important
+                Importante
               </div>
             )}
             

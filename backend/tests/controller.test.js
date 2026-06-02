@@ -132,7 +132,7 @@ test('authUser rejects requests without a token', async () => {
     assert.equal(nextCalled, false);
     assert.deepEqual(res.body, {
         success: false,
-        message: 'Not Authorized, Login Again'
+        message: 'Not Authorized, Entrar Again'
     });
 });
 

@@ -33,7 +33,7 @@ axiosInstance.interceptors.response.use(
         if (error.response?.status === 401) {
             // Token expired or invalid
             localStorage.removeItem('token');
-            localStorage.removeItem('wisemind_user');
+            localStorage.removeItem('orkestos_user');
             window.location.href = '/login';
         }
         return Promise.reject(error);

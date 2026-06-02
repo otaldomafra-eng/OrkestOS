@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import InputField from '../components/InputField';
 import GradientButton from '../components/GradientButton';
@@ -9,7 +9,7 @@ import { authAPI } from '../api/apiService';
 import { showToast } from '../utils/toastHelper';
 import { GoogleLogin } from '@react-oauth/google';
 
-const Login = () => {
+const Entrar = () => {
   const { token, setToken, user, setUser, navigate } = useApp()
   const [formData, setFormData] = useState({
     identifier: '',
@@ -21,6 +21,24 @@ const Login = () => {
     return error?.response?.data?.message || error?.message || fallback;
   };
 
+  const enterDemoMode = () => {
+    const demoUser = {
+      name: 'Usuário Demo',
+      username: 'demo',
+      email: 'demo@orkestos.local',
+      bio: 'Conta local para explorar o OrkestOS.',
+      profile_picture: ''
+    };
+    const demoToken = `demo-${Date.now()}`;
+
+    setToken(demoToken);
+    setUser(demoUser);
+    localStorage.setItem('token', demoToken);
+    localStorage.setItem('orkestos_user', JSON.stringify(demoUser));
+    showToast({ message: 'Modo demo iniciado', status: 'success' });
+    navigate('/dashboard');
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -29,23 +47,23 @@ const Login = () => {
     const password = formData.password.trim();
 
     if (!identifier && !password) {
-      setError('Enter your email or username and password to continue.');
+      setError('Informe seu email ou usuário e senha para continuar.');
       return;
     }
 
     if (!identifier) {
-      setError('Enter your email or username.');
+      setError('Informe seu email ou usuário.');
       return;
     }
 
     if (!password) {
-      setError('Enter your password.');
+      setError('Informe sua senha.');
       return;
     }
 
     try {
       const response = await authAPI.login({ identifier, password });
-      console.log('Login response:', response);
+      console.log('Entrar response:', response);
 
       if (response.success) {
         // Store token
@@ -63,25 +81,25 @@ const Login = () => {
         };
         console.log('Setting user:', userData);
         setUser(userData);
-        localStorage.setItem('wisemind_user', JSON.stringify(userData));
+        localStorage.setItem('orkestos_user', JSON.stringify(userData));
 
-        showToast({ message: response.message || 'Login Successful', status: "success" })
+        showToast({ message: response.message || 'Login realizado com sucesso', status: "success" })
       } else {
-        setError(response.message || 'Login failed');
-        showToast({ message: response.message || 'Login failed', status: 'error'})
+        setError(response.message || 'Falha no login');
+        showToast({ message: response.message || 'Falha no login', status: 'error'})
       }
 
     } catch (error) {
 
-      console.error('Login error:', error);
-      const message = getAuthErrorMessage(error, 'Unable to log in. Please check your details and try again.');
+      console.error('Entrar error:', error);
+      const message = getAuthErrorMessage(error, 'Não foi possível entrar. Verifique seus dados e tente novamente.');
       setError(message);
       showToast({ message, status: "error" })
     }
   };
 
   useEffect(() => {
-      console.log('Login useEffect - token:', token, 'user:', user);
+      console.log('Entrar useEffect - token:', token, 'user:', user);
       if (token && user) {
         console.log('Navigating to dashboard');
         navigate('/dashboard');
@@ -118,10 +136,10 @@ const Login = () => {
                 repeat: Infinity,
                 ease: "easeInOut"
               }}>
-              Wise<span className="bg-gradient-to-r from-indigo-500 to-purple-600 baloo-2-700 md:text-5xl bg-clip-text text-transparent">Mind</span>OS
+              Orkest<span className="bg-gradient-to-r from-indigo-500 to-purple-600 baloo-2-700 md:text-5xl bg-clip-text text-transparent">OS</span>
             </motion.h1>
           </Link>
-          <p className="text-gray-400">Welcome back! Login to continue</p>
+          <p className="text-gray-400">Bem-vindo de volta. Entre para continuar</p>
         </div>
 
         <Card className="
@@ -130,7 +148,7 @@ border border-white/10
 rounded-2xl p-8
 shadow-[0_0_40px_rgba(99,102,241,0.2)]
 ">
-          <h2 className="text-2xl font-bold young-serif-regular text-center text-gray-200 mb-6">Login</h2>
+          <h2 className="text-2xl font-bold young-serif-regular text-center text-gray-200 mb-6">Entrar</h2>
 
           {error && (
             <div className="bg-red-500/10 border border-red-500 text-red-400 px-4 py-3 rounded-lg mb-4">
@@ -140,32 +158,40 @@ shadow-[0_0_40px_rgba(99,102,241,0.2)]
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <InputField
-              label="Email / Username"
+              label="Email / Usuário"
               type="text"
               value={formData.identifier}
               onChange={(e) => setFormData({ ...formData, identifier: e.target.value })}
-              placeholder="Email or Username"
+              placeholder="Email ou usuário"
               required
             />
 
             <InputField
-              label="Password"
+              label="Senha"
               type="password"
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              placeholder="Enter your password"
+              placeholder="Informe sua senha"
               required
             />
 
             <GradientButton type="submit" className="w-full mt-6" data-testid="login-submit-btn">
-              Login
+              Entrar
             </GradientButton>
           </form>
+
+          <button
+            type="button"
+            onClick={enterDemoMode}
+            className="mt-3 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-gray-100 transition hover:bg-white/10 active:scale-[0.98]"
+          >
+            Entrar como demo
+          </button>
 
           <div className="relative my-6 flex items-center justify-center">
             <div className="absolute w-full border-t border-white/10"></div>
             <span className="relative bg-[#161320] px-3 text-xs uppercase text-gray-500 tracking-wider">
-              Or continue with
+              Ou continue com
             </span>
           </div>
 
@@ -192,25 +218,25 @@ shadow-[0_0_40px_rgba(99,102,241,0.2)]
                       profile_picture: response.profile_picture
                     };
                     setUser(userData);
-                    localStorage.setItem('wisemind_user', JSON.stringify(userData));
+                    localStorage.setItem('orkestos_user', JSON.stringify(userData));
 
                     // 4. Show success message and navigate to dashboard
-                    showToast({ message: response.message || 'Login Successful', status: "success" });
+                    showToast({ message: response.message || 'Login realizado com sucesso', status: "success" });
                     navigate('/dashboard');
                   } else {
-                    setError(response.message || 'Google login failed');
-                    showToast({ message: response.message || 'Google login failed', status: 'error'});
+                    setError(response.message || 'Falha no login com Google');
+                    showToast({ message: response.message || 'Falha no login com Google', status: 'error'});
                   }
                 } catch (err) {
                   console.error('Google authorization error:', err);
-                  const message = getAuthErrorMessage(err, 'Google authentication failed. Please try again.');
+                  const message = getAuthErrorMessage(err, 'Falha na autenticação com Google. Tente novamente.');
                   setError(message);
                   showToast({ message, status: "error" });
                 }
               }}
               onError={() => {
-                setError("Google Login Failed. Please try again.");
-                showToast({ message: "Google Auth Failed", status: "error" });
+                setError("Falha no login com Google. Tente novamente.");
+                showToast({ message: "Falha na autenticação com Google", status: "error" });
               }}
               theme="filled_black"
               shape="pill"
@@ -220,9 +246,9 @@ shadow-[0_0_40px_rgba(99,102,241,0.2)]
 
           <div className="mt-6 text-center">
             <p className="text-gray-400">
-              Don't have an account?{' '}
+              Não tem uma conta?{' '}
               <Link to="/signup" className="text-indigo-400 hover:text-indigo-300 font-semibold">
-                Sign up
+                Criar conta
               </Link>
             </p>
           </div>
@@ -232,4 +258,4 @@ shadow-[0_0_40px_rgba(99,102,241,0.2)]
   );
 };
 
-export default Login;
+export default Entrar;

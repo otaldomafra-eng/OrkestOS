@@ -1,4 +1,4 @@
-import taskModel from '../models/taskModel.js';
+﻿import taskModel from '../models/taskModel.js';
 import dailyPlanModel from '../models/dailyPlanModel.js';
 
 // Create Task
@@ -138,7 +138,7 @@ const deleteTask = async (req, res) => {
             { $pull: { plannedTasks: { taskId: taskId } } }
         );
 
-        res.json({ success: true, message: 'Task deleted successfully' });
+        res.json({ success: true, message: 'Tarefa excluida com sucesso' });
 
     } catch (error) {
         console.log(error);

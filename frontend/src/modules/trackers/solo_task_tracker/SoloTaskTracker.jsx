@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Plus, Filter } from 'lucide-react';
 import { useApp } from '../../../store/AppContext';
 import Card from '../../../components/Card';
@@ -70,7 +70,7 @@ const SoloTaskTracker = () => {
           className="flex justify-between items-center mb-6"
         >
           <div>
-            <h1 className="text-3xl font-bold young-serif-regular text-gray-200">Solo Task Tracker</h1>
+            <h1 className="text-3xl font-bold young-serif-regular text-gray-200">Tarefas avulsas</h1>
             <p className="text-gray-400">Track individual tasks and to-dos</p>
           </div>
           <button
@@ -98,7 +98,7 @@ const SoloTaskTracker = () => {
                 }}
                 className="text-xs text-indigo-400 hover:text-indigo-300"
               >
-                Reset
+                Reiniciar
               </button>
             )}
           </div>
@@ -172,11 +172,11 @@ const SoloTaskTracker = () => {
           )}
         </Card>
 
-        {/* Completed Tasks */}
+        {/* Concluido Tasks */}
         {completedTasks.length > 0 && (
           <Card className="bg-white/5 backdrop-blur-xl border border-white/10 opacity-80">
             <h2 className="text-xl font-bold text-white mb-4">
-              Completed Tasks ({completedTasks.length})
+              Concluido Tasks ({completedTasks.length})
             </h2>
             <p className="text-xs text-gray-400 mb-3">Well done! Keep the streak going 🔥</p>
             <div className="space-y-3">
@@ -213,11 +213,11 @@ const SoloTaskTracker = () => {
         )}
       </div>
 
-      {/* Add Task Modal */}
-      <Modal isOpen={showAddTask} onClose={() => setShowAddTask(false)} title="Create New Task">
+      {/* Adicionar tarefa Modal */}
+      <Modal isOpen={showAddTask} onClose={() => setShowAddTask(false)} title="Criar nova tarefa">
         <div className="space-y-5">
           <InputField
-            label="Task Title"
+            label="Titulo da tarefa"
             value={newTask.title}
             onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
             placeholder="Enter task title"
@@ -265,7 +265,7 @@ const SoloTaskTracker = () => {
 
           <div className="flex items-center justify-between bg-white/5 border border-white/10 rounded-lg px-4 py-3">
             <label htmlFor="important" className="text-gray-300 text-sm">
-              Mark as Important
+              Mark as Importante
             </label>
 
             <input

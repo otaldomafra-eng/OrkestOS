@@ -53,7 +53,7 @@ const plans = [
 
 const comparisonRows = [
   ['Habit and task tracking', 'Included', 'Unlimited', 'Unlimited'],
-  ['FutureTwin simulations', 'Trial', 'Advanced', 'Team scenarios'],
+  ['FutureTwin simulations', 'Trial', 'Advanced', 'Team scenários'],
   ['Analytics depth', 'Basic', 'Advanced', 'Group reporting'],
   ['Support priority', 'Community', 'Priority', 'Dedicated'],
 ];
@@ -62,7 +62,7 @@ const MotionHeader = motion.header;
 const MotionSection = motion.section;
 const MotionDiv = motion.div;
 
-const Pricing = () => {
+const Preços = () => {
   const [billing, setBilling] = useState('monthly');
   const isYearly = billing === 'yearly';
 
@@ -77,14 +77,14 @@ const Pricing = () => {
         >
           <div className="min-w-0 max-w-3xl">
             <Link to="/" className="flex w-fit items-center gap-2 text-sm text-indigo-300 hover:text-white transition mb-6">
-              Wise<span className="text-purple-300">Mind</span>OS
+              Orkest<span className="text-purple-300">OS</span>
             </Link>
             <div className="flex w-fit max-w-full items-start gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-indigo-200 mb-5">
               <Sparkles size={16} className="mt-0.5 flex-shrink-0" />
               <span className="min-w-0">Flexible plans for every growth system</span>
             </div>
             <h1 className="max-w-full text-4xl md:text-6xl font-extrabold tracking-normal text-white mb-5">
-              Pricing that scales with your discipline.
+              Preços that scales with your discipline.
             </h1>
             <p className="max-w-full text-lg md:text-xl text-gray-400 leading-relaxed">
               Start with personal tracking, then unlock deeper analytics, simulations, and shared planning when your system matures.
@@ -227,7 +227,7 @@ const Pricing = () => {
           </p>
           <Link to="/signup">
             <GradientButton className="bg-white text-black hover:bg-gray-100">
-              Start with WiseMindOS
+              Start with OrkestOS
             </GradientButton>
           </Link>
         </MotionSection>
@@ -236,4 +236,4 @@ const Pricing = () => {
   );
 };
 
-export default Pricing;
+export default Preços;

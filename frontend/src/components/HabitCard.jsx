@@ -1,4 +1,4 @@
-import { Flame, Clock } from 'lucide-react';
+﻿import { Flame, Clock } from 'lucide-react';
 import Card from './Card';
 import ToggleSwitch from './ToggleSwitch';
 
@@ -30,7 +30,7 @@ const HabitCard = ({ habit, onComplete }) => {
               : 'bg-red-500/20 text-red-400'
             }
   `}>
-            {habit.type === 'build' ? 'Build Habit' : 'Break Habit'}
+            {habit.type === 'build' ? 'Construir hábito' : 'Romper hábito'}
           </div>
 
           {/* RIGHT SIDE */}
@@ -80,7 +80,7 @@ const HabitCard = ({ habit, onComplete }) => {
           {/* COMPLETION STATUS */}
           {isCompleted && (
             <span className="text-xs text-indigo-400 font-medium">
-              ✔ Completed Today
+              ✔ Concluido Today
             </span>
           )}
         </div>

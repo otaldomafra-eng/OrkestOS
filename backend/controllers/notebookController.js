@@ -1,14 +1,14 @@
 import notebookModel from "../models/notebookModel.js";
 import pageModel from "../models/pageModel.js";
 
-// ➤ Create Notebook (max 40)
+// âž¤ Create Notebook (max 40)
 export const createNotebook = async (req, res) => {
   try {
     const userId = req.body.userId;
     const { name } = req.body;
 
     if (!name) {
-      return res.json({ success: false, message: "Name required" });
+      return res.json({ success: false, message: "Nome obrigatório" });
     }
 
     const count = await notebookModel.countDocuments({ userId });
@@ -32,7 +32,7 @@ export const createNotebook = async (req, res) => {
 };
 
 
-// ➤ Get all notebooks of user
+// âž¤ Get all notebooks of user
 export const getNotebooks = async (req, res) => {
   try {
     const userId = req.body.userId;
@@ -48,7 +48,7 @@ export const getNotebooks = async (req, res) => {
   }
 };
 
-// ➤ Update Notebook Name
+// âž¤ Update Notebook Nome
 export const updateNotebook = async (req, res) => {
   try {
     const { notebookId, name } = req.body;
@@ -76,7 +76,7 @@ export const updateNotebook = async (req, res) => {
 };
 
 
-// ➤ Delete Notebook (with user check + cascade delete)
+// âž¤ Delete Notebook (with user check + cascade delete)
 export const deleteNotebook = async (req, res) => {
   try {
     const { notebookId } = req.body;

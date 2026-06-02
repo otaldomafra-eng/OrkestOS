@@ -3,7 +3,7 @@ import { Target, Folder, CheckSquare, Repeat, Calendar } from 'lucide-react';
 import Card from '../../components/Card';
 import { motion } from 'framer-motion';
 
-const Trackers = () => {
+const Rastreadores = () => {
   const trackerOptions = [
     {
       icon: Target,
@@ -32,7 +32,7 @@ const Trackers = () => {
     {
       icon: Repeat,
       title: 'Habits',
-      description: 'Build good habits and break bad ones',
+      description: 'Construa bons hábitos e reduza os ruins',
       path: '/trackers/habits',
       color: 'from-orange-600 to-red-600',
       testId: 'tracker-habits'
@@ -76,7 +76,7 @@ const Trackers = () => {
               ]
             }}
             transition={{ duration: 3, repeat: Infinity }}>
-            Trackers
+            Rastreadores
           </motion.h1>
           <p className="text-gray-400 text-center">Manage all aspects of your life operating system</p>
         </div>
@@ -106,7 +106,7 @@ const Trackers = () => {
                     <h3 className="text-xl font-bold text-white mb-2">{tracker.title}</h3>
                     <p className="text-gray-400">{tracker.description}</p>
                     <div className="flex items-center gap-2 mt-4 text-indigo-400 text-sm font-medium">
-                      Explore →
+                      Explore â†’
                     </div>
                   </Card>
                 </motion.div>
@@ -119,4 +119,4 @@ const Trackers = () => {
   );
 };
 
-export default Trackers;
+export default Rastreadores;

@@ -1,0 +1,250 @@
+CONTEXTO DO PROJETO ORKESTOS
+Data: 2026-06-02
+Diretorio local: C:\BACKUP_HD_D_2026-05-28\00 - AGENCIA ORKEST\WiseMindOS
+Branch de trabalho: codex/telegram-kronos-adaptation
+
+1. Origem do projeto
+
+O projeto foi clonado a partir do repositorio open-source:
+https://github.com/aaryan498/WiseMindOS
+
+A ideia original do WiseMindOS era um sistema all-in-one de produtividade e life management, com:
+- metas;
+- projetos;
+- tarefas;
+- planejamento diario;
+- habitos;
+- foco;
+- biblioteca/notas;
+- analytics;
+- assistente FutureTwin.
+
+O projeto foi escolhido como base para criar uma versao adaptada chamada OrkestOS.
+
+2. Direcao do produto
+
+A direcao definida foi:
+
+Sistema completo por funcionalidade, minimalista por interface.
+
+Ou seja, o OrkestOS nao deve ser um app simples demais. Ele pode ter muitos modulos, mas a experiencia deve ser limpa, direta e organizada. A referencia conceitual e um "sistema operacional pessoal" com tarefas, habitos, metas, foco, notas, calendario/rotina e automacoes.
+
+3. Mudancas de marca e idioma
+
+Foi feita a troca de marca:
+
+De: WiseMindOS
+Para: OrkestOS
+
+Tambem foi iniciada a traducao do sistema para Portugues Brasil.
+
+Itens ajustados:
+- nome da marca nas telas principais;
+- textos de login/cadastro;
+- menu inferior;
+- landing page;
+- modulos principais de habitos, tarefas, metas, projetos e foco;
+- mensagens de toast;
+- mensagens principais do backend;
+- documentacao criada para a integracao Telegram;
+- chave local de usuario alterada para orkestos_user.
+
+Foi corrigido tambem o problema de caracteres acentuados, como "ç", "á", "é", "ã", etc. Alguns arquivos tinham sido gravados em codificacao incorreta e foram normalizados para UTF-8.
+
+Observacao: comandos do Telegram continuam sem acento, por exemplo /habitos, porque comandos com acento sao piores de digitar e mais sujeitos a erro.
+
+4. Acesso demo
+
+Como o projeto pede login/cadastro e ainda depende de backend/MongoDB para autenticacao real, foi adicionado um modo demo local.
+
+Na tela de login existe o botao:
+Entrar como demo
+
+Esse botao cria uma sessao local temporaria com:
+- nome: Usuario Demo
+- username: demo
+- email: demo@orkestos.local
+
+Isso permite testar a interface sem configurar banco de dados ou criar usuario real.
+
+Como acessar:
+1. Abrir http://127.0.0.1:5173/
+2. Clicar em Entrar
+3. Clicar em Entrar como demo
+
+5. Integracao Telegram inspirada no KRONOS
+
+Foi adicionada uma primeira camada de integracao com Telegram, inspirada no projeto KRONOS.
+
+Objetivo:
+Permitir que o usuario use o Telegram como superficie rapida de comando e briefing do OrkestOS.
+
+Arquivos criados:
+- backend/models/telegramLinkModel.js
+- backend/services/telegramCommandService.js
+- backend/controllers/telegramController.js
+- backend/routes/telegramRoute.js
+- backend/tests/telegram.test.js
+- frontend/src/pages/Integrations.jsx
+- docs/superpowers/specs/2026-06-02-telegram-kronos-integration-design.md
+- docs/superpowers/plans/2026-06-02-telegram-kronos-integration.md
+
+Rotas adicionadas:
+- POST /api/telegram/link-code
+- POST /api/telegram/webhook
+- POST /api/telegram/briefings/daily
+
+Comandos Telegram implementados:
+- /start
+- /help
+- /link CODIGO
+- /hoje
+- /tarefas
+- /habitos
+- /briefing
+- /add tarefa TITULO
+
+Funcionalidades implementadas:
+- gerar codigo temporario de vinculo Telegram;
+- vincular chat do Telegram a um usuario do OrkestOS;
+- responder comandos basicos;
+- listar plano do dia;
+- listar tarefas pendentes;
+- listar habitos;
+- gerar briefing do dia;
+- criar tarefa via Telegram;
+- enviar briefing diario para todos os chats vinculados;
+- modo dry-run para envio Telegram quando TELEGRAM_BOT_TOKEN nao esta configurado.
+
+6. Tela de integracoes
+
+Foi criada uma tela protegida em:
+/integrations
+
+Essa tela permite:
+- gerar codigo de vinculo Telegram;
+- copiar o comando /link CODIGO;
+- ver comandos ativos do Telegram.
+
+Ela aparece no menu inferior como:
+Integracoes
+
+7. Variaveis de ambiente importantes
+
+O arquivo backend/.env.example foi atualizado com variaveis para Telegram.
+
+Variaveis relevantes:
+
+PORT=4000
+DB_NAME="orkestos"
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET="secretwisemindos"
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secrets
+IMAGEKIT_PUBLIC_KEY=placeholder_public_key
+IMAGEKIT_PRIVATE_KEY=placeholder_private_key
+IMAGEKIT_URL_ENDPOINT=placeholder_url_endpoint
+
+TELEGRAM_BOT_TOKEN=
+TELEGRAM_WEBHOOK_SECRET=change-me-webhook-secret
+TELEGRAM_CRON_SECRET=change-me-cron-secret
+
+Para o Telegram funcionar de verdade ainda sera necessario:
+- criar um bot no Telegram via BotFather;
+- preencher TELEGRAM_BOT_TOKEN;
+- configurar TELEGRAM_WEBHOOK_SECRET;
+- configurar TELEGRAM_CRON_SECRET;
+- apontar o webhook do Telegram para o backend publicado;
+- configurar um cron externo ou plataforma de deploy para chamar /api/telegram/briefings/daily.
+
+8. Estado tecnico atual
+
+Stack principal:
+- Frontend: React, Vite, Tailwind CSS, Framer Motion, Lucide React.
+- Backend: Node.js, Express, Mongoose, MongoDB, JWT.
+- Testes backend: node --test.
+
+Comandos de verificacao executados:
+- backend: npm test
+- frontend: npm run build
+- backend: node --check nos arquivos Telegram principais
+
+Resultado atual:
+- Backend passou com 12 testes.
+- Frontend buildou com sucesso.
+- O Vite ainda exibe aviso de bundle grande, mas nao bloqueia o build.
+
+Avisos:
+- O lint global do frontend ainda falha por problemas herdados do projeto original, principalmente imports nao usados, hooks e componentes declarados dentro de render.
+- O backend apresentou 2 vulnerabilidades moderadas no npm audit apos npm install. Nao foi aplicado npm audit fix --force para evitar quebra de dependencias.
+
+9. O que ainda precisa ser feito
+
+Proximos passos recomendados:
+
+1. Revisar toda a interface em Portugues Brasil
+- Ainda pode haver textos em ingles em modulos internos.
+- Fazer uma passada tela por tela no navegador.
+- Ajustar gramatica, acentos e termos de produto.
+
+2. Melhorar o design visual
+- Reduzir excesso de gradientes/neon herdado do projeto original.
+- Aproximar o visual de um produto all-in-one minimalista.
+- Padronizar cores, espacamentos, tipografia e cards.
+- Evitar que a interface pareca "landing page" onde deveria parecer app operacional.
+
+3. Corrigir lint e problemas estruturais do frontend
+- Resolver imports nao usados.
+- Corrigir hooks com dependencias faltantes.
+- Remover componentes criados dentro de render.
+- Revisar arquivos grandes como Dashboard.jsx e AppContext.jsx.
+
+4. Configurar backend real
+- Criar/configurar MongoDB.
+- Preencher .env real.
+- Testar login/cadastro real.
+- Validar Google Login ou remover ate estar pronto.
+
+5. Finalizar Telegram real
+- Criar bot no Telegram.
+- Configurar token e webhook.
+- Testar /link, /briefing e /add tarefa com usuario real.
+- Configurar cron diario.
+- Adicionar opcao visual de status de vinculo Telegram.
+
+6. Melhorar modo demo
+- Popular dados demo automaticamente.
+- Criar tarefas, metas, habitos e projetos falsos para demonstracao.
+- Permitir resetar demo.
+
+7. Revisar modelos e campos apos traducao
+- Garantir que campos tecnicos continuem em ingles quando necessario, como:
+  - isImportant
+  - lastCompleted
+  - telegramFirstName
+  - progress
+- Evitar traduzir nomes de variaveis, imports e propriedades do banco.
+
+8. Preparar deploy
+- Definir onde hospedar frontend/backend.
+- Para inicio gratuito, direcao preferida:
+  - Vercel Hobby para frontend;
+  - Supabase Free ou MongoDB Atlas Free para dados, dependendo da decisao tecnica;
+  - subdominio atual da Orkest;
+  - Oracle Free Tier apenas como apoio, nao host principal do app.
+
+10. Observacoes para continuidade
+
+Nao renomear o diretorio local ainda. O diretorio continua chamado WiseMindOS porque veio do clone original, mas o produto dentro do codigo foi renomeado para OrkestOS.
+
+Evitar novas substituicoes automáticas amplas de texto sem revisar, porque anteriormente palavras como Name, Progress, Model, Pause e Reports foram traduzidas por engano e quebraram imports/identificadores.
+
+Quando traduzir:
+- textos visiveis ao usuario podem ter acentos;
+- nomes de variaveis, arquivos, campos de banco e imports devem permanecer tecnicos e estaveis;
+- comandos Telegram devem permanecer simples e sem acento.
+
+Estado pratico para o usuario:
+- O app local pode ser acessado em http://127.0.0.1:5173/
+- Para testar sem cadastro, usar "Entrar como demo".
+- A integracao Telegram esta implementada no codigo, mas ainda nao conectada a um bot real.

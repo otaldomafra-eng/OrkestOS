@@ -18,7 +18,7 @@ const Bag = () => {
   const [search, setSearch] = useState("");
   const [pageSearch, setPageSearch] = useState("");
   const [editingNotebook, setEditingNotebook] = useState(null);
-  const [tempName, setTempName] = useState("");
+  const [tempName, settempName] = useState("");
   const [view, setView] = useState("notebooks");
   const [activeNotebook, setActiveNotebook] = useState(null);
   const [activePage, setActivePage] = useState(null);
@@ -91,18 +91,18 @@ const Bag = () => {
               {editingNotebook === nb.id ? (
                 <input
                   value={tempName}
-                  onChange={(e) => setTempName(e.target.value)}
+                  onChange={(e) => settempName(e.target.value)}
                   onBlur={async() => {
                     if (!tempName.trim()) return;
                     await updateNotebook(nb.id, tempName);
-                    showToast({message: "Updated Name", status: "success"})
+                    showToast({message: "Nome atualizado", status: "success"})
                     setEditingNotebook(null);
                   }}
                   onKeyDown={async(e) => {
                     if (e.key === "Enter") {
                       if (!tempName.trim()) return;
                       await updateNotebook(nb.id, tempName);
-                      showToast({message: "Updated Name", status: "success"})
+                      showToast({message: "Nome atualizado", status: "success"})
                       setEditingNotebook(null);
                     }
                   }}
@@ -118,7 +118,7 @@ const Bag = () => {
                       onClick={(e) => {
                         e.stopPropagation();
                         setEditingNotebook(nb.id);
-                        setTempName(nb.name);
+                        settempName(nb.name);
                       }}
                     />
                     <Trash2

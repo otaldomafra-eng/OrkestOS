@@ -1,4 +1,4 @@
-import dailyPlanModel from '../models/dailyPlanModel.js';
+﻿import dailyPlanModel from '../models/dailyPlanModel.js';
 import taskModel from '../models/taskModel.js';
 import habitModel from '../models/habitModel.js';
 
@@ -42,7 +42,7 @@ const getTodayPlan = async (req, res) => {
     }
 };
 
-// Add Task to Daily Plan
+// Adicionar tarefa to Daily Plan
 const addToDailyPlan = async (req, res) => {
     try {
         const { source, taskId, habitId, title, startTime, endTime, isImportant } = req.body;

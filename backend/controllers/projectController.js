@@ -1,7 +1,7 @@
 import projectModel from '../models/projectModel.js';
 import taskModel from '../models/taskModel.js';
 
-// Create Project
+// Criar projeto
 const createProject = async (req, res) => {
     try {
         const { title, goalId, deadline, description } = req.body;
@@ -43,7 +43,7 @@ const getProjects = async (req, res) => {
             return {
                 ...project.toObject(),
                 progress,
-                tasksCompleted: completedTasks,
+                tasksConcluido: completedTasks,
                 totalTasks: projectTasks.length
             };
         }));
@@ -100,7 +100,7 @@ const deleteProject = async (req, res) => {
             return res.json({ success: false, message: 'Project not found' });
         }
 
-        res.json({ success: true, message: 'Project deleted successfully' });
+        res.json({ success: true, message: 'Projeto excluido com sucesso' });
 
     } catch (error) {
         console.log(error);

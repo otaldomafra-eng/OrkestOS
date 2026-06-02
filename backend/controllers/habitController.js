@@ -1,4 +1,4 @@
-import habitModel from '../models/habitModel.js';
+﻿import habitModel from '../models/habitModel.js';
 import dailyPlanModel from '../models/dailyPlanModel.js';
 
 // Helper function for streak logic
@@ -15,7 +15,7 @@ const isToday = (date) => {
     return today === compareDate;
 };
 
-// Create Habit
+// Criar hábito
 const createHabit = async (req, res) => {
     try {
         const { name, type, startTime, endTime, mode } = req.body;
@@ -126,7 +126,7 @@ const completeHabit = async (req, res) => {
 
             await habit.save();
 
-            // 🔄 Sync DailyPlan
+            // ðŸ”„ Sync DailyPlan
             const dailyPlan = await dailyPlanModel.findOne({ userId, date: todayStr });
             if (dailyPlan) {
                 const plannedHabit = dailyPlan.plannedTasks.find(pt =>
@@ -161,7 +161,7 @@ const completeHabit = async (req, res) => {
         habit.lastCompleted = today;
         await habit.save();
 
-        // 🔄 Sync DailyPlan
+        // ðŸ”„ Sync DailyPlan
         const dailyPlan = await dailyPlanModel.findOne({ userId, date: todayStr });
 
         if (dailyPlan) {
@@ -180,7 +180,7 @@ const completeHabit = async (req, res) => {
         return res.json({
             success: true,
             habit,
-            message: 'Habit completed successfully'
+            message: 'Hábito concluido com sucesso'
         });
 
     } catch (error) {
@@ -210,7 +210,7 @@ const deleteHabit = async (req, res) => {
             { $pull: { plannedTasks: { habitId: habitId } } }
         );
 
-        res.json({ success: true, message: 'Habit deleted successfully' });
+        res.json({ success: true, message: 'Hábito excluido com sucesso' });
 
     } catch (error) {
         console.log(error);

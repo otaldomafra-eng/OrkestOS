@@ -1,7 +1,7 @@
 import goalModel from '../models/goalModel.js';
 import taskModel from '../models/taskModel.js';
 
-// Create Goal
+// Criar meta
 const createGoal = async (req, res) => {
     try {
         const { title, type, description, deadline } = req.body;
@@ -98,7 +98,7 @@ const deleteGoal = async (req, res) => {
             return res.json({ success: false, message: 'Goal not found' });
         }
 
-        res.json({ success: true, message: 'Goal deleted successfully' });
+        res.json({ success: true, message: 'Meta excluida com sucesso' });
 
     } catch (error) {
         console.log(error);

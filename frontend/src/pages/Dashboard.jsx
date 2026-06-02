@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+﻿import { Link, useNavigate } from 'react-router-dom';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LabelList } from 'recharts';
 import { TrendingUp, Target, CheckCircle, Zap, ArrowRight, UserPlus2, Camera, CalendarDays, Star, AlertTriangle, UserPen, LucideTrophy, Pencil, Activity, Flame, BarChart3 } from 'lucide-react';
 import { useApp } from '../store/AppContext';
@@ -21,7 +21,7 @@ import InputField from '../components/InputField';
 import { AnalyticsSkeleton, DashboardStatsSkeleton, SkeletonCard, SkeletonBlock, TrackerGridSkeleton } from '../components/LoadingSkeleton';
 
 
-const Dashboard = () => {
+const Painel = () => {
 
   const [weeklyData, setWeeklyData] = useState([]);
   const [showEditProfile, setShowEditProfile] = useState(false);
@@ -175,7 +175,7 @@ const Dashboard = () => {
       text: 'text-emerald-300',
     },
     {
-      title: 'Goal Progress',
+      title: 'Progresso das metas',
       value: `${productivityInsights.avgGoalProgress}%`,
       detail: `${goals.length} active goals tracked`,
       icon: <Target size={22} />,
@@ -210,7 +210,7 @@ const Dashboard = () => {
       updates.bio = newProfile.bio;
     }
 
-    // If nothing changed → don't call API
+    // If nothing changed â†’ don't call API
     if (Object.keys(updates).length === 0) {
       setShowEditProfile(false);
       return;
@@ -220,7 +220,7 @@ const Dashboard = () => {
     const success = await updateUser(updates);
 
     if (success) {
-      // Reset form with updated values
+      // Reiniciar form with updated values
       setNewProfile({
         name: updates.name ?? user.name,
         username: updates.username ?? user.username,
@@ -238,7 +238,7 @@ const Dashboard = () => {
     const formData = new FormData();
     let hasChanges = false;
 
-    // 🔥 IMAGE FIELD (IMPORTANT)
+    // ðŸ”¥ IMAGE FIELD (IMPORTANT)
     if (newProfilePic) {
       formData.append("profile", newProfilePic);
       hasChanges = true;
@@ -254,7 +254,7 @@ const Dashboard = () => {
     const success = await updateUserProfilePic(formData);
 
     if (success) {
-      // Reset form with updated values
+      // Reiniciar form with updated values
       setNewProfilePic(null);
       setShowEditProfilePic(false);
     }
@@ -307,7 +307,7 @@ const Dashboard = () => {
             <div className='flex flex-wrap justify-around gap-4 mb-4'>
               <div className="text-center">
                 <p className="text-lg font-bold text-indigo-400">{productivityScore}%</p>
-                <p className="text-xs text-gray-400">Productivity</p>
+                <p className="text-xs text-gray-400">Produtividade</p>
               </div>
 
               <div className="text-center">
@@ -328,7 +328,7 @@ const Dashboard = () => {
 
         <div className='rounded-2xl p-6 mb-6 bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_rgba(99,102,241,0.15)]'>
 
-          {/* Clock Widget & Focus Room */}
+          {/* Clock Widget & Sala de foco */}
           <div className="mb-6">
             <ClockWidget />
           </div>
@@ -340,7 +340,7 @@ const Dashboard = () => {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
 
               <StatCard
-                title="Productivity"
+                title="Produtividade"
                 value={`${productivityScore}%`}
                 icon={<Zap size={24} />}
                 // trend={{positive: false, value: 20}}
@@ -368,11 +368,11 @@ const Dashboard = () => {
           )}
         </div>
 
-        {/* Productivity Insights */}
+        {/* Produtividade Insights */}
         <div className="mb-6">
           <div className="flex items-center justify-between gap-4 mb-4">
             <div>
-              <h2 className="text-xl font-bold text-white">Productivity Insights</h2>
+              <h2 className="text-xl font-bold text-white">Produtividade Insights</h2>
               <p className="text-sm text-gray-400">Live signals from your goals, habits, tasks, and weekly rhythm</p>
             </div>
             <div className={`hidden sm:flex items-center gap-2 px-3 py-2 rounded-full border border-white/10 bg-white/5 ${productivityInsights.trendDelta >= 0 ? 'text-emerald-300' : 'text-rose-300'}`}>
@@ -453,7 +453,7 @@ const Dashboard = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           <Card className="bg-transparent border cursor-pointer border-white/10 hover:scale-[1.02] transition-all duration-300">
-            <h3 className="text-lg font-semibold text-white mb-4">Productivity Score</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">Produtividade Score</h3>
             <div className="flex justify-center">
               <DonutChart value={avgProductivity} size={140} color="#7C3AED" label="This Week" />
             </div>
@@ -486,7 +486,7 @@ const Dashboard = () => {
               </LineChart> */}
               <BarChart data={weeklyData} margin={{ top: 20, right: 0, left: -10, bottom: 0 }} barGap={8} >
                 <defs>
-                  {/* Purple Glow (Productivity) */}
+                  {/* Purple Glow (Produtividade) */}
                   <filter id="purpleGlow" x="-50%" y="-50%" width="200%" height="200%">
                     <feGaussianBlur stdDeviation="4" result="coloredBlur" />
                     <feMerge>
@@ -532,7 +532,7 @@ const Dashboard = () => {
 
                 {/* <Legend /> */}
 
-                {/* Productivity Bar */}
+                {/* Produtividade Bar */}
                 {/* <Bar
                 dataKey="productivity"
                 fill="#6366f1"
@@ -575,13 +575,13 @@ const Dashboard = () => {
         {(importantTasks.length > 0 || behindTasks.length > 0) && (
           <div className='border-orange-500/30 bg-orange-500/5 backdrop-blur-lg rounded-2xl p-6 shadow-lg items-stretch mb-4'>
             <div className='flex gap-2 flex-col lg:flex-row'>
-              {/* Important Tasks */}
+              {/* Importante Tasks */}
               {importantTasks.length > 0 && (
                 <div className="bg-transparent flex-1 p-4">
                   <h2 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                    {/* <span className="text-orange-400">⭐</span> */}
+                    {/* <span className="text-orange-400">â­</span> */}
                     <Star className="text-orange-400 " size={18} />
-                    Important Tasks
+                    Importante Tasks
                   </h2>
                   <p className="text-gray-400 text-sm mb-4">High Priority Tasks, Complete these first.</p>
                   <div className="space-y-3">
@@ -623,7 +623,7 @@ const Dashboard = () => {
           <div className='flex flex-col sm:flex-row gap-2 w-full mt-4 pt-4'>
               <Link to="/focus-room" className='flex-1'>
                 <GradientButton className="w-full h-full flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(99,102,241,0.5)]" data-testid="focus-room-cta">
-                  <span>Enter Focus Room</span>
+                  <span>Enter Sala de foco</span>
                   <ArrowRight size={20} />
                 </GradientButton>
               </Link>
@@ -651,7 +651,7 @@ const Dashboard = () => {
         ) : hasPlannedTasks && pendingPlannedTasks.length > 0 ? (
           <Card className="mb-6 bg-white/5 border border-white/10 backdrop-blur-lg shadow-[0_0_40px_rgba(99,102,241,0.2)]">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-white">Today's Planned Tasks</h2>
+              <h2 className="text-xl font-bold text-white">Tarefas planejadas para hoje</h2>
               <Link to="/trackers/daily-tasks" className="text-indigo-400 hover:text-indigo-300 text-sm">
                 View All
               </Link>
@@ -692,7 +692,7 @@ const Dashboard = () => {
                             </span>
                             {item.isImportant && (
                               <span className="text-xs px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30">
-                                Important
+                                Importante
                               </span>
                             )}
                           </div>
@@ -717,7 +717,7 @@ const Dashboard = () => {
             <div className='flex flex-col sm:flex-row gap-2 w-full h-full justify-between mt-4'>
                 <Link to="/focus-room">
                   <GradientButton className="w-full h-full flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(99,102,241,0.5)]" data-testid="focus-room-cta">
-                    <span>Enter Focus Room</span>
+                    <span>Enter Sala de foco</span>
                     <ArrowRight size={20} />
                   </GradientButton>
                 </Link>
@@ -749,7 +749,7 @@ const Dashboard = () => {
           <Card className="mb-6 bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_rgba(99,102,241,0.15)]">
             <div className="text-center py-8">
               <CalendarDays size={48} className="text-indigo-400 mx-auto mb-3 drop-shadow-[0_0_10px_rgba(99,102,241,0.6)]" />
-              <h3 className="text-xl font-bold text-white mb-2">Plan Your Day to Stay Productive</h3>
+              <h3 className="text-xl font-bold text-white mb-2">Planeje seu dia para manter a produtividade</h3>
               <p className="text-gray-400 mb-4">
                 Create a structured daily plan to maximize your productivity
               </p>
@@ -763,7 +763,7 @@ const Dashboard = () => {
         )}
 
 
-        {/* Goals Progress */}
+        {/* Progresso das metas */}
         {loading ? (
           <div className="mb-6">
             <div className="flex justify-between items-center mb-4">
@@ -775,7 +775,7 @@ const Dashboard = () => {
         ) : goals.length > 0 && (
           <div className="mb-6">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-white">Goals Progress</h2>
+              <h2 className="text-xl font-bold text-white">Progresso das metas</h2>
               <Link to="/trackers/goals" className="text-indigo-400 hover:text-indigo-300 text-sm">
                 View All <ArrowRight size={16} className="inline" />
               </Link>
@@ -800,11 +800,11 @@ const Dashboard = () => {
           </div>
         )}
 
-        {/* Projects Progress */}
+        {/* Progresso dos projetos */}
         {projects.length > 0 && (
           <div className="mb-6">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-white">Projects Progress</h2>
+              <h2 className="text-xl font-bold text-white">Progresso dos projetos</h2>
               <Link to="/trackers/projects" className="text-indigo-400 hover:text-indigo-300 text-sm">
                 View All <ArrowRight size={16} className="inline" />
               </Link>
@@ -876,18 +876,18 @@ const Dashboard = () => {
       <Modal isOpen={showEditProfile} onClose={() => setShowEditProfile(false)} title="Edit Profile Info">
         <form onSubmit={handleEditProfile} className="space-y-4">
           <InputField
-            label="Name (Full Name)"
+            label="Nome completo"
             value={newProfile.name}
             onChange={(e) => setNewProfile({ ...newProfile, name: e.target.value })}
-            placeholder="Enter Full Name"
+            placeholder="Informe seu nome completo"
             required
             data-testid="profile-name-input"
           />
           <InputField
-            label="Username"
+            label="Usuário"
             value={newProfile.username}
             onChange={(e) => setNewProfile({ ...newProfile, username: e.target.value })}
-            placeholder="Username"
+            placeholder="Usuário"
             required
             data-testid="profile-username-input"
           />
@@ -937,4 +937,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Painel;

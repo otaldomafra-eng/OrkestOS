@@ -16,12 +16,12 @@ const CustomToast = ({ message, duration = 4000, status = "default" }) => {
 
       {/* Content */}
       <div>
-        <p className="text-white default-bold text-lg">Wise<span className="bg-gradient-to-r from-indigo-500 to-purple-600 baloo-2-700 bg-clip-text text-transparent">Mind</span>OS</p>
+        <p className="text-white default-bold text-lg">Orkest<span className="bg-gradient-to-r from-indigo-500 to-purple-600 baloo-2-700 bg-clip-text text-transparent">OS</span></p>
         
         <p className={`text-sm default-bold ${status == "success" ? 'text-green-400' : status == "error" ? 'text-red-400' : 'text-gray-400'}`} >{message}</p>
       </div>
 
-      {/* Custom Progress Bar */}
+      {/* Custom Progresso Bar */}
       <div className="absolute bottom-0 left-0 w-full h-[3px] bg-white/20">
         <div
           className="h-full bg-gradient-to-r from-green-400 to-blue-500"

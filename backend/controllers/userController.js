@@ -14,7 +14,7 @@ const createToken = (id) => {
 
 
 
-// Route for user Login 
+// Route for user Entrar 
 const loginUser = async (req, res) => {
 
     try {
@@ -36,7 +36,7 @@ const loginUser = async (req, res) => {
 
         if (isMatch) {
             const token = createToken(user._id)
-            return res.json({ success: true, message: "Login Successful", token, name: user.name, email: user.email, username: user.username, bio: user.bio, profile_picture: user.profile_picture })
+            return res.json({ success: true, message: "Login realizado com sucesso", token, name: user.name, email: user.email, username: user.username, bio: user.bio, profile_picture: user.profile_picture })
         }
         else {
             return res.json({ success: false, message: "Invalid Credentials" })
@@ -51,7 +51,7 @@ const loginUser = async (req, res) => {
 }
 
 //Route for Google SignIn
-const googleLogin = async (req, res) => {
+const GoogleLogin = async (req, res) => {
     try {
         const { credential } = req.body;
 
@@ -89,37 +89,37 @@ const googleLogin = async (req, res) => {
                 });
             }
             
-            const baseUsername = email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '');
-            let generatedUsername = `${baseUsername}${Math.floor(1000 + Math.random() * 9000)}`;
+            const baseUsuário = email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '');
+            let generatedUsuário = `${baseUsuário}${Math.floor(1000 + Math.random() * 9000)}`;
             
             let isUnique = false;
             let iterations = 0;
             const MAX_ITERATIONS = 5; 
 
             while (!isUnique && iterations < MAX_ITERATIONS) {
-                const checkUsernameConflict = await userModel.findOne({ username: generatedUsername });
+                const checkUsuárioConflict = await userModel.findOne({ username: generatedUsuário });
                 
-                if (!checkUsernameConflict) {
+                if (!checkUsuárioConflict) {
                     isUnique = true; 
                 } else {
                     iterations++;
                     if (iterations >= 3) {
                         const randomString = Math.random().toString(36).substring(2, 7); 
-                        generatedUsername = `${baseUsername}${randomString}`;
+                        generatedUsuário = `${baseUsuário}${randomString}`;
                     } else {
-                        generatedUsername = `${baseUsername}${Math.floor(1000 + Math.random() * 9000)}`;
+                        generatedUsuário = `${baseUsuário}${Math.floor(1000 + Math.random() * 9000)}`;
                     }
                 }
             }
 
             //Timestamp fallback if uniqueness is not achieved after max iterations (extremely unlikely)
             if (!isUnique) {
-                generatedUsername = `${baseUsername}${Date.now().toString().slice(-5)}`;
+                generatedUsuário = `${baseUsuário}${Date.now().toString().slice(-5)}`;
             }
 
             user = await userModel.create({
-                name: name || baseUsername,
-                username: generatedUsername,
+                name: name || baseUsuário,
+                username: generatedUsuário,
                 email,
                 googleId,
                 profile_picture: picture || ''
@@ -133,7 +133,7 @@ const googleLogin = async (req, res) => {
         // Send the token and user info back to the client
         return res.json({
             success: true,
-            message: "Login Successful",
+            message: "Login realizado com sucesso",
             token,
             name: user.name,
             email: user.email,
@@ -160,9 +160,9 @@ const registerUser = async (req, res) => {
             return res.json({ success: false, message: "User already Exists." })
         }
 
-        const existsUsername = await userModel.findOne({ username });
-        if (existsUsername) {
-            return res.json({ success: false, message: "Username already taken. Try another !" })
+        const existsUsuário = await userModel.findOne({ username });
+        if (existsUsuário) {
+            return res.json({ success: false, message: "Usuário already taken. Try another !" })
         }
 
 
@@ -171,13 +171,13 @@ const registerUser = async (req, res) => {
             return res.json({ success: false, message: "Please enter a valid email." })
         }
         if (password.length < 8) {
-            return res.json({ success: false, message: "Password must at least contain 8 characters." })
+            return res.json({ success: false, message: "Senha must at least contain 8 characters." })
         }
 
 
         // Hashing User's password
         const salt = await bcrypt.genSalt(9)          // The higher the number the more time it will take to hash users password.
-        const hashedPassword = await bcrypt.hash(password, salt)
+        const hashedSenha = await bcrypt.hash(password, salt)
 
 
         // Creating new User in database.
@@ -185,7 +185,7 @@ const registerUser = async (req, res) => {
             name,
             username,
             email,
-            password: hashedPassword
+            password: hashedSenha
         })
 
         // Saving the new user in database.
@@ -217,16 +217,16 @@ const updateUser = async (req, res) => {
 
         let isModified = false;
 
-        // If username is being changed → check uniqueness
+        // If username is being changed â†’ check uniqueness
         if (username && username !== user.username) {
-            const existingUsername = await userModel.findOne({
+            const existingUsuário = await userModel.findOne({
                 username,
                 _id: { $ne: userId }
             });
-            if (existingUsername) {
+            if (existingUsuário) {
                 return res.json({
                     success: false,
-                    message: "Username already taken. Try another!"
+                    message: "Usuário already taken. Try another!"
                 });
             }
         }
@@ -255,7 +255,7 @@ const updateUser = async (req, res) => {
 
         res.json({
             success: true,
-            message: "Profile updated successfully",
+            message: "Perfil atualizado com sucesso",
             user: {
                 name: updatedUser.name,
                 username: updatedUser.username,
@@ -351,4 +351,4 @@ const updateUserProfilePic = async (req, res) => {
 
 
 
-export { loginUser, googleLogin, registerUser, updateUser, updateUserProfilePic }
+export { loginUser, GoogleLogin, registerUser, updateUser, updateUserProfilePic }

@@ -22,7 +22,7 @@ import GradientButton from '../components/GradientButton';
 const roadmapItems = [
   {
     title: 'Unified productivity dashboard',
-    status: 'Completed',
+    status: 'Concluido',
     category: 'Core',
     quarter: 'Q2 2026',
     description: 'Centralize goals, habits, projects, and daily plans into one clear operating view.',
@@ -30,7 +30,7 @@ const roadmapItems = [
   },
   {
     title: 'Focus room streaks',
-    status: 'Completed',
+    status: 'Concluido',
     category: 'Focus',
     quarter: 'Q2 2026',
     description: 'Track deep-work sessions and make short focus wins visible across the product.',
@@ -38,7 +38,7 @@ const roadmapItems = [
   },
   {
     title: 'FutureTwin decision simulator',
-    status: 'In Progress',
+    status: 'Em andamento',
     category: 'AI',
     quarter: 'Q3 2026',
     description: 'Preview likely outcomes from routines, goals, and long-running commitments.',
@@ -46,7 +46,7 @@ const roadmapItems = [
   },
   {
     title: 'Goal risk alerts',
-    status: 'In Progress',
+    status: 'Em andamento',
     category: 'Insights',
     quarter: 'Q3 2026',
     description: 'Detect stale goals, overloaded weeks, and habit drift before progress stalls.',
@@ -75,13 +75,13 @@ const milestones = [
     quarter: 'Q2 2026',
     title: 'Foundation',
     summary: 'Core tracking, dashboards, authentication polish, and responsive public pages.',
-    status: 'Completed',
+    status: 'Concluido',
   },
   {
     quarter: 'Q3 2026',
     title: 'Intelligence',
     summary: 'FutureTwin simulations, insight alerts, stronger analytics, and guided planning.',
-    status: 'In Progress',
+    status: 'Em andamento',
   },
   {
     quarter: 'Q4 2026',
@@ -98,15 +98,15 @@ const milestones = [
 ];
 
 const statusStyles = {
-  Completed: 'border-emerald-400/30 bg-emerald-500/10 text-emerald-300',
-  'In Progress': 'border-indigo-400/30 bg-indigo-500/10 text-indigo-300',
+  Concluido: 'border-emerald-400/30 bg-emerald-500/10 text-emerald-300',
+  'Em andamento': 'border-indigo-400/30 bg-indigo-500/10 text-indigo-300',
   Planned: 'border-purple-400/30 bg-purple-500/10 text-purple-300',
 };
 
-const statusOptions = ['All', 'Completed', 'In Progress', 'Planned'];
+const statusOptions = ['All', 'Concluido', 'Em andamento', 'Planned'];
 const categoryOptions = ['All', 'Core', 'Focus', 'AI', 'Insights', 'Collaboration'];
 
-const Roadmap = () => {
+const Roteiro = () => {
   const [selectedStatus, setSelectedStatus] = useState('All');
   const [selectedCategory, setSelectedCategory] = useState('All');
 
@@ -151,21 +151,21 @@ const Roadmap = () => {
           >
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-indigo-400/30 bg-indigo-500/10 px-4 py-2 text-sm text-indigo-200">
               <CalendarDays size={16} />
-              Product roadmap
+              Roteiro do produto
             </div>
             <h1 className="young-serif-regular text-4xl font-bold leading-tight text-white sm:text-5xl md:text-6xl">
               Building the operating system for intentional growth.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-gray-300 sm:text-lg">
-              Track what has shipped, what is being built now, and what is planned next for WiseMindOS.
+              Acompanhe o que foi entregue, o que esta em construcao e o que vem a seguir no OrkestOS.
             </p>
           </Motion.div>
 
           <div className="mt-10 grid gap-4 sm:grid-cols-3">
             {[
               { label: 'Milestones', value: milestones.length, icon: Target },
-              { label: 'Active builds', value: roadmapItems.filter((item) => item.status === 'In Progress').length, icon: Clock3 },
-              { label: 'Completed items', value: roadmapItems.filter((item) => item.status === 'Completed').length, icon: CheckCircle2 },
+              { label: 'Active builds', value: roadmapItems.filter((item) => item.status === 'Em andamento').length, icon: Clock3 },
+              { label: 'Concluido items', value: roadmapItems.filter((item) => item.status === 'Concluido').length, icon: CheckCircle2 },
             ].map((stat, index) => {
               const Icon = stat.icon;
               return (
@@ -297,4 +297,4 @@ const Roadmap = () => {
   );
 };
 
-export default Roadmap;
+export default Roteiro;

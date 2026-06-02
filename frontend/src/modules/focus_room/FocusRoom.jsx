@@ -14,7 +14,7 @@ const FocusRoom = () => {
   const [minutes, setMinutes] = useState(25);
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
-  const [mode, setMode] = useState('work'); // work, shortBreak, longBreak
+  const [mode, setModo] = useState('work'); // work, shortBreak, longBreak
   const [pomodoroCount, setPomodoroCount] = useState(0);
 
   useEffect(() => {
@@ -48,14 +48,14 @@ const FocusRoom = () => {
 
       // After 4 pomodoros, long break
       if (newCount % 4 === 0) {
-        setMode('longBreak');
+        setModo('longBreak');
         setMinutes(15);
       } else {
-        setMode('shortBreak');
+        setModo('shortBreak');
         setMinutes(5);
       }
     } else {
-      setMode('work');
+      setModo('work');
       setMinutes(25);
     }
 
@@ -86,12 +86,12 @@ const FocusRoom = () => {
     else setMinutes(15);
   };
 
-  const switchMode = (newMode) => {
+  const switchModo = (newModo) => {
     setIsActive(false);
-    setMode(newMode);
+    setModo(newModo);
     setSeconds(0);
-    if (newMode === 'work') setMinutes(25);
-    else if (newMode === 'shortBreak') setMinutes(5);
+    if (newModo === 'work') setMinutes(25);
+    else if (newModo === 'shortBreak') setMinutes(5);
     else setMinutes(15);
   };
 
@@ -100,13 +100,13 @@ const FocusRoom = () => {
   const pendingPlannedTasks = todayPlannedTasks.filter(t => !t.completed).slice(0, 8);
   const hasPlannedTasks = todayPlannedTasks.length > 0;
 
-  const getModeColor = () => {
+  const getModoColor = () => {
     if (mode === 'work') return 'from-red-600 to-orange-600';
     if (mode === 'shortBreak') return 'from-green-600 to-emerald-600';
     return 'from-blue-600 to-cyan-600';
   };
 
-  const getModeText = () => {
+  const getModoText = () => {
     if (mode === 'work') return 'Focus Time';
     if (mode === 'shortBreak') return 'Short Break';
     return 'Long Break';
@@ -145,7 +145,7 @@ const FocusRoom = () => {
             }}
             transition={{ duration: 3, repeat: Infinity }}
           >
-            Focus Room
+            Sala de foco
           </motion.h1>
           <p className="text-gray-400">Minimize distractions, maximize productivity</p>
         </div>
@@ -154,10 +154,10 @@ const FocusRoom = () => {
           {/* Timer Section */}
           <div className="lg:col-span-2">
             <Card className="relative overflow-hidden text-center bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_40px_rgba(99,102,241,0.2)]">
-              {/* Mode Selector */}
+              {/* Modo Selector */}
               <div className="flex justify-center gap-2 mb-6">
                 <button
-                  onClick={() => switchMode('work')}
+                  onClick={() => switchModo('work')}
                   className={`px-4 py-2 rounded-lg border cursor-pointer border-white/10 transition-all duration-300 ${mode === 'work'
                     ? 'bg-red-600 text-white shadow-[0_0_15px_rgba(239,68,68,0.5)]'
                     : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
@@ -167,7 +167,7 @@ const FocusRoom = () => {
                   Work
                 </button>
                 <button
-                  onClick={() => switchMode('shortBreak')}
+                  onClick={() => switchModo('shortBreak')}
                   className={`px-4 py-2 rounded-lg border cursor-pointer border-white/10 transition-all duration-300 ${mode === 'shortBreak'
                     ? 'bg-green-600 text-white shadow-[0_0_15px_rgba(34,197,94,0.5)]'
                     : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
@@ -177,7 +177,7 @@ const FocusRoom = () => {
                   Short Break
                 </button>
                 <button
-                  onClick={() => switchMode('longBreak')}
+                  onClick={() => switchModo('longBreak')}
                   className={`px-4 py-2 rounded-lg border cursor-pointer border-white/10 transition-all duration-300 ${mode === 'longBreak'
                     ? 'bg-blue-600 text-white shadow-[0_0_15px_rgba(59,130,246,0.5)]'
                     : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
@@ -195,13 +195,13 @@ const FocusRoom = () => {
               >
                 {/* Timer */}
 
-                <div className={`bg-gradient-to-r flex flex-col items-center ${getModeColor()} rounded-2xl p-12 mb-6`}>
-                  <p className="text-white text-xl mb-4">{getModeText()}</p>
+                <div className={`bg-gradient-to-r flex flex-col items-center ${getModoColor()} rounded-2xl p-12 mb-6`}>
+                  <p className="text-white text-xl mb-4">{getModoText()}</p>
                   <div className="text-8xl font-bold text-white mb-4" data-testid="timer-display">
                     {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
                   </div>
                   <p className="text-white mt-4 text-sm">
-                    Completed Sessions: <span className="text-white font-semibold">{pomodoroCount}</span>
+                    Concluido Sessions: <span className="text-white font-semibold">{pomodoroCount}</span>
                   </p>
                 </div>
               </motion.div>
@@ -211,13 +211,13 @@ const FocusRoom = () => {
                 <button
                   onClick={toggleTimer}
                   data-testid="timer-toggle"
-                  className={`bg-gradient-to-r ${getModeColor()} hover:opacity-90 text-white px-8 py-4 rounded-xl shadow-[0_0_15px_rgba(99,102,241,0.5)] 
+                  className={`bg-gradient-to-r ${getModoColor()} hover:opacity-90 text-white px-8 py-4 rounded-xl shadow-[0_0_15px_rgba(99,102,241,0.5)] 
 hover:scale-105 cursor-pointer active:scale-95 transition-all flex items-center gap-2 text-lg font-semibold`}
                 >
                   {isActive ? (
                     <>
                       <Pause size={24} />
-                      Pause
+                      Pausar
                     </>
                   ) : (
                     <>
@@ -255,7 +255,7 @@ hover:scale-110 active:scale-95 cursor-pointer transition-all"
                       Focus Notes
                     </h2>
                     <span className="text-xs text-gray-400">
-                      Deep Work Mode
+                      Deep Work Modo
                     </span>
                   </div>
 
@@ -273,7 +273,7 @@ hover:scale-110 active:scale-95 cursor-pointer transition-all"
           <div className="lg:col-span-1">
             <Card className='bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_0_40px_rgba(99,102,241,0.15)]'>
 
-              <h2 className="text-xl font-bold text-white mb-4">Today's Planned Tasks</h2>
+              <h2 className="text-xl font-bold text-white mb-4">Tarefas planejadas para hoje</h2>
               {hasPlannedTasks && pendingPlannedTasks.length > 0 ? (
                 <div className="space-y-3 max-h-[600px] overflow-y-auto">
                   {pendingPlannedTasks.map((item, index) => (
@@ -321,7 +321,7 @@ hover:scale-110 active:scale-95 cursor-pointer transition-all"
                 <Card className="mb-6 bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_rgba(99,102,241,0.15)]">
                   <div className="text-center py-8">
                     <CalendarDays size={48} className="text-indigo-400 mx-auto mb-3 drop-shadow-[0_0_10px_rgba(99,102,241,0.6)]" />
-                    <h3 className="text-xl font-bold text-white mb-2">Plan Your Day to Stay Productive</h3>
+                    <h3 className="text-xl font-bold text-white mb-2">Planeje seu dia para manter a produtividade</h3>
                     <p className="text-gray-400 mb-4">
                       Create a structured daily plan to maximize your productivity
                     </p>

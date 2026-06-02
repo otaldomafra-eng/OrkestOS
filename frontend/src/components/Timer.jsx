@@ -6,7 +6,7 @@ import GradientButton from './GradientButton';
 const Timer = ({ defaultMinutes = 25 }) => {
   const [timeLeft, setTimeLeft] = useState(defaultMinutes * 60);
   const [isRunning, setIsRunning] = useState(false);
-  const [mode, setMode] = useState('focus'); // 'focus' or 'break'
+  const [mode, setModo] = useState('focus'); // 'focus' or 'break'
 
   useEffect(() => {
     let interval = null;
@@ -32,10 +32,10 @@ const Timer = ({ defaultMinutes = 25 }) => {
     setTimeLeft(mode === 'focus' ? 25 * 60 : 5 * 60);
   };
 
-  const switchMode = (newMode) => {
-    setMode(newMode);
+  const switchModo = (newModo) => {
+    setModo(newModo);
     setIsRunning(false);
-    setTimeLeft(newMode === 'focus' ? 25 * 60 : 5 * 60);
+    setTimeLeft(newModo === 'focus' ? 25 * 60 : 5 * 60);
   };
 
   const minutes = Math.floor(timeLeft / 60);
@@ -46,7 +46,7 @@ const Timer = ({ defaultMinutes = 25 }) => {
       <div className="text-center">
         <div className="flex gap-2 justify-center mb-6">
           <button
-            onClick={() => switchMode('focus')}
+            onClick={() => switchModo('focus')}
             className={`px-4 py-2 rounded-lg transition-all ${
               mode === 'focus'
                 ? 'bg-indigo-600 text-white'
@@ -57,7 +57,7 @@ const Timer = ({ defaultMinutes = 25 }) => {
             Focus (25m)
           </button>
           <button
-            onClick={() => switchMode('break')}
+            onClick={() => switchModo('break')}
             className={`px-4 py-2 rounded-lg transition-all ${
               mode === 'break'
                 ? 'bg-green-600 text-white'

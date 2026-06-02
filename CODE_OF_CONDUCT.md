@@ -2,7 +2,7 @@
 
 ## Our Pledge
 
-We are committed to making participation in WiseMindOS a respectful, inclusive, and collaborative experience for everyone, regardless of background, identity, experience level, nationality, or skill set.
+We are committed to making participation in OrkestOS a respectful, inclusive, and collaborative experience for everyone, regardless of background, identity, experience level, nationality, or skill set.
 
 Our goal is to foster an open-source environment where contributors can learn, collaborate, and grow together while building meaningful software.
 
@@ -25,7 +25,7 @@ Contributors are expected to:
 
 # Unacceptable Behavior
 
-The following behaviors are unacceptable within the WiseMindOS community:
+The following behaviors are unacceptable within the OrkestOS community:
 
 - Harassment, discrimination, or hate speech
 - Personal attacks, insults, or intimidation
@@ -83,10 +83,10 @@ This Code of Conduct applies to all project spaces, including:
 - Discussions
 - Project documentation
 - Community interactions
-- Any other official WiseMindOS communication channels
+- Any other official OrkestOS communication channels
 
 ---
 
 # Acknowledgement
 
-By participating in WiseMindOS, contributors agree to follow this Code of Conduct and help maintain a positive and respectful open-source environment.
+By participating in OrkestOS, contributors agree to follow this Code of Conduct and help maintain a positive and respectful open-source environment.

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Calendar, Clock, Plus, ListTodo, X, CheckCircle2, CalendarSyncIcon, CheckSquare, CalendarClock } from 'lucide-react';
 import { useApp } from '../../../store/AppContext';
 import Card from '../../../components/Card';
@@ -27,7 +27,7 @@ const DailyTaskTracker = () => {
   } = useApp();
 
   const [activeTab, setActiveTab] = useState('timeline'); // 'timeline' | 'add'
-  const [addMode, setAddMode] = useState('tasks'); // 'tasks' | 'habits' | 'manual'
+  const [addModo, setAddModo] = useState('tasks'); // 'tasks' | 'habits' | 'manual'
   const [activeView, setActiveView] = useState('timeline');
   const [manualTaskForm, setManualTaskForm] = useState({
     title: '',
@@ -181,7 +181,7 @@ const DailyTaskTracker = () => {
           />
           <div className="max-w-4xl mx-auto relative z-10">
             <div className="mb-6">
-              <h1 className="text-3xl young-serif-regular font-bold text-gray-200 mb-2">Daily Task Planner</h1>
+              <h1 className="text-3xl young-serif-regular font-bold text-gray-200 mb-2">Planejador diário</h1>
               <div className="flex items-center gap-2 text-gray-400">
                 <Calendar size={20} />
                 <p>{format(new Date(), 'EEEE, MMMM d, yyyy')}</p>
@@ -216,7 +216,7 @@ const DailyTaskTracker = () => {
             animate={{ opacity: 1, y: 0 }}
             className="mb-6"
           >
-            <h1 className="text-3xl young-serif-regular font-bold text-gray-200 mb-2\">Daily Task Planner</h1>
+            <h1 className="text-3xl young-serif-regular font-bold text-gray-200 mb-2\">Planejador diário</h1>
             <div className="flex items-center gap-2 text-gray-400">
               <Calendar size={20} />
               <p>{format(new Date(), 'EEEE, MMMM d, yyyy')}</p>
@@ -226,7 +226,7 @@ const DailyTaskTracker = () => {
           {/* Scores */}
           <div className="grid grid-cols-2 gap-4 mb-6">
             <Card className="bg-white/5 backdrop-blur-xl border border-white/10">
-              <h3 className="text-sm text-gray-400 mb-3 text-center">Productivity Score</h3>
+              <h3 className="text-sm text-gray-400 mb-3 text-center">Produtividade Score</h3>
               <DonutChart value={productivityScore} color="#10b981" size={120} />
             </Card>
             <Card className="bg-white/5 backdrop-blur-xl border border-white/10">
@@ -263,7 +263,7 @@ const DailyTaskTracker = () => {
               data-testid="timeline-tab"
             >
               <ListTodo size={20} className="inline mr-2" />
-              Today's Timeline ({dailyPlan.plannedTasks.length})
+              Linha do tempo de hoje ({dailyPlan.plannedTasks.length})
             </button>
             <button
               onClick={() => setActiveTab('add')}
@@ -296,11 +296,11 @@ const DailyTaskTracker = () => {
                 </Card>
               ) : (
                 <>
-                  {/* Progress Summary */}
+                  {/* Progresso Summary */}
                   <Card className="bg-white/10 backdrop-blur-3xl border-2 border-white/25 mb-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="text-lg font-semibold text-white mb-1">Today's Progress</h3>
+                        <h3 className="text-lg font-semibold text-white mb-1">Progresso de hoje</h3>
                         <p className="text-gray-400 text-sm">
                           {completedCount} of {dailyPlan.plannedTasks.length} tasks completed
                         </p>
@@ -333,7 +333,7 @@ const DailyTaskTracker = () => {
                       data-testid="timeline-view-tab"
                     >
                       <CalendarClock size={20} className="inline mr-2" />
-                      Timeline View ({dailyPlan.plannedTasks.length})
+                      Visualização em linha do tempo ({dailyPlan.plannedTasks.length})
                     </button>
                     <button
                       onClick={() => setActiveView('list')}
@@ -344,7 +344,7 @@ const DailyTaskTracker = () => {
                       data-testid="tasks-list-view-tab"
                     >
                       <CheckSquare size={20} className="inline mr-2" />
-                      Task List View
+                      Visualização em lista
                     </button>
                   </div>
 
@@ -405,7 +405,7 @@ const DailyTaskTracker = () => {
                           const top = (startInHours - START_HOUR) * HOUR_HEIGHT;
                           const height = (endInHours - startInHours) * HOUR_HEIGHT;
 
-                          // 🔥 Adaptive UI logic
+                          // ðŸ”¥ Adaptive UI logic
                           const isSmall = height < 60;
                           const isMedium = height >= 30 && height < 40;
 
@@ -429,7 +429,7 @@ const DailyTaskTracker = () => {
                               }}
                             >
 
-                              {/* 🔥 ACTION BUTTONS (FIXED) */}
+                              {/* ðŸ”¥ ACTION BUTTONS (FIXED) */}
                               <div
                                 className="absolute top-1 right-1 flex gap-1 transition z-20 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
                               >
@@ -457,7 +457,7 @@ const DailyTaskTracker = () => {
                                 </button>
                               </div>
 
-                              {/* 🔥 CONTENT */}
+                              {/* ðŸ”¥ CONTENT */}
                               <div className="h-full flex flex-col justify-start overflow-hidden">
 
                                 {/* TITLE (ALWAYS VISIBLE) */}
@@ -484,7 +484,7 @@ const DailyTaskTracker = () => {
 
                                     {task.isImportant && (
                                       <span className="text-[10px] px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-400">
-                                        Important
+                                        Importante
                                       </span>
                                     )}
                                   </div>
@@ -500,7 +500,7 @@ const DailyTaskTracker = () => {
                   )}
                   {activeView === 'list' && (
                     <div className="space-y-3 p-5 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_0_40px_rgba(99,102,241,0.15)]">
-                      <h2 className="text-xl font-bold text-white mb-4">Today's Planned Tasks</h2>
+                      <h2 className="text-xl font-bold text-white mb-4">Tarefas planejadas para hoje</h2>
                       {activeTasks.map((item, index) => (
                         <Motion.div
                           key={item.id}
@@ -530,7 +530,7 @@ const DailyTaskTracker = () => {
                                       </span>
                                       {item.isImportant && (
                                         <span className="text-xs px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30">
-                                          Important
+                                          Importante
                                         </span>
                                       )}
                                     </div>
@@ -569,7 +569,7 @@ const DailyTaskTracker = () => {
 
                       {/* HEADER */}
                       <h3 className="text-lg font-semibold text-gray-300 mb-4">
-                        Completed Tasks ({completedTasks.length})
+                        Concluido Tasks ({completedTasks.length})
                       </h3>
 
                       {/* LIST */}
@@ -630,28 +630,28 @@ const DailyTaskTracker = () => {
               {/* Sub-tabs */}
               <div className="flex gap-2 mb-6">
                 <button
-                  onClick={() => setAddMode('tasks')}
-                  className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all ${addMode === 'tasks'
+                  onClick={() => setAddModo('tasks')}
+                  className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all ${addModo === 'tasks'
                     ? 'bg-indigo-600 text-white'
                     : 'bg-white/5 text-gray-400 hover:bg-white/10'
                     }`}
                   data-testid="add-from-tasks-tab"
                 >
-                  From Tasks ({availableTasks.length})
+                  A partir de tarefas ({availableTasks.length})
                 </button>
                 <button
-                  onClick={() => setAddMode('habits')}
-                  className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all ${addMode === 'habits'
+                  onClick={() => setAddModo('habits')}
+                  className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all ${addModo === 'habits'
                     ? 'bg-indigo-600 text-white'
                     : 'bg-white/5 text-gray-400 hover:bg-white/10'
                     }`}
                   data-testid="add-from-habits-tab"
                 >
-                  Suggested Habits ({suggestedHabits.length})
+                  Hábitos sugeridos ({suggestedHabits.length})
                 </button>
                 <button
-                  onClick={() => setAddMode('manual')}
-                  className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all ${addMode === 'manual'
+                  onClick={() => setAddModo('manual')}
+                  className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all ${addModo === 'manual'
                     ? 'bg-indigo-600 text-white'
                     : 'bg-white/5 text-gray-400 hover:bg-white/10'
                     }`}
@@ -662,9 +662,9 @@ const DailyTaskTracker = () => {
               </div>
 
               {/* Add from Tasks */}
-              {addMode === 'tasks' && (
+              {addModo === 'tasks' && (
                 <Card className='bg-white/5 border border-white/10 '>
-                  <h3 className="text-lg font-semibold text-white mb-4">Select Task to Add</h3>
+                  <h3 className="text-lg font-semibold text-white mb-4">Selecione a tarefa para adicionar</h3>
                   {availableTasks.length > 0 ? (
                     <>
                       <div className="space-y-2 mb-6 max-h-96 overflow-y-auto pr-3">
@@ -700,17 +700,17 @@ const DailyTaskTracker = () => {
                     </>
                   ) : (
                     <div className="text-center py-8">
-                      <p className="text-gray-400">No available tasks to add</p>
-                      <p className="text-sm text-gray-500 mt-1">All tasks are either completed or already in your plan</p>
+                      <p className="text-gray-400">Nenhuma tarefa disponível para adicionar</p>
+                      <p className="text-sm text-gray-500 mt-1">Todas as tarefas estão concluídas ou ja estão no plano</p>
                     </div>
                   )}
                 </Card>
               )}
 
-              {/* Suggested Habits */}
-              {addMode === 'habits' && (
+              {/* Hábitos sugeridos */}
+              {addModo === 'habits' && (
                 <Card className='bg-white/5 border backdrop-blur-2xl border-white/10'>
-                  <h3 className="text-lg font-semibold text-white mb-4">Suggested Habits</h3>
+                  <h3 className="text-lg font-semibold text-white mb-4">Hábitos sugeridos</h3>
                   {suggestedHabits.length > 0 ? (
                     <div className="space-y-3 mb-6 max-h-96 overflow-y-auto px-3">
                       {suggestedHabits.map(habit => (
@@ -742,20 +742,20 @@ const DailyTaskTracker = () => {
                     </div>
                   ) : (
                     <div className="text-center py-8">
-                      <p className="text-gray-400">No habits available</p>
-                      <p className="text-sm text-gray-500 mt-1">Habits without time or already in plan are hidden</p>
+                      <p className="text-gray-400">Nenhum hábito disponível</p>
+                      <p className="text-sm text-gray-500 mt-1">Hábitos sem horário ou ja adicionados ao plano ficam ocultos</p>
                     </div>
                   )}
                 </Card>
               )}
 
-              {/* Create Manual Task */}
-              {addMode === 'manual' && (
+              {/* Criar tarefa manual */}
+              {addModo === 'manual' && (
                 <Card className='bg-white/5 border border-white/10 backdrop-blur-2xl'>
-                  <h3 className="text-lg font-semibold text-white mb-4">Create Manual Task</h3>
+                  <h3 className="text-lg font-semibold text-white mb-4">Criar tarefa manual</h3>
                   <form onSubmit={handleCreateManualTask} className="space-y-4">
                     <InputField
-                      label="Task Title"
+                      label="Titulo da tarefa"
                       type="text"
                       value={manualTaskForm.title}
                       onChange={(e) => setManualTaskForm({ ...manualTaskForm, title: e.target.value })}
@@ -765,14 +765,14 @@ const DailyTaskTracker = () => {
 
                     <div className="grid grid-cols-2 gap-4">
                       <InputField
-                        label="Start Time"
+                        label="Horario inicial"
                         type="time"
                         value={manualTaskForm.startTime}
                         onChange={(e) => setManualTaskForm({ ...manualTaskForm, startTime: e.target.value })}
                         required
                       />
                       <InputField
-                        label="End Time"
+                        label="Horario final"
                         type="time"
                         value={manualTaskForm.endTime}
                         onChange={(e) => setManualTaskForm({ ...manualTaskForm, endTime: e.target.value })}
@@ -787,7 +787,7 @@ const DailyTaskTracker = () => {
                         onChange={(e) => setManualTaskForm({ ...manualTaskForm, isImportant: e.target.checked })}
                         className="w-5 h-5"
                       />
-                      Mark as Important
+                      Mark as Importante
                     </label>
 
                     <GradientButton type="submit" className="w-full" data-testid="create-manual-task-btn">
@@ -804,13 +804,13 @@ const DailyTaskTracker = () => {
         <Modal
           isOpen={showTimeModal}
           onClose={() => setShowTimeModal(false)}
-          title={`Set time for ${selectedTask.title}`}
+          title={`Definir horário para ${selectedTask.title}`}
         >
           <div className="space-y-4">
 
             <div className="grid grid-cols-2 gap-4">
               <InputField
-                label="Start Time"
+                label="Horario inicial"
                 type="time"
                 value={timeForm.startTime}
                 onChange={(e) =>
@@ -820,7 +820,7 @@ const DailyTaskTracker = () => {
               />
 
               <InputField
-                label="End Time"
+                label="Horario final"
                 type="time"
                 value={timeForm.endTime}
                 onChange={(e) =>

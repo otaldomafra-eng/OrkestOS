@@ -52,8 +52,8 @@ const HabitTracker = () => {
           className="flex justify-between items-center mb-6"
         >
           <div>
-            <h1 className="text-3xl font-bold text-gray-200 young-serif-regular">Habit Tracker</h1>
-            <p className="text-gray-400">Build good habits and break bad ones</p>
+            <h1 className="text-3xl font-bold text-gray-200 young-serif-regular">Rastreador de hábitos</h1>
+            <p className="text-gray-400">Construa bons hábitos e reduza os ruins</p>
           </div>
           <button
             onClick={() => setShowAddHabit(true)}
@@ -72,7 +72,7 @@ const HabitTracker = () => {
               {/* LEFT */}
               <div>
                 <h2 className="text-xl font-bold text-white mb-1">
-                  Habit Analytics
+                  Análise de hábitos
                 </h2>
                 <p className="text-gray-400 text-sm">
                   Consistency builds your identity
@@ -84,14 +84,14 @@ const HabitTracker = () => {
 
                 <div className="bg-white/5 border border-white/10 rounded-lg p-4 text-center">
                   <p className="text-3xl font-bold text-orange-400">{habits.length}</p>
-                  <p className="text-xs text-gray-400 mt-1">Total Habits</p>
+                  <p className="text-xs text-gray-400 mt-1">Total de hábitos</p>
                 </div>
 
                 <div className="bg-white/5 border border-white/10 rounded-lg p-4 text-center">
                   <p className="text-3xl font-bold text-green-400">
                     {Math.max(...habits.map(h => h.streak), 0)}
                   </p>
-                  <p className="text-xs text-gray-400 mt-1">Longest Streak</p>
+                  <p className="text-xs text-gray-400 mt-1">Maior sequência</p>
                 </div>
 
               </div>
@@ -100,18 +100,18 @@ const HabitTracker = () => {
           </Card>
         )}
 
-        {/* Build Habits */}
+        {/* Construir habitos */}
         <Card className="mb-6 bg-transparent border border-white/10 shadow-[0_0_30px_rgba(34,197,94,0.2)]">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <TrendingUp size={24} className="text-green-400" />
               <h2 className="text-xl font-bold text-white">
-                Build Habits ({buildHabits.length})
+                Construir hábitos ({buildHabits.length})
               </h2>
             </div>
 
             <span className="text-xs text-green-400 bg-green-500/10 px-3 py-1 rounded-full">
-              Growth Zone
+              Zona de crescimento
             </span>
           </div>
           {buildHabits.length > 0 ? (
@@ -132,22 +132,22 @@ const HabitTracker = () => {
               ))}
             </div>
           ) : (
-            <p className="text-gray-400 text-center py-8">No build habits yet. Add one to get started!</p>
+            <p className="text-gray-400 text-center py-8">Nenhum hábito de construção ainda. Adicione um para começar.</p>
           )}
         </Card>
 
-        {/* Break Habits */}
+        {/* Romper habitos */}
         <Card className="mb-6 bg-transparent border border-white/10 shadow-[0_0_30px_rgba(34,197,94,0.2)]">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <TrendingDown size={24} className="text-red-400" />
               <h2 className="text-xl font-bold text-white">
-                Break Habits ({breakHabits.length})
+                Romper hábitos ({breakHabits.length})
               </h2>
             </div>
 
             <span className="text-xs text-red-400 bg-red-500/10 px-3 py-1 rounded-full">
-              Discipline Zone
+              Zona de disciplina
             </span>
           </div>
           {breakHabits.length > 0 ? (
@@ -162,7 +162,7 @@ const HabitTracker = () => {
               ))}
             </div>
           ) : (
-            <p className="text-gray-400 text-center py-8">No break habits yet.</p>
+            <p className="text-gray-400 text-center py-8">Nenhum hábito para romper ainda.</p>
           )}
         </Card>
 
@@ -174,15 +174,15 @@ const HabitTracker = () => {
               <Flame size={64} className="text-orange-400 mx-auto mb-4 animate-pulse" />
 
               <p className="text-gray-400 text-lg mb-2">
-                No habits yet.
+                Nenhum hábito ainda.
               </p>
 
               <p className="text-indigo-400 text-sm mb-6">
-                Start building your discipline system 🚀
+                Comece a construir seu sistema de disciplina 🚀
               </p>
 
               <GradientButton onClick={() => setShowAddHabit(true)}>
-                Add Your First Habit
+                Adicionar primeiro hábito
               </GradientButton>
             </div>
           </Card>
@@ -190,10 +190,10 @@ const HabitTracker = () => {
       </div>
 
       {/* Add Habit Modal */}
-      <Modal isOpen={showAddHabit} onClose={() => setShowAddHabit(false)} title="Create New Habit">
+      <Modal isOpen={showAddHabit} onClose={() => setShowAddHabit(false)} title="Criar novo hábito">
         <div className="space-y-4">
           <InputField
-            label="Habit Name"
+            label="Nome do hábito"
             value={newHabit.name}
             onChange={(e) => setNewHabit({ ...newHabit, name: e.target.value })}
             placeholder="e.g., Morning Exercise, Read 30 pages"
@@ -202,7 +202,7 @@ const HabitTracker = () => {
           />
 
           <div>
-            <label className="block text-gray-300 text-sm font-medium mb-2">Habit Type</label>
+            <label className="block text-gray-300 text-sm font-medium mb-2">Tipo de hábito</label>
             <div className="flex gap-3">
               <button
                 onClick={() => setNewHabit({ ...newHabit, type: 'build' })}
@@ -231,7 +231,7 @@ const HabitTracker = () => {
 
           <div className="grid grid-cols-2 gap-4">
             <InputField
-              label="Start Time"
+              label="Horario inicial"
               type="time"
               value={newHabit.startTime}
               onChange={(e) => setNewHabit({ ...newHabit, startTime: e.target.value })}
@@ -239,7 +239,7 @@ const HabitTracker = () => {
               data-testid="habit-start-time"
             />
             <InputField
-              label="End Time"
+              label="Horario final"
               type="time"
               value={newHabit.endTime}
               onChange={(e) => setNewHabit({ ...newHabit, endTime: e.target.value })}
@@ -249,7 +249,7 @@ const HabitTracker = () => {
           </div>
 
           <div>
-            <label className="block text-gray-300 text-sm font-medium mb-2">Mode</label>
+            <label className="block text-gray-300 text-sm font-medium mb-2">Modo</label>
             <div className="flex gap-3">
               <button
                 onClick={() => setNewHabit({ ...newHabit, mode: '21-day' })}
@@ -275,7 +275,7 @@ const HabitTracker = () => {
           </div>
 
           <GradientButton onClick={handleAddHabit} className="w-full" data-testid="submit-habit-btn">
-            Create Habit
+            Criar hábito
           </GradientButton>
         </div>
       </Modal>

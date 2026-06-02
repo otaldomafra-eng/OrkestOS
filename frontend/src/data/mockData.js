@@ -1,4 +1,4 @@
-// Mock data for WiseMindOS
+// Mock data for OrkestOS
 
 export const weeklyProductivityData = [
   { name: 'Mon', productivity: 75 },
@@ -72,15 +72,15 @@ export const mockGoals = [
 ];
 
 export const mockProjects = [
-  { id: 1, name: 'E-commerce App', progress: 75, tasksCompleted: 15, totalTasks: 20 },
-  { id: 2, name: 'Portfolio Website', progress: 100, tasksCompleted: 10, totalTasks: 10 },
-  { id: 3, name: 'Mobile App UI', progress: 45, tasksCompleted: 9, totalTasks: 20 },
+  { id: 1, name: 'E-commerce App', progress: 75, tasksConcluido: 15, totalTasks: 20 },
+  { id: 2, name: 'Portfolio Website', progress: 100, tasksConcluido: 10, totalTasks: 10 },
+  { id: 3, name: 'Mobile App UI', progress: 45, tasksConcluido: 9, totalTasks: 20 },
 ];
 
 export const mockDailyLog = {
   studyHours: 4,
   sleepHours: 7,
-  tasksCompleted: 5,
+  tasksConcluido: 5,
   date: new Date().toISOString().split('T')[0]
 };
 

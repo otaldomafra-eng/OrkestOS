@@ -1,8 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, ListChecks, Focus, Sparkles, Library } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Home, ListChecks, Focus, Sparkles, Library, Plug, LogOut } from 'lucide-react';
+import { motion as Motion } from 'framer-motion';
 import { useApp } from '../store/AppContext';
-import { LogOut } from "lucide-react";
 
 const BottomNav = () => {
   const location = useLocation();
@@ -12,17 +11,18 @@ const BottomNav = () => {
   const logout = () => {
     navigate('/login')
     localStorage.removeItem('token')
-    localStorage.removeItem('wisemind_user')
+    localStorage.removeItem('orkestos_user')
     setToken('')
   }
 
   const navItems = [
-    { path: '/dashboard', icon: Home, label: 'Dashboard' },
-    { path: '/trackers', icon: ListChecks, label: 'Trackers' },
-    { path: '/focus-room', icon: Focus, label: 'Focus' },
-    { path: '/future-twin', icon: Sparkles, label: 'FutureTwin' },
-    { path: '/library', icon: Library, label: 'Library' },
-    { path: '/login', icon: LogOut, label: 'LogOut' },
+    { path: '/dashboard', icon: Home, label: 'Painel' },
+    { path: '/trackers', icon: ListChecks, label: 'Rastreadores' },
+    { path: '/focus-room', icon: Focus, label: 'Foco' },
+    { path: '/future-twin', icon: Sparkles, label: 'IA' },
+    { path: '/library', icon: Library, label: 'Biblioteca' },
+    { path: '/integrations', icon: Plug, label: 'Integrações' },
+    { path: '/login', icon: LogOut, label: 'Sair' },
   ];
 
   return (
@@ -43,14 +43,14 @@ before:bg-gradient-to-r before:from-indigo-500 before:to-purple-500">
               key={item.path}
               to={item.path}
               onClick={(e) => {
-                if (item.label === "LogOut") {
+                if (item.label === "Sair") {
                   e.preventDefault(); // stop Link navigation
                   logout();           // call your function
                 }
               }}
               className="flex-1 h-full flex items-center justify-center"
             >
-              <motion.div
+              <Motion.div
                 className={`
       flex flex-col items-center justify-center 
       px-3 py-1 rounded-xl transition-all duration-300
@@ -64,27 +64,27 @@ before:bg-gradient-to-r before:from-indigo-500 before:to-purple-500">
 
                 {/* Active Background Glow */}
                 {isActive && (
-                  <motion.div
+                  <Motion.div
                     layoutId="nav-pill"
                     className="absolute w-14 h-10 rounded-xl bg-indigo-500/10 blur-md"
                   />
                 )}
 
                 {/* Icon */}
-                <motion.div
+                <Motion.div
                   animate={isActive ? { y: [0, -4, 0] } : {}}
                   transition={{ duration: 0.4 }}
                   className={isActive ? "drop-shadow-[0_0_10px_rgba(99,102,241,0.7)]" : ""}
                 >
                   <Icon size={22} />
-                </motion.div>
+                </Motion.div>
 
                 {/* Label */}
                 <span className="text-[10px] mt-1">
                   {item.label}
                 </span>
 
-              </motion.div>
+              </Motion.div>
             </Link>
           );
         })}

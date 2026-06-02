@@ -129,7 +129,7 @@ const Onboarding = () => {
     });
 
     // Set onboarding flag
-    localStorage.setItem('wisemind_hasOnboarded', 'true');
+    localStorage.setItem('Orkest_hasOnboarded', 'true');
 
     // Navigate to dashboard
     setTimeout(() => {
@@ -168,7 +168,7 @@ const Onboarding = () => {
               repeat: Infinity,
               ease: "easeInOut"
             }}>
-            Wise<span className="bg-gradient-to-r from-indigo-400 baloo-2-700 md:text-5xl to-violet-400 bg-clip-text text-transparent">Mind</span>OS
+            Orkest<span className="bg-gradient-to-r from-indigo-400 baloo-2-700 md:text-5xl to-violet-400 bg-clip-text text-transparent">OS</span>
           </motion.h1>
           <p className="text-gray-400">Let's set up your Life Operating System</p>
           <div className="flex items-center justify-center mt-6">
@@ -230,12 +230,12 @@ shadow-[0_0_40px_rgba(99,102,241,0.2)]
             {step === 1 && (
               <div data-testid="onboarding-step-1">
                 <h2 className="text-2xl font-bold young-serif-regular text-white mb-2">Step 1: Set Your Goals</h2>
-                <p className="text-gray-400 mb-6">Let’s define what success looks like for you.</p>
+                <p className="text-gray-400 mb-6">Letâ€™s define what success looks like for you.</p>
 
                 <div className="space-y-4 mb-6">
                   <div className="grid grid-cols-2 gap-3">
                     <InputField
-                      label="Goal Title"
+                      label="Titulo da meta"
                       value={currentGoal.title}
                       onChange={(e) => setCurrentGoal({ ...currentGoal, title: e.target.value })}
                       placeholder="Enter goal title"
@@ -367,7 +367,7 @@ transition-all duration-300 rounded-lg
                       </div>
 
                       <InputField
-                        label={currentExecution.type === 'project' ? 'Project Title' : 'Task Title'}
+                        label={currentExecution.type === 'project' ? 'Titulo do projeto' : 'Titulo da tarefa'}
                         value={currentExecution.title}
                         onChange={(e) => setCurrentExecution({ ...currentExecution, title: e.target.value })}
                         placeholder={`Enter ${currentExecution.type} title`}
@@ -414,7 +414,7 @@ text-white rounded-lg
                             <div className="mb-2">
                               <p className="text-xs text-gray-500 mb-1">Projects:</p>
                               {map.projects.map(p => (
-                                <p key={p.id} className="text-sm text-gray-300 ml-3">• {p.title}</p>
+                                <p key={p.id} className="text-sm text-gray-300 ml-3">â€¢ {p.title}</p>
                               ))}
                             </div>
                           )}
@@ -422,7 +422,7 @@ text-white rounded-lg
                             <div>
                               <p className="text-xs text-gray-500 mb-1">Tasks:</p>
                               {map.tasks.map(t => (
-                                <p key={t.id} className="text-sm text-gray-300 ml-3">• {t.title}</p>
+                                <p key={t.id} className="text-sm text-gray-300 ml-3">â€¢ {t.title}</p>
                               ))}
                             </div>
                           )}
@@ -455,7 +455,7 @@ text-white rounded-lg
               {step === 3 && (
                 <div data-testid="onboarding-step-3">
                   <h2 className="text-2xl font-bold text-white mb-2">Step 3: System Ready!</h2>
-                  <p className="text-gray-400 mb-6">Your system is ready! Your WiseMindOS is being initialized...</p>
+                  <p className="text-gray-400 mb-6">Your system is ready! Your OrkestOS is being initialized...</p>
 
                   <div className="bg-gray-700/30 rounded-lg p-6 mb-6">
                     <div className="grid grid-cols-3 gap-4 text-center">
@@ -497,21 +497,21 @@ text-white rounded-lg
 
                   <div className="mb-6 space-y-2">
                     <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-sm">✓</div>
-                      <p className="text-white">Goal Tracker populated</p>
+                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-sm">âœ“</div>
+                      <p className="text-white">Rastreador de metas populated</p>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-sm">✓</div>
-                      <p className="text-white">Project Tracker initialized</p>
+                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-sm">âœ“</div>
+                      <p className="text-white">Rastreador de projetos initialized</p>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-sm">✓</div>
-                      <p className="text-white">Solo Task Tracker ready</p>
+                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-sm">âœ“</div>
+                      <p className="text-white">Tarefas avulsas ready</p>
                     </div>
                   </div>
 
                   <p className="text-gray-400 text-sm mb-6">
-                    You can add more goals, projects, tasks, and habits anytime from the Trackers section.
+                    Você pode adicionar mais metas, projetos, tarefas e hábitos a qualquer momento na seção Rastreadores.
                   </p>
 
                   <div className="flex gap-3">
@@ -523,7 +523,7 @@ text-white rounded-lg
                       Back
                     </button>
                     <GradientButton onClick={handleFinishOnboarding} className="flex-1" data-testid="finish-onboarding-btn">
-                      {loading ? "Initializing..." : "Enter Dashboard"}
+                      {loading ? "Inicializando..." : "Entrar no painel"}
                     </GradientButton>
                   </div>
                 </div>

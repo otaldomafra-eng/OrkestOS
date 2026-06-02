@@ -13,7 +13,7 @@ export const showToast = ({
       autoClose: duration,
       position,
       className: "bg-transparent shadow-none p-0",
-      bodyClassName: "p-0",
+      bodyclassName: "p-0",
       hideProgressBar: true,
       transition: null,
     }

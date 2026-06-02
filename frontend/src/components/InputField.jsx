@@ -10,9 +10,9 @@ const InputField = ({
   required = false,
   className = "",
 }) => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showSenha, setShowSenha] = useState(false);
 
-  const isPassword = type === "password";
+  const isSenha = type === "password";
 
   return (
     <div className={`w-full ${className}`}>
@@ -24,7 +24,7 @@ const InputField = ({
 
       <div className="relative">
         <input
-          type={isPassword && showPassword ? "text" : type}
+          type={isSenha && showSenha ? "text" : type}
           value={value}
           onChange={onChange}
           placeholder={placeholder}
@@ -40,13 +40,13 @@ const InputField = ({
         />
 
         {/* Eye Toggle */}
-        {isPassword && (
+        {isSenha && (
           <button
             type="button"
-            onClick={() => setShowPassword(!showPassword)}
+            onClick={() => setShowSenha(!showSenha)}
             className="absolute right-3 top-4 text-gray-400 hover:text-white transition-all duration-300 transform hover:scale-110 active:scale-95 hover:drop-shadow-[0_0_6px_rgba(99,102,241,0.6)]"
           >
-            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            {showSenha ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>
         )}
       </div>

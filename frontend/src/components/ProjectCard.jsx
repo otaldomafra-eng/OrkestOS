@@ -5,7 +5,7 @@ import DonutChart from './DonutChart';
 
 const ProjectCard = ({ project, progress, linkedGoal, onClick }) => {
   const getTimeRemaining = (deadline) => {
-    if (!deadline) return 'No deadline';
+    if (!deadline) return 'Sem prazo';
     try {
       return formatDistanceToNow(new Date(deadline), { addSuffix: true });
     } catch {

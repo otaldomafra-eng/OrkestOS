@@ -1,8 +1,8 @@
-# Contributing to WiseMindOS
+# Contributing to OrkestOS
 
-Thank you for considering contributing to WiseMindOS.
+Thank you for considering contributing to OrkestOS.
 
-WiseMindOS is a full-stack productivity and life-management platform focused on helping users transform long-term goals into structured daily execution through interconnected planning systems, productivity tracking, analytics, and focused workflows.
+OrkestOS is a full-stack productivity and life-management platform focused on helping users transform long-term goals into structured daily execution through interconnected planning systems, productivity tracking, analytics, and focused workflows.
 
 We welcome contributors of all experience levels, whether you are:
 - fixing bugs,
@@ -54,13 +54,13 @@ Before contributing, make sure you have:
 # Fork the repository first
 
 # Clone your fork
-git clone https://github.com/<your-username>/WiseMindOS.git
+git clone https://github.com/<your-username>/OrkestOS.git
 
 # Move into the project directory
-cd WiseMindOS
+cd OrkestOS
 
 # Add upstream remote
-git remote add upstream https://github.com/aaryan498/WiseMindOS.git
+git remote add upstream https://github.com/aaryan498/OrkestOS.git
 ```
 
 ---
@@ -115,7 +115,7 @@ npm run dev
 # Project Structure
 
 ```text
-WiseMindOS/
+OrkestOS/
 │
 ├── frontend/
 │   ├── src/
@@ -357,7 +357,7 @@ Contributors can work on multiple areas of the project.
 
 - UI/UX improvements
 - Responsive design
-- Dashboard enhancements
+- Painel enhancements
 - Planner improvements
 - Accessibility
 
@@ -373,7 +373,7 @@ Contributors can work on multiple areas of the project.
 - FutureTwin AI assistant
 - Gamification systems
 - Finance tracker
-- Productivity analytics
+- Produtoivity analytics
 - Smart recommendations
 
 ## Documentation
@@ -387,7 +387,7 @@ Contributors can work on multiple areas of the project.
 
 # GSSoC'26 Contributors
 
-WiseMindOS is an open-source project participating in GirlScript Summer of Code 2026.
+OrkestOS is an open-source project participating in GirlScript Summer of Code 2026.
 
 ## Guidelines for GSSoC Contributors
 
@@ -424,4 +424,4 @@ If you face issues while contributing:
 
 # Thank You
 
-Thank you for contributing to WiseMindOS and helping improve the project for the open-source community.
+Thank you for contributing to OrkestOS and helping improve the project for the open-source community.

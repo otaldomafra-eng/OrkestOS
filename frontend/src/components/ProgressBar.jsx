@@ -5,7 +5,7 @@ const ProgressBar = ({ progress, className = '', showLabel = true }) => {
     <div className={`w-full ${className}`}>
       {showLabel && (
         <div className="flex justify-between text-sm text-gray-400 mb-2">
-          <span>Progress</span>
+          <span>Progresso</span>
           <span>{clampedProgress}%</span>
         </div>
       )}

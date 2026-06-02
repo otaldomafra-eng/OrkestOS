@@ -28,7 +28,7 @@ const GoalCard = ({ goal, progress, onClick }) => {
 
   const getStatus = () => {
     if (progress >= 80) return { text: 'On Track', style: 'bg-green-500/20 text-green-400' };
-    if (progress >= 50) return { text: 'In Progress', style: 'bg-yellow-500/20 text-yellow-400' };
+    if (progress >= 50) return { text: 'Em andamento', style: 'bg-yellow-500/20 text-yellow-400' };
     return { text: 'Behind', style: 'bg-red-500/20 text-red-400' };
   };
 
@@ -77,7 +77,7 @@ const GoalCard = ({ goal, progress, onClick }) => {
         {/* Percentage */}
         <div className="text-right mb-2">
           <p className="text-2xl font-bold text-white">{progress}%</p>
-          <p className="text-xs text-gray-400">Progress</p>
+          <p className="text-xs text-gray-400">Progresso</p>
         </div>
         <ProgressBar showLabel={false} progress={progress} className="mb-3" />
       </div>

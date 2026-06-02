@@ -10,7 +10,7 @@ export const authAPI = {
         const response = await axiosInstance.post('/api/user/login', data);
         return response.data;
     },
-    googleLogin: async (credential) => {
+    GoogleLogin: async (credential) => {
         const response = await axiosInstance.post('/api/user/google', { credential });
         return response.data;
     },
@@ -186,6 +186,14 @@ export const statsAPI = {
 
     getWeekly: async () => {
         const response = await axiosInstance.post('/api/stats/weekly', {});
+        return response.data;
+    }
+};
+
+// ============ TELEGRAM APIs ============
+export const telegramAPI = {
+    createLinkCode: async () => {
+        const response = await axiosInstance.post('/api/telegram/link-code', {});
         return response.data;
     }
 };

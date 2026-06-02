@@ -10,33 +10,33 @@ const Landing = () => {
   const features = [
     {
       icon: <TrendingUp size={32} />,
-      title: '21-Day Habit Tracker',
-      description: 'Build lasting habits with our proven 21-day tracking system'
+      title: 'Rastreador de hábitos',
+      description: 'Construa rotinas consistentes com ciclos de acompanhamento diário'
     },
     {
       icon: <Target size={32} />,
-      title: 'Goal Management',
-      description: 'Set, track, and achieve your personal and professional goals'
+      title: 'Gestão de metas',
+      description: 'Defina, acompanhe e conclua metas pessoais e profissionais'
     },
     {
       icon: <CheckCircle size={32} />,
-      title: 'Task & Project Tracking',
-      description: 'Organize your work with powerful task and project management'
+      title: 'Tarefas e projetos',
+      description: 'Organize execução diária, prioridades e entregas em um so lugar'
     },
     {
       icon: <Sparkles size={32} />,
-      title: 'FutureTwin AI',
-      description: 'Simulate future outcomes and make data-driven decisions'
+      title: 'Assistente de IA',
+      description: 'Simule cenários e tome decisões com apoio de dados'
     },
     {
       icon: <Brain size={32} />,
-      title: 'Smart Analytics',
-      description: 'Gain insights with comprehensive productivity analytics'
+      title: 'Análises inteligentes',
+      description: 'Veja padrões de produtividade, disciplina e progresso'
     },
     {
       icon: <Zap size={32} />,
-      title: 'Holistic Development',
-      description: 'Focus on balanced growth and participation in larger order.'
+      title: 'Desenvolvimento integrado',
+      description: 'Conecte hábitos, metas, foco e planejamento em uma rotina única'
     }
   ];
 
@@ -66,7 +66,7 @@ const Landing = () => {
                 {/* Logo */}
                 <Motion.img
                   src={logo}
-                  alt="WiseMindOS Logo"
+                  alt="OrkestOS Logo"
                   className="w-20 h-20 md:w-28 md:h-28 mb-4 object-contain"
                   animate={{ y: [0, -10, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -88,25 +88,24 @@ const Landing = () => {
                     ease: "easeInOut"
                   }}
                 >
-                  Wise
+                  Orkest
                   <span className="bg-gradient-to-r text-4xl sm:text-5xl md:text-8xl baloo-2-700 from-indigo-500 to-purple-500 bg-clip-text text-transparent break-words">
-                    Mind
+                    OS
                   </span>
-                  OS
                 </Motion.h1>
 
                 <div className="h-1 w-32 bg-gradient-to-r from-indigo-600 to-violet-600 mx-auto rounded-full"></div>
               </div>
 <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed px-2">
-                Your intelligent life tracking and simulation system.
+                Seu sistema inteligente de organização pessoal.
                 <br />
-                Stay focused, achieve goals, and optimize your future.
+                Mantenha foco, execute metas e organize sua rotina.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link to="/signup">
                   <GradientButton data-testid="get-started-btn" className="w-full sm:w-auto">
-                    Get Started
+                    Começar
                   </GradientButton>
                 </Link>
                 <Link to="/login">
@@ -116,7 +115,7 @@ const Landing = () => {
                         hover:bg-indigo-500 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] 
                         hover:-translate-y-1 active:scale-95 transition-all duration-300"
                   >
-                    Login
+                    Entrar
                   </button>
                 </Link>
               </div>
@@ -127,13 +126,13 @@ const Landing = () => {
 
 
 
-      {/* Features Section */}
+      {/* Recursos Section */}
       <section id="features" className="py-20 px-4 bg-white dark:bg-gray-800/50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold young-serif-regular text-gray-600 dark:text-gray-100 mb-2">Powerful Features</h2>
+            <h2 className="text-3xl md:text-4xl font-bold young-serif-regular text-gray-600 dark:text-gray-100 mb-2">Recursos principais</h2>
             <div className="h-1 w-39 bg-gradient-to-r from-indigo-600 to-violet-600 mx-auto rounded-full"></div>
-            <p className="text-gray-900 dark:text-gray-300 mt-2 text-base md:text-lg">Everything you need for holistic personal development</p>
+            <p className="text-gray-900 dark:text-gray-300 mt-2 text-base md:text-lg">Tudo que você precisa para organizar rotina, metas e execução</p>
           </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -157,21 +156,21 @@ hover:scale-105 hover:shadow-xl transition-all duration-300 cursor-pointer">
         </div>
       </section>
 
-      {/* How It Works Section */}
+      {/* Como funciona Section */}
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold young-serif-regular text-gray-200 mb-2">How It Works</h2>
+            <h2 className="text-3xl md:text-4xl font-bold young-serif-regular text-gray-200 mb-2">Como funciona</h2>
             <div className="h-1 w-30 bg-gradient-to-r from-indigo-600 to-violet-600 mx-auto rounded-full"></div>
-            <p className="text-gray-400 mt-2 text-base md:text-lg">Simple steps to transform your life</p>
+            <p className="text-gray-400 mt-2 text-base md:text-lg">Passos simples para transformar planejamento em ação</p>
           </div>
 
           <div className="space-y-8">
             {[
-              { step: '01', title: 'Track Your Life', desc: 'Log your daily habits, tasks, and progress' },
-              { step: '02', title: 'Analyze Patterns', desc: 'Review insights and analytics on your productivity' },
-              { step: '03', title: 'Simulate Future', desc: 'Use FutureTwin AI to predict outcomes and optimize decisions' },
-              { step: '04', title: 'Achieve Goals', desc: 'Stay consistent and watch your goals become reality' }
+              { step: '01', title: 'Mapeie sua rotina', desc: 'Registre hábitos, tarefas e progresso diário' },
+              { step: '02', title: 'Entenda padrões', desc: 'Revise indicadores e analises da sua produtividade' },
+              { step: '03', title: 'Planeje cenários', desc: 'Use IA para antecipar caminhos e ajustar decisões' },
+              { step: '04', title: 'Conclua metas', desc: 'Mantenha consistencia e transforme plano em resultado' }
             ].map((item, index) => (
               <Motion.div
                 key={index}
@@ -205,10 +204,10 @@ hover:scale-[1.02] hover:bg-white/10 transition-all duration-300 hover:drop-shad
       <section className="py-20 px-4 bg-gradient-to-r from-indigo-800 via-purple-800 to-indigo-900 shadow-[0_0_60px_rgba(99,102,241,0.4)]">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-4xl font-bold young-serif-regular text-white mb-6">
-            Ready to Optimize Your Life?
+            Pronto para organizar sua rotina?
           </h2>
           <p className="text-xl text-gray-300 mb-8">
-            Join thousands who are achieving their goals with WiseMindOS
+            Centralize tarefas, hábitos, metas e foco no OrkestOS.
           </p>
           <Link to="/signup">
             <GradientButton data-testid="cta-signup-btn" className="
@@ -218,7 +217,7 @@ hover:scale-[1.02] hover:bg-white/10 transition-all duration-300 hover:drop-shad
     hover:bg-gray-200 
     shadow-[0_0_30px_rgba(255,255,255,0.6)]
   ">
-              Start Your Journey Today
+              Comece hoje
             </GradientButton>
           </Link>
         </div>
@@ -234,11 +233,11 @@ hover:scale-[1.02] hover:bg-white/10 transition-all duration-300 hover:drop-shad
           {/* Heading */}
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold young-serif-regular text-white mb-2">
-              Trusted by Achievers
+              Feito para quem executa
             </h2>
             <div className="h-1 w-32 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto rounded-full"></div>
             <p className="text-gray-400 mt-3 text-base md:text-lg">
-              Real impact on productivity and growth
+              Impacto real em produtividade e crescimento
             </p>
           </div>
 
@@ -246,10 +245,10 @@ hover:scale-[1.02] hover:bg-white/10 transition-all duration-300 hover:drop-shad
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
 
             {[
-              { value: "10K+", label: "Active Users" },
-              { value: "95%", label: "Goal Completion Rate" },
-              { value: "2.5x", label: "Productivity Boost" },
-              { value: "24/7", label: "AI Support" }
+              { value: "10K+", label: "Usuários ativos" },
+              { value: "95%", label: "Taxa de metas concluídas" },
+              { value: "2.5x", label: "Ganho de produtividade" },
+              { value: "24/7", label: "Suporte de IA" }
             ].map((stat, index) => (
 
               <Motion.div
@@ -303,39 +302,39 @@ hover:scale-[1.02] hover:bg-white/10 transition-all duration-300 hover:drop-shad
             {/* Branding */}
             <div>
               <h2 className="text-2xl young-serif-regular font-bold mb-4">
-                Wise<span className="bg-gradient-to-r text-3xl baloo-2-400 from-indigo-500 to-purple-500 bg-clip-text text-transparent">Mind</span>OS
+                Orkest<span className="bg-gradient-to-r text-3xl baloo-2-400 from-indigo-500 to-purple-500 bg-clip-text text-transparent">OS</span>
               </h2>
               <p className="text-gray-400 text-sm leading-relaxed">
-                Your intelligent life tracking and simulation system.
-                Optimize your habits, goals, and future decisions.
+                Seu sistema inteligente de organização pessoal.
+                Otimize hábitos, metas e decisões futuras.
               </p>
             </div>
 
-            {/* Product Links */}
+            {/* Produto Links */}
             <div>
-              <h3 className="text-white font-semibold mb-4">Product</h3>
+              <h3 className="text-white font-semibold mb-4">Produto</h3>
               <ul className="space-y-2 text-gray-400 text-sm">
                 <li>
                   <Link to="/#features" className="hover:text-white transition cursor-pointer">
-                    Features
+                    Recursos
                   </Link>
                 </li>
                 <li>
                   <Link to="/pricing" className="hover:text-white transition cursor-pointer">
-                    Pricing
+                    Preços
                   </Link>
                 </li>
                 <li>
                   <Link to="/roadmap" className="hover:text-white transition">
-                    Roadmap
+                    Roteiro
                   </Link>
                 </li>
               </ul>
             </div>
 
-            {/* Company Links */}
+            {/* Empresa Links */}
             <div>
-              <h3 className="text-white font-semibold mb-4">Company</h3>
+              <h3 className="text-white font-semibold mb-4">Empresa</h3>
               <ul className="space-y-2 text-gray-400 text-sm">
                 <li>
                   <Link to="/about" className="hover:text-white transition cursor-pointer">
@@ -357,7 +356,7 @@ hover:scale-[1.02] hover:bg-white/10 transition-all duration-300 hover:drop-shad
 
             {/* CTA / Social */}
             <div>
-              <h3 className="text-white font-semibold mb-4">Get Started</h3>
+              <h3 className="text-white font-semibold mb-4">Começar</h3>
 
               <Link to="/signup">
                 <GradientButton className="bg-white text-black hover:bg-gray-200 w-full mb-4">
@@ -377,7 +376,7 @@ hover:scale-[1.02] hover:bg-white/10 transition-all duration-300 hover:drop-shad
 
           {/* Bottom Line */}
           <div className="mt-12 pt-6 border-t border-gray-700 text-center text-gray-400 text-sm">
-            © 2026 <span className="text-white font-semibold">WiseMindOS</span>. All rights reserved.
+            Â© 2026 <span className="text-white font-semibold">OrkestOS</span>. All rights reserved.
           </div>
 
         </div>
