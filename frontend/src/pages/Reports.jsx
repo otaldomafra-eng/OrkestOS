@@ -12,29 +12,29 @@ const Relatorios = () => {
         <h1 className="text-3xl font-bold text-white mb-6">Análises e relatórios</h1>
 
         {/* Summary Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <Card className="bg-gradient-to-br from-indigo-900/30 to-indigo-800/30">
-            <p className="text-gray-400 text-sm mb-1">Weekly Avg</p>
-            <p className="text-3xl font-bold text-white">78%</p>
-            <p className="text-green-400 text-sm mt-1">+12% from last week</p>
+        <div className=”grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6”>
+          <Card className=”bg-gradient-to-br from-indigo-900/30 to-indigo-800/30”>
+            <p className=”text-gray-400 text-sm mb-1”>Média Semanal</p>
+            <p className=”text-3xl font-bold text-white”>78%</p>
+            <p className=”text-green-400 text-sm mt-1”>+12% da semana passada</p>
           </Card>
-          
-          <Card className="bg-gradient-to-br from-violet-900/30 to-violet-800/30">
-            <p className="text-gray-400 text-sm mb-1">Habits Concluido</p>
-            <p className="text-3xl font-bold text-white">42</p>
-            <p className="text-green-400 text-sm mt-1">This week</p>
+
+          <Card className=”bg-gradient-to-br from-violet-900/30 to-violet-800/30”>
+            <p className=”text-gray-400 text-sm mb-1”>Hábitos Concluídos</p>
+            <p className=”text-3xl font-bold text-white”>42</p>
+            <p className=”text-green-400 text-sm mt-1”>Esta semana</p>
           </Card>
-          
-          <Card className="bg-gradient-to-br from-purple-900/30 to-purple-800/30">
-            <p className="text-gray-400 text-sm mb-1">Current Streak</p>
-            <p className="text-3xl font-bold text-white">15 ðŸ”¥</p>
-            <p className="text-gray-400 text-sm mt-1">Days</p>
+
+          <Card className=”bg-gradient-to-br from-purple-900/30 to-purple-800/30”>
+            <p className=”text-gray-400 text-sm mb-1”>Sequência Atual</p>
+            <p className=”text-3xl font-bold text-white”>15 🔥</p>
+            <p className=”text-gray-400 text-sm mt-1”>Dias</p>
           </Card>
-          
-          <Card className="bg-gradient-to-br from-pink-900/30 to-pink-800/30">
-            <p className="text-gray-400 text-sm mb-1">Progresso das metas</p>
-            <p className="text-3xl font-bold text-white">65%</p>
-            <p className="text-yellow-400 text-sm mt-1">3 active goals</p>
+
+          <Card className=”bg-gradient-to-br from-pink-900/30 to-pink-800/30”>
+            <p className=”text-gray-400 text-sm mb-1”>Progresso de Metas</p>
+            <p className=”text-3xl font-bold text-white”>65%</p>
+            <p className=”text-yellow-400 text-sm mt-1”>3 metas ativas</p>
           </Card>
         </div>
 
@@ -42,13 +42,13 @@ const Relatorios = () => {
         <Card className="mb-6">
           <div className="flex items-center gap-3 mb-6">
             <Calendar className="text-indigo-400" size={24} />
-            <h2 className="text-2xl font-bold text-white">Weekly Summary</h2>
+            <h2 className="text-2xl font-bold text-white">Resumo Semanal</h2>
           </div>
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Weekly Produtividade Line Chart */}
             <div>
-              <h3 className="text-lg font-semibold text-white mb-4">Produtividade Trend</h3>
+              <h3 className="text-lg font-semibold text-white mb-4">Tendência de Produtividade</h3>
               <ResponsiveContainer width="100%" height={280}>
                 <LineChart data={weeklyProductivityData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#374151" />

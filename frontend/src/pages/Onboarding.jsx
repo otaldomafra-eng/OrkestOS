@@ -17,14 +17,14 @@ const Onboarding = () => {
   const [currentExecution, setCurrentExecution] = useState({ type: 'task', title: '', deadline: '' });
 
   const predefinedGoals = [
-    'Software Developer',
-    'Civil Servant',
-    'Data Scientist',
-    'Learn New Skills',
-    'Career Growth',
-    'Mental Wellness',
-    'Financial Freedom',
-    'Better Sleep Schedule'
+    'Desenvolvedor de Software',
+    'Servidor Público',
+    'Cientista de Dados',
+    'Aprender Novas Habilidades',
+    'Crescimento Profissional',
+    'Bem-estar Mental',
+    'Liberdade Financeira',
+    'Melhor Rotina de Sono'
   ];
 
   // Step 1: Add Goals
@@ -57,7 +57,7 @@ const Onboarding = () => {
 
   const handleStep1Next = () => {
     if (goals.length === 0) {
-      alert('Please add at least one goal to continue');
+      alert('Por favor, adicione pelo menos uma meta para continuar');
       return;
     }
     setStep(2);

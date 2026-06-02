@@ -54,7 +54,7 @@ const Signup = () => {
 
     const missingSenhaRule = passwordRules.find((rule) => !rule.isValid);
     if (missingSenhaRule) {
-      setError(`Senha must include: ${missingSenhaRule.label.toLowerCase()}.`);
+      setError(`A Senha deve incluir: ${missingSenhaRule.label.toLowerCase()}.`);
       return;
     }
 
@@ -160,7 +160,7 @@ shadow-[0_0_40px_rgba(99,102,241,0.2)]'>
                 type="text"
                 value={formData.username}
                 onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                placeholder="Choose Usuário"
+                placeholder="Escolha um usuário"
                 required
               />
 
@@ -181,10 +181,10 @@ shadow-[0_0_40px_rgba(99,102,241,0.2)]'>
                 placeholder="Crie uma senha forte"
                 required
               />
-              <div className="space-y-1 text-sm">
+              <div className=”space-y-1 text-sm”>
                 {passwordRules.map((rule) => (
                   <p key={rule.label} className={rule.isValid ? 'text-green-400' : 'text-gray-500'}>
-                    {rule.isValid ? 'âœ“' : 'â€¢'} {rule.label}
+                    {rule.isValid ? '✓' : '•'} {rule.label}
                   </p>
                 ))}
               </div>
