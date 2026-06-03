@@ -304,7 +304,7 @@ hover:scale-110 active:scale-95 cursor-pointer transition-all"
                           onClick={() => toggleDailyPlanTaskCompletion(item.id)}
                           className={`p-2 rounded-lg transition-all flex-shrink-0 ${item.completed
                             ? 'bg-green-500/20 text-green-400'
-                            : 'bg-gray-700/50 text-charcoal hover:bg-green-500/20 hover:text-green-400'
+                            : 'bg-white/5 text-white/50 border border-white/10 hover:bg-green-500/20 hover:text-green-400'
                             }`}
                           data-testid={`toggle-focus-task-${item.id}`}
                         >

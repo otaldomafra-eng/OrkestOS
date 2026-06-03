@@ -61,7 +61,7 @@ const Bag = () => {
         placeholder="Pesquisar cadernos..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="mb-4 px-3 py-2 bg-gray-800 text-white rounded-lg outline-none"
+        className="mb-4 px-3 py-2 bg-white/5 border border-white/10 text-white rounded-lg outline-none placeholder-white/30 focus:border-white/30"
       />
 
       <div className="flex-1 overflow-y-auto space-y-2">
@@ -79,8 +79,8 @@ const Bag = () => {
                 setView("pages");
               }}
               className={`p-3 rounded-lg cursor-pointer ${activeNotebook === nb.id
-                ? "bg-indigo-600 text-white"
-                : "bg-gray-700 text-gray-300"
+                ? "bg-accent-blue/20 border border-accent-blue/40 text-white"
+                : "bg-white/5 border border-white/10 text-white/70 hover:border-white/20"
                 }`}
             >
               {editingNotebook === nb.id ? (
@@ -140,7 +140,7 @@ const Bag = () => {
   const renderPagesView = () => {
     if (!currentNotebook) {
       return (
-        <div className="flex items-center justify-center h-full text-gray-400">
+        <div className="flex items-center justify-center h-full text-white/40">
           Selecione um caderno primeiro
         </div>
       );
@@ -162,7 +162,7 @@ const Bag = () => {
           placeholder="Pesquisar páginas..."
           value={pageSearch}
           onChange={(e) => setPageSearch(e.target.value)}
-          className="mb-4 px-3 py-2 bg-gray-800 text-white rounded-lg outline-none"
+          className="mb-4 px-3 py-2 bg-white/5 border border-white/10 text-white rounded-lg outline-none placeholder-white/30 focus:border-white/30"
         />
 
         <div className="flex-1 overflow-y-auto space-y-2">
@@ -180,8 +180,8 @@ const Bag = () => {
                   setView("editor");
                 }}
                 className={`p-3 rounded-lg cursor-pointer ${activePage === p.id
-                  ? "bg-green-600 text-white"
-                  : "bg-gray-700 text-gray-300"
+                  ? "bg-accent-green/20 border border-accent-green/40 text-white"
+                  : "bg-white/5 border border-white/10 text-white/70 hover:border-white/20"
                   }`}
               >
                 <div className="flex justify-between items-center">
@@ -250,7 +250,7 @@ const Bag = () => {
               onClick={() =>
                 updateContent(editorContent + "**bold**")
               }
-              className="text-xs px-2 py-1 bg-gray-700 rounded"
+              className="text-xs px-2 py-1 bg-white/10 text-white/70 border border-white/10 rounded hover:bg-white/15"
             >
               B
             </button>
@@ -258,7 +258,7 @@ const Bag = () => {
               onClick={() =>
                 updateContent(editorContent + "_italic_")
               }
-              className="text-xs px-2 py-1 bg-gray-700 rounded"
+              className="text-xs px-2 py-1 bg-white/10 text-white/70 border border-white/10 rounded hover:bg-white/15"
             >
               I
             </button>
@@ -270,7 +270,7 @@ const Bag = () => {
               setEditorContent(e.target.value);
               updateContent(e.target.value);
             }}
-            className="flex-1 w-full bg-gray-800 text-white rounded-lg p-4 focus:outline-none resize-none"
+            className="flex-1 w-full bg-white/5 border border-white/10 text-white rounded-lg p-4 focus:outline-none focus:border-white/25 resize-none placeholder-white/30"
           />
           <button
             onClick={async() => {
@@ -288,7 +288,7 @@ const Bag = () => {
           </button>
         </div>)}
         {view === "editor" && !currentPage && (
-          <div className="flex items-center justify-center flex-1 text-gray-400 h-full">
+          <div className="flex items-center justify-center flex-1 text-white/40 h-full">
             Selecione uma página para começar a escrever...
           </div>
         )}

@@ -235,7 +235,7 @@ rounded-xl p-6
                       <select
                         value={currentGoal.type}
                         onChange={(e) => setCurrentGoal({ ...currentGoal, type: e.target.value })}
-                        className="w-full bg-gray-700 text-ink border border-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-blue"
+                        className="w-full bg-white/5 text-white border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue/50"
                         data-testid="goal-type-select"
                       >
                         <option value="final">Meta Final</option>
@@ -320,7 +320,7 @@ transition-all duration-300 rounded-lg
                     <select
                       value={selectedGoalForMapping || ''}
                       onChange={(e) => setSelectedGoalForMapping(e.target.value)}
-                      className="w-full bg-gray-700 text-ink border border-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-blue"
+                      className="w-full bg-white/5 text-white border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue/50"
                       data-testid="select-goal-mapping"
                     >
                       <option value="">Escolha uma meta...</option>
