@@ -5,7 +5,7 @@ const CustomToast = ({ message, duration = 4000, status = "default" }) => {
   return (
     <div className="relative flex w-full items-center gap-3 p-4 rounded-2xl 
       backdrop-blur-md bg-white/10 border border-white/20 
-      shadow-lg text-black overflow-hidden">
+      shadow-lg text-white overflow-hidden">
 
       {/* Avatar */}
       <img
