@@ -294,7 +294,7 @@ const Painel = () => {
             />
           </div>
           {nextLevelXP && (
-            <div className="text-[11px] text-white/25 mt-1.5">
+            <div className="text-[11px] text-white/45 mt-1.5">
               {(nextLevelXP - totalXP).toLocaleString('pt-BR')} XP para o próximo nível
             </div>
           )}
@@ -320,14 +320,14 @@ const Painel = () => {
               <div className="text-3xl font-extrabold tracking-tight leading-none mb-1.5" style={{ color }}>
                 {val}
               </div>
-              <div className="text-[10px] uppercase tracking-widest text-white/25">{label}</div>
+              <div className="text-[10px] uppercase tracking-widest text-white/45">{label}</div>
             </div>
           ))}
         </div>
 
         {/* Grid de módulos */}
         <div className="mb-8">
-          <h2 className="text-xs font-semibold text-white/25 uppercase tracking-widest mb-3">Módulos</h2>
+          <h2 className="text-xs font-semibold text-white/45 uppercase tracking-widest mb-3">Módulos</h2>
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
             {[
               { to: '/future-twin', icon: '🧠', name: 'FutureTwin AI',  sub: '3 insights hoje', badge: 'Novo',    badgeColor: '#11ff99' },

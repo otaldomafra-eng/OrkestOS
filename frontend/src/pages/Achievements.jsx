@@ -67,7 +67,7 @@ export default function Achievements() {
           />
         </div>
         {nextLevelXP && (
-          <div className="text-[11px] text-white/25 mt-1.5">
+          <div className="text-[11px] text-white/45 mt-1.5">
             {(nextLevelXP - totalXP).toLocaleString('pt-BR')} XP para o próximo nível
           </div>
         )}

@@ -100,7 +100,7 @@ export default function FutureTwin() {
               ].map(({ val, lbl }) => (
                 <div key={lbl}>
                   <div className="text-lg font-bold text-[#3b9eff]" style={{ textShadow: '0 0 12px rgba(59,158,255,0.5)' }}>{val}</div>
-                  <div className="text-[10px] text-white/30 uppercase tracking-wider mt-0.5">{lbl}</div>
+                  <div className="text-[10px] text-white/50 uppercase tracking-wider mt-0.5">{lbl}</div>
                 </div>
               ))}
             </div>
@@ -122,7 +122,7 @@ export default function FutureTwin() {
               style={{ background: '#11ff99', boxShadow: '0 0 6px #11ff99' }}
             />
             <span className="text-sm font-semibold">FutureTwin</span>
-            <span className="text-xs text-white/30 ml-auto">Online</span>
+            <span className="text-xs text-white/50 ml-auto">Online</span>
           </div>
 
           <div className="flex-1 overflow-y-auto p-5 flex flex-col gap-4">
@@ -139,7 +139,7 @@ export default function FutureTwin() {
                   {msg.role === 'assistant' ? '🧠' : '👤'}
                 </div>
                 <div
-                  className="max-w-[78%] px-4 py-3 rounded-2xl text-sm leading-relaxed"
+                  className="max-w-[78%] px-4 py-3 rounded-2xl text-sm leading-relaxed text-white"
                   style={
                     msg.role === 'assistant'
                       ? { background: 'linear-gradient(135deg,rgba(59,158,255,0.07),rgba(17,255,153,0.03))', border: '1px solid rgba(59,158,255,0.15)', borderBottomLeftRadius: '4px' }
@@ -187,9 +187,9 @@ export default function FutureTwin() {
           <div className="text-sm font-bold">Insights de Hoje</div>
 
           {loadingInsights ? (
-            <div className="text-sm text-white/30">Carregando insights...</div>
+            <div className="text-sm text-white/60">Carregando insights...</div>
           ) : insights.length === 0 ? (
-            <div className="text-sm text-white/30">Nenhum insight disponível ainda.</div>
+            <div className="text-sm text-white/60">Nenhum insight disponível ainda.</div>
           ) : (
             insights.map((ins, i) => {
               const style = INSIGHT_STYLE[ins.type] ?? INSIGHT_STYLE.previsao;

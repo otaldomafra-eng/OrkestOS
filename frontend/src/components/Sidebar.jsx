@@ -53,7 +53,7 @@ export default function Sidebar() {
         >
           WiseMindOS
         </div>
-        <div className="text-[11px] text-white/25 mt-0.5 tracking-wide">
+        <div className="text-[11px] text-white/40 mt-0.5 tracking-wide">
           Sistema de Produtividade
         </div>
       </div>
@@ -62,7 +62,7 @@ export default function Sidebar() {
       <nav className="flex-1 px-3 py-4 overflow-y-auto">
         {NAV_GROUPS.map((group) => (
           <div key={group.label} className="mb-5">
-            <div className="text-[10px] font-semibold text-white/25 uppercase tracking-widest px-2.5 mb-2">
+            <div className="text-[10px] font-semibold text-white/40 uppercase tracking-widest px-2.5 mb-2">
               {group.label}
             </div>
             {group.items.map((item) =>
@@ -140,7 +140,7 @@ export default function Sidebar() {
             <div className="text-sm font-semibold text-white truncate">
               {user?.name ?? 'Usuário'}
             </div>
-            <div className="text-[11px] text-white/30">Nível 7</div>
+            <div className="text-[11px] text-white/50">Nível 7</div>
           </div>
           <button
             onClick={(e) => { e.stopPropagation(); logout(); }}
