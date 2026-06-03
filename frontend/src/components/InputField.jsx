@@ -17,7 +17,7 @@ const InputField = ({
   return (
     <div className={`w-full ${className}`}>
       {label && (
-        <label className="block text-gray-300 text-sm font-medium mb-2">
+        <label className="block text-charcoal text-sm font-medium mb-2">
           {label} {required && <span className="text-red-400">*</span>}
         </label>
       )}
@@ -30,11 +30,10 @@ const InputField = ({
           placeholder={placeholder}
           required={required}
           className="
-            w-full bg-gray-700 text-white border border-gray-600 rounded-lg 
+            w-full bg-surface-deep text-ink border border-hairline-strong rounded-lg 
             px-4 py-3 pr-10
-            focus:outline-none focus:ring-2 focus:ring-indigo-500 
+            focus:outline-none focus:ring-2 focus:ring-white/30
             focus:border-transparent 
-            focus:shadow-[0_0_15px_rgba(99,102,241,0.5)]
             transition-all
           "
         />
@@ -44,7 +43,7 @@ const InputField = ({
           <button
             type="button"
             onClick={() => setShowSenha(!showSenha)}
-            className="absolute right-3 top-4 text-gray-400 hover:text-white transition-all duration-300 transform hover:scale-110 active:scale-95 hover:drop-shadow-[0_0_6px_rgba(99,102,241,0.6)]"
+            className="absolute right-3 top-4 text-mute hover:text-ink transition-all duration-300 transform hover:scale-110 active:scale-95"
           >
             {showSenha ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>

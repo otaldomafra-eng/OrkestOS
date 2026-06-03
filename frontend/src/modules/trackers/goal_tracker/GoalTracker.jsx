@@ -1,17 +1,20 @@
 ﻿import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, ArrowLeft, ChevronRight, Target } from 'lucide-react';
-import { useApp } from '../../../store/AppContext';
+import { Plus, ArrowLeft, ChevronRight, Target, Trophy } from 'lucide-react';
+import { useApp } from '../../../hooks/useApp';
 import Card from '../../../components/Card';
 import DonutChart from '../../../components/DonutChart';
 import GoalCard from '../../../components/GoalCard';
-import GradientButton from '../../../components/GradientButton';
+import Button from '../../../components/GradientButton';
 import InputField from '../../../components/InputField';
 import Modal from '../../../components/Modal';
 import TaskItem from '../../../components/TaskItem';
 import ProjectCard from '../../../components/ProjectCard';
 import { motion as Motion } from 'framer-motion';
 import { SkeletonBlock, SkeletonCard, TrackerGridSkeleton } from '../../../components/LoadingSkeleton';
+import { useXP } from '../../../hooks/useXP';
+import { XP_VALUES } from '../../../data/gamification';
+import { showToast } from '../../../utils/toastHelper';
 
 const GoalTracker = () => {
   const navigate = useNavigate();
@@ -39,6 +42,25 @@ const GoalTracker = () => {
   const [showAddProject, setShowAddProject] = useState(false);
   const [newProject, setNewProject] = useState({ title: '', deadline: '', description: '' });
   const [newGoal, setNewGoal] = useState({ title: '', type: 'mid-term', description: '', deadline: '' });
+  const { addXP, stats } = useXP();
+
+  const claimedGoalsRef = useState(new Set())[0];
+
+  const handleCompleteGoal = (goal) => {
+    const progress = calculateGoalProgress(goal.id);
+    if (progress < 100) {
+      showToast({ message: 'Complete todas as tarefas da meta primeiro', status: 'warning' });
+      return;
+    }
+    const key = `goal_${goal.id}`;
+    if (claimedGoalsRef.has(key)) return;
+    claimedGoalsRef.add(key);
+    const xpMap = { final: XP_VALUES.goal_final, long_term: XP_VALUES.goal_longterm, mid_term: XP_VALUES.goal_midterm };
+    addXP(xpMap[goal.type] ?? XP_VALUES.goal_midterm, 'meta concluída', {
+      goalsCompleted: (stats?.goalsCompleted ?? 0) + 1,
+    });
+    showToast({ message: 'Meta concluída! XP concedido.', status: 'success' });
+  };
 
   const handleAddGoal = (e) => {
     e.preventDefault();
@@ -82,15 +104,6 @@ const GoalTracker = () => {
     setShowAddTask(false);
   };
 
-  const getTypeColor = (type) => {
-    switch (type) {
-      case 'final': return 'from-purple-600 to-pink-600';
-      case 'long-term': return 'from-indigo-600 to-blue-600';
-      case 'mid-term': return 'from-blue-600 to-cyan-600';
-      default: return 'from-indigo-600 to-violet-600';
-    }
-  };
-
   const handleGoalClick = (goal) => {
     setSelectedGoal(goal);
   };
@@ -110,48 +123,37 @@ const GoalTracker = () => {
     const linkedGoal = goals.find(g => g.id === selectedProject.goalId);
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black pb-20 px-4 pt-6 relative overflow-hidden">
-        <Motion.div
-          className="absolute top-20 left-10 w-72 h-72 bg-green-500 rounded-full blur-3xl opacity-20"
-          animate={{ x: [0, 40, 0], y: [0, 20, 0] }}
-          transition={{ duration: 10, repeat: Infinity }}
-        />
-
-        <Motion.div
-          className="absolute bottom-20 right-10 w-72 h-72 bg-emerald-500 rounded-full blur-3xl opacity-20"
-          animate={{ x: [0, -40, 0], y: [0, -20, 0] }}
-          transition={{ duration: 12, repeat: Infinity }}
-        />
+      <div className="min-h-screen bg-canvas pb-20 px-4 pt-6 relative overflow-hidden">
         <div className="max-w-4xl mx-auto">
           <button
             onClick={() => setSelectedProject(null)}
-            className="flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-all hover:-translate-x-1 cursor-pointer"
+            className="flex items-center gap-2 text-mute hover:text-ink mb-6 transition-all hover:-translate-x-1 cursor-pointer"
             data-testid="back-to-projects-btn"
           >
             <ArrowLeft size={20} />
-            Back to Projects
+            Voltar aos Projetos
           </button>
 
           <Motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <Card className="mb-6 bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_40px_rgba(16,185,129,0.2)]">
+            <Card className="mb-6">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-xl bg-gradient-to-r from-green-600 to-emerald-600">
-                    <Target size={22} className="text-white" />
+                  <div className="p-3 rounded-xl bg-[rgba(16,185,129,0.1)]">
+                    <Target size={22} className="text-accent-green" />
                   </div>
 
                   <div>
-                    <h1 className="text-2xl md:text-3xl font-bold text-white">
+                    <h1 className="text-2xl md:text-3xl font-bold text-ink">
                       {selectedProject.title}
                     </h1>
 
-                    <p className="text-sm text-emerald-400 mt-1">
+                    <p className="text-sm text-accent-green mt-1">
                       Progresso: {progress}%
                     </p>
 
                     {linkedGoal && (
-                      <span className="text-xs mt-1 inline-block text-indigo-400">
-                        Linked to: {linkedGoal.title}
+                      <span className="text-xs mt-1 inline-block text-accent-blue">
+                        Vinculado a: {linkedGoal.title}
                       </span>
                     )}
                   </div>
@@ -161,22 +163,22 @@ const GoalTracker = () => {
                 </div>
               </div>
               {selectedProject.description && (
-                <p className="text-gray-400 mt-4">{selectedProject.description}</p>
+                <p className="text-mute mt-4">{selectedProject.description}</p>
               )}
             </Card>
           </Motion.div>
 
-          <Card className="bg-white/5 backdrop-blur-xl border border-white/10">
+          <Card className="">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-white">Tasks</h2>
-              <button
+              <h2 className="text-xl font-bold text-ink">Tarefas</h2>
+              <Button
+                variant="primary"
                 onClick={() => setShowAddProjectTask(true)}
                 data-testid="add-task-btn"
-                className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] hover:-translate-y-1 active:scale-95 text-white px-4 py-2 rounded-lg transition-all cursor-pointer"
               >
                 <Plus size={20} className="inline mr-2" />
                 Adicionar tarefa
-              </button>
+              </Button>
             </div>
             {projectTasks.length > 0 ? (
               <div className="space-y-3">
@@ -196,31 +198,31 @@ const GoalTracker = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-400 text-center py-8">No tasks yet. Add your first task!</p>
+              <p className="text-mute text-center py-8">Nenhuma tarefa ainda. Adicione sua primeira tarefa!</p>
             )}
           </Card>
         </div>
 
         {/* Adicionar tarefa Modal */}
-        <Modal isOpen={showAddProjectTask} onClose={() => setShowAddProjectTask(false)} title="Adicionar tarefa to Project">
+        <Modal isOpen={showAddProjectTask} onClose={() => setShowAddProjectTask(false)} title="Adicionar tarefa ao Projeto">
           <div className="space-y-4">
             <InputField
               label="Titulo da tarefa"
               value={newProjectTask.title}
               onChange={(e) => setNewProjectTask({ ...newProjectTask, title: e.target.value })}
-              placeholder="Enter task title"
+              placeholder="Digite o título da tarefa"
               data-testid="task-title-input"
             />
             <InputField
-              label="Deadline (Optional)"
+              label="Prazo (Opcional)"
               type="date"
               value={newProjectTask.deadline}
               onChange={(e) => setNewProjectTask({ ...newProjectTask, deadline: e.target.value })}
               data-testid="task-deadline-input"
             />
-            <div className="flex items-center justify-between bg-white/5 border border-white/10 rounded-lg px-4 py-3">
-              <label htmlFor="important" className="text-gray-300 text-sm">
-                Mark as Importante
+            <div className="flex items-center justify-between bg-surface-card border border-hairline-strong rounded-lg px-4 py-3">
+              <label htmlFor="important" className="text-charcoal text-sm">
+                Marcar como Importante
               </label>
 
               <input
@@ -228,13 +230,13 @@ const GoalTracker = () => {
                 id="important"
                 checked={newProjectTask.isImportant}
                 onChange={(e) => setNewProjectTask({ ...newProjectTask, isImportant: e.target.checked })}
-                className="w-5 h-5 accent-orange-500"
+                className="w-5 h-5 accent-yellow-500"
                 data-testid="task-important-checkbox"
               />
             </div>
-            <GradientButton onClick={handleAddProjectTask} className="w-full" data-testid="submit-task-btn">
+            <Button variant="primary" onClick={handleAddProjectTask} className="w-full" data-testid="submit-task-btn">
               Adicionar tarefa
-            </GradientButton>
+            </Button>
           </div>
         </Modal>
       </div>
@@ -249,30 +251,19 @@ const GoalTracker = () => {
     if(selectedProject) return;
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black pb-20 px-4 pt-6 relative overflow-hidden">
-        <Motion.div
-          className="absolute top-20 left-10 w-72 h-72 bg-indigo-500 rounded-full blur-3xl opacity-20"
-          animate={{ x: [0, 40, 0], y: [0, 20, 0] }}
-          transition={{ duration: 10, repeat: Infinity }}
-        />
-
-        <Motion.div
-          className="absolute bottom-20 right-10 w-72 h-72 bg-purple-500 rounded-full blur-3xl opacity-20"
-          animate={{ x: [0, -40, 0], y: [0, -20, 0] }}
-          transition={{ duration: 12, repeat: Infinity }}
-        />
+      <div className="min-h-screen bg-canvas pb-20 px-4 pt-6 relative overflow-hidden">
         <div className="max-w-4xl mx-auto">
           <button
             onClick={handleBackToList}
-            className="flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-all hover:-translate-x-1 cursor-pointer"
+            className="flex items-center gap-2 text-mute hover:text-ink mb-6 transition-all hover:-translate-x-1 cursor-pointer"
             data-testid="back-to-goals-btn"
           >
             <ArrowLeft size={20} />
-            Back to Goals
+            Voltar às Metas
           </button>
 
           <Motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <Card className="mb-6 bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_40px_rgba(99,102,241,0.2)] hover:shadow-[0_0_50px_rgba(99,102,241,0.3)] transition-all">
+            <Card className="mb-6">
 
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
 
@@ -283,23 +274,23 @@ const GoalTracker = () => {
                   <div className="flex items-start justify-between gap-3">
 
                     <div className="flex gap-3 items-center">
-                      <div className={`p-3 h-12 w-12 flex items-center justify-center bg-gradient-to-r ${getTypeColor(selectedGoal.type)} rounded-xl`}>
-                        <Target size={20} className="text-white" />
+                      <div className={`p-3 h-12 w-12 flex items-center justify-center bg-[rgba(59,158,255,0.1)] rounded-xl`}>
+                        <Target size={20} className="text-accent-blue" />
                       </div>
 
                       <div>
-                        <h1 className="text-xl md:text-2xl font-bold text-white leading-tight">
+                        <h1 className="text-xl md:text-2xl font-bold text-ink leading-tight">
                           {selectedGoal.title}
                         </h1>
 
-                        <p className="text-sm text-indigo-400">
-                          {progress}% completed
+                        <p className="text-sm text-accent-blue">
+                          {progress}% concluído
                         </p>
                       </div>
                     </div>
 
                     {/* Type Badge */}
-                    <span className="text-xs md:text-sm px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-400 whitespace-nowrap">
+                    <span className="text-xs md:text-sm px-3 py-1 rounded-full bg-[rgba(59,158,255,0.1)] text-accent-blue whitespace-nowrap">
                       {selectedGoal.type}
                     </span>
 
@@ -316,9 +307,22 @@ const GoalTracker = () => {
 
               {/* DESCRIPTION */}
               {selectedGoal.description && (
-                <p className="text-gray-400 mt-4 text-sm leading-relaxed">
+                <p className="text-mute mt-4 text-sm leading-relaxed">
                   {selectedGoal.description}
                 </p>
+              )}
+
+              {progress >= 100 && (
+                <div className="mt-6 pt-4 border-t border-white/[0.07]">
+                  <Button
+                    variant="primary"
+                    onClick={() => handleCompleteGoal(selectedGoal)}
+                    className="w-full"
+                  >
+                    <Trophy size={18} />
+                    Receber XP por Concluir Meta
+                  </Button>
+                </div>
               )}
 
             </Card>
@@ -327,15 +331,15 @@ const GoalTracker = () => {
           {goalProjects.length > 0 ? (
             <div className="mb-6">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold text-white">Projects</h2>
-                <button
+                <h2 className="text-xl font-bold text-ink">Projetos</h2>
+                <Button
+                  variant="primary"
                   onClick={() => setShowAddProject(true)}
                   data-testid="add-project-btn"
-                  className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] hover:-translate-y-1 active:scale-95 text-white px-4 py-2 rounded-lg transition-all cursor-pointer"
                 >
                   <Plus size={20} className="inline mr-2" />
-                  Add Project
-                </button>
+                  Adicionar Projeto
+                </Button>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {goalProjects.map((project, index) => (
@@ -357,37 +361,36 @@ const GoalTracker = () => {
               </div>
             </div>
           ) : goalTasks.length > 0 && (
-            <Card className="bg-white/5 mb-4 backdrop-blur-xl border border-white/10 text-center">
-              <h2 className="text-xl font-bold text-white mb-4 text-start">Projects</h2>
-              <p className="text-gray-400 text-center py-8">
-                No projects yet.
+            <Card className="mb-4 text-center">
+              <h2 className="text-xl font-bold text-ink mb-4 text-start">Projetos</h2>
+              <p className="text-mute text-center py-8">
+                Nenhum projeto ainda.
                 <br />
-                <span className="text-indigo-400">Add Projects for a stronger you.</span>
+                <span className="text-accent-blue">Adicione Projetos para um você mais forte.</span>
               </p>
-              <button
+              <Button
+                variant="primary"
                 onClick={() => setShowAddProject(true)}
                 data-testid="add-project-btn"
-                className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] hover:-translate-y-1 active:scale-95 text-white px-4 py-2 rounded-lg transition-all cursor-pointer"
               >
                 <Plus size={20} className="inline mr-2" />
-                Add Project
-              </button>
+                Adicionar Projeto
+              </Button>
             </Card>
           )}
 
           {goalTasks.length > 0 ? (
-            <Card className="bg-white/5 mb-4 backdrop-blur-xl border border-white/10">
-              {/* <h2 className="text-xl font-bold text-white">Tasks</h2> */}
+            <Card className="mb-4">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold text-white">Tasks</h2>
-                <button
+                <h2 className="text-xl font-bold text-ink">Tarefas</h2>
+                <Button
+                  variant="primary"
                   onClick={() => setShowAddTask(true)}
                   data-testid="add-task-btn"
-                  className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] hover:-translate-y-1 active:scale-95 text-white px-4 py-2 rounded-lg transition-all cursor-pointer"
                 >
                   <Plus size={20} className="inline mr-2" />
                   Adicionar tarefa
-                </button>
+                </Button>
               </div>
               <div className="space-y-3">
                 {goalTasks.map((task) => (
@@ -405,87 +408,87 @@ const GoalTracker = () => {
               </div>
             </Card>
           ) : goalProjects.length > 0 && (
-            <Card className="bg-white/5 mb-4 backdrop-blur-xl border border-white/10 text-center">
-              <h2 className="text-xl font-bold text-white mb-4 text-start">Tasks</h2>
-              <p className="text-gray-400 text-center py-8">
-                No tasks yet.
+            <Card className="mb-4 text-center">
+              <h2 className="text-xl font-bold text-ink mb-4 text-start">Tarefas</h2>
+              <p className="text-mute text-center py-8">
+                Nenhuma tarefa ainda.
                 <br />
-                <span className="text-indigo-400">Add your first task!</span>
+                <span className="text-accent-blue">Adicione sua primeira tarefa!</span>
               </p>
-              <button
+              <Button
+                variant="primary"
                 onClick={() => setShowAddTask(true)}
                 data-testid="add-task-btn"
-                className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] hover:-translate-y-1 active:scale-95 text-white px-4 py-2 rounded-lg transition-all cursor-pointer"
               >
                 <Plus size={20} className="inline mr-2" />
                 Adicionar tarefa
-              </button>
+              </Button>
             </Card>
           )}
 
 
           {goalProjects.length === 0 && goalTasks.length === 0 && (
-            <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-center">
-              <p className="text-gray-400 text-center py-8">
-                No projects or tasks yet.
+            <Card className="text-center">
+              <p className="text-mute text-center py-8">
+                Nenhum projeto ou tarefa ainda.
                 <br />
-                <span className="text-indigo-400">Start building your execution system</span>
+                <span className="text-accent-blue">Comece a construir seu sistema de execução</span>
               </p>
               <div className='flex gap-3 justify-center'>
-                <button
+                <Button
+                  variant="primary"
                   onClick={() => setShowAddProject(true)}
                   data-testid="add-project-btn"
-                  className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] hover:-translate-y-1 active:scale-95 text-white px-4 py-2 rounded-lg transition-all cursor-pointer"
                 >
                   <Plus size={20} className="inline mr-2" />
-                  Add Project
-                </button>
-                <button
+                  Adicionar Projeto
+                </Button>
+                <Button
+                  variant="primary"
                   onClick={() => setShowAddTask(true)}
                   data-testid="add-task-btn"
-                  className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] hover:-translate-y-1 active:scale-95 text-white px-4 py-2 rounded-lg transition-all cursor-pointer"
                 >
                   <Plus size={20} className="inline mr-2" />
                   Adicionar tarefa
-                </button>
+                </Button>
               </div>
             </Card>
           )}
         </div>
         {/* Adicionar tarefa Modal */}
-        <Modal isOpen={showAddTask} onClose={() => setShowAddTask(false)} title="Adicionar tarefa to Project">
+        <Modal isOpen={showAddTask} onClose={() => setShowAddTask(false)} title="Adicionar tarefa ao Projeto">
           <div className="space-y-4">
             <InputField
               label="Titulo da tarefa"
               value={newTask.title}
               onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-              placeholder="Enter task title"
+              placeholder="Digite o título da tarefa"
               data-testid="task-title-input"
             />
             <div>
-              <label className="block text-gray-300 text-sm font-medium mb-2">Link to Project (Optional)</label>
+              <label className="block text-charcoal text-sm font-medium mb-2">Vincular ao Projeto (Opcional)</label>
               <select
                 value={newTask.projectId}
                 onChange={(e) => setNewTask({ ...newTask, projectId: e.target.value })}
-                className="w-full bg-gray-700 text-white border border-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full bg-surface-elevated text-ink border border-hairline-strong rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-blue"
                 data-testid="task-project-select"
               >
-                <option value="">No Project (independent)</option>
+                <option value="">Sem Projeto (independente)</option>
                 {goalProjects.map(project => (
                   <option key={project.id} value={project.id}>{project.title}</option>
                 ))}
               </select>
             </div>
             <InputField
-              label="Deadline (Optional)"
+              label="Prazo (Opcional)"
               type="date"
               value={newTask.deadline}
               onChange={(e) => setNewTask({ ...newTask, deadline: e.target.value })}
               data-testid="task-deadline-input"
             />
-            <div className="flex items-center justify-between bg-white/5 border border-white/10 rounded-lg px-4 py-3">
-              <label htmlFor="important" className="text-gray-300 text-sm">
-                Mark as Importante
+            <div className="flex items-center justify-between bg-surface-card border border-hairline-strong rounded-lg px-4 py-3">
+              <label htmlFor="important" className="text-charcoal text-sm">
+                Marcar como Importante
               </label>
 
               <input
@@ -493,13 +496,13 @@ const GoalTracker = () => {
                 id="important"
                 checked={newTask.isImportant}
                 onChange={(e) => setNewTask({ ...newTask, isImportant: e.target.checked })}
-                className="w-5 h-5 accent-orange-500"
+                className="w-5 h-5 accent-yellow-500"
                 data-testid="task-important-checkbox"
               />
             </div>
-            <GradientButton onClick={handleAddTask} className="w-full" data-testid="submit-task-btn">
+            <Button variant="primary" onClick={handleAddTask} className="w-full" data-testid="submit-task-btn">
               Adicionar tarefa
-            </GradientButton>
+            </Button>
           </div>
         </Modal>
         {/* Add Project Modal */}
@@ -509,7 +512,7 @@ const GoalTracker = () => {
               label="Titulo do projeto"
               value={newProject.title}
               onChange={(e) => setNewProject({ ...newProject, title: e.target.value })}
-              placeholder="Enter project title"
+              placeholder="Digite o título do projeto"
               required
               data-testid="project-title-input"
             />
@@ -524,20 +527,20 @@ const GoalTracker = () => {
             />
 
             <div>
-              <label className="block text-gray-300 text-sm font-medium mb-2">Description</label>
+              <label className="block text-charcoal text-sm font-medium mb-2">Descrição</label>
               <textarea
                 value={newProject.description}
                 onChange={(e) => setNewProject({ ...newProject, description: e.target.value })}
-                placeholder="Describe your project..."
+                placeholder="Descreva seu projeto..."
                 data-testid="project-description-input"
                 required
-                className="w-full bg-gray-700 text-white border border-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500 min-h-[100px]"
+                className="w-full bg-surface-elevated text-ink border border-hairline-strong rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-blue min-h-[100px]"
               />
             </div>
 
-            <GradientButton onClick={handleAddProject} className="w-full" data-testid="submit-project-btn">
+            <Button variant="primary" onClick={handleAddProject} className="w-full" data-testid="submit-project-btn">
               Criar projeto
-            </GradientButton>
+            </Button>
           </div>
         </Modal>
       </div>
@@ -545,18 +548,7 @@ const GoalTracker = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black pb-20 px-4 pt-6 relative overflow-hidden">
-      <Motion.div
-        className="absolute top-20 left-10 w-72 h-72 bg-indigo-500 rounded-full blur-3xl opacity-20"
-        animate={{ x: [0, 40, 0], y: [0, 20, 0] }}
-        transition={{ duration: 10, repeat: Infinity }}
-      />
-
-      <Motion.div
-        className="absolute bottom-20 right-10 w-72 h-72 bg-purple-500 rounded-full blur-3xl opacity-20"
-        animate={{ x: [0, -40, 0], y: [0, -20, 0] }}
-        transition={{ duration: 12, repeat: Infinity }}
-      />
+    <div className="min-h-screen bg-canvas pb-20 px-4 pt-6 relative overflow-hidden">
       <div className="max-w-6xl mx-auto">
         <Motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -564,16 +556,16 @@ const GoalTracker = () => {
           className="flex justify-between items-center mb-6"
         >
           <div>
-            <h1 className="text-3xl young-serif-regular font-bold text-gray-200">Rastreador de metas</h1>
-            <p className="text-gray-400">Track your final, long-term, and mid-term goals</p>
+            <h1 className="text-3xl young-serif-regular font-bold text-ink">Rastreador de metas</h1>
+            <p className="text-mute">Acompanhe suas metas finais, de longo prazo e médio prazo</p>
           </div>
-          <button
+          <Button
+            variant="primary"
             onClick={() => setShowAddGoal(true)}
             data-testid="add-goal-btn"
-            className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] hover:-translate-y-1 active:scale-95 text-white p-3 rounded-xl transition-all cursor-pointer"
           >
             <Plus size={24} />
-          </button>
+          </Button>
         </Motion.div>
 
         {/* Progresso geral */}
@@ -594,20 +586,20 @@ const GoalTracker = () => {
             </div>
           </SkeletonCard>
         ) : goals.length > 0 && (
-          <Card className="mb-6 bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_40px_rgba(99,102,241,0.2)]">
+          <Card className="mb-6">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
 
               {/* Left */}
               <div>
-                <h2 className="text-xl font-bold text-white mb-1">
+                <h2 className="text-xl font-bold text-ink mb-1">
                   Progresso geral
                 </h2>
-                <p className="text-gray-400 text-sm">
-                  Keep pushing — consistency builds success 🚀
+                <p className="text-mute text-sm">
+                  Continue assim — a consistência constrói o sucesso 🚀
                 </p>
 
-                <div className="mt-3 text-sm text-gray-400">
-                  Total Goals: <span className="text-white font-semibold">{goals.length}</span>
+                <div className="mt-3 text-sm text-mute">
+                  Total de Metas: <span className="text-ink font-semibold">{goals.length}</span>
                 </div>
               </div>
 
@@ -622,7 +614,7 @@ const GoalTracker = () => {
                   <p className="text-green-400 text-xl font-bold">
                     {goals.filter(g => calculateGoalProgress(g.id) >= 80).length}
                   </p>
-                  <p className="text-xs text-gray-400">On Track</p>
+                    <p className="text-xs text-mute">No Caminho</p>
                 </div>
 
                 <div>
@@ -632,14 +624,14 @@ const GoalTracker = () => {
                       return p >= 50 && p < 80;
                     }).length}
                   </p>
-                  <p className="text-xs text-gray-400">Em andamento</p>
+                  <p className="text-xs text-mute">Em andamento</p>
                 </div>
 
                 <div>
                   <p className="text-red-400 text-xl font-bold">
                     {goals.filter(g => calculateGoalProgress(g.id) < 50).length}
                   </p>
-                  <p className="text-xs text-gray-400">Behind</p>
+                  <p className="text-xs text-mute">Atrasado</p>
                 </div>
               </div>
 
@@ -666,13 +658,13 @@ const GoalTracker = () => {
             ))}
           </div>
         ) : (
-          <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-center">
+          <Card className="text-center">
             <div className="text-center py-16">
-              <Target size={64} className="mx-auto text-indigo-400 mb-4 animate-pulse" />
-              <p className="text-gray-400 text-lg mb-4">No goals yet. Start by adding your first goal!</p>
-              <GradientButton onClick={() => setShowAddGoal(true)} data-testid="add-first-goal-btn">
-                Add Your First Goal
-              </GradientButton>
+              <Target size={64} className="mx-auto text-accent-blue mb-4 animate-pulse" />
+              <p className="text-mute text-lg mb-4">Nenhuma meta ainda. Comece adicionando sua primeira meta!</p>
+              <Button variant="primary" onClick={() => setShowAddGoal(true)} data-testid="add-first-goal-btn">
+                Adicionar Primeira Meta
+              </Button>
             </div>
           </Card>
         )}
@@ -685,49 +677,49 @@ const GoalTracker = () => {
             label="Titulo da meta"
             value={newGoal.title}
             onChange={(e) => setNewGoal({ ...newGoal, title: e.target.value })}
-            placeholder="Enter goal title"
+            placeholder="Digite o título da meta"
             required
             data-testid="goal-title-input"
           />
 
           <div>
-            <label className="block text-gray-300 text-sm font-medium mb-2">Category</label>
+            <label className="block text-charcoal text-sm font-medium mb-2">Categoria</label>
             <select
               value={newGoal.type}
               onChange={(e) => setNewGoal({ ...newGoal, type: e.target.value })}
-              className="w-full bg-gray-700 text-white border border-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full bg-surface-elevated text-ink border border-hairline-strong rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-blue"
               data-testid="goal-type-select"
             >
-              <option value="final">Final Goal</option>
-              <option value="long-term">Long-term Goal</option>
-              <option value="mid-term">Mid-term Goal</option>
+              <option value="final">Meta Final</option>
+              <option value="long-term">Meta de Longo Prazo</option>
+              <option value="mid-term">Meta de Médio Prazo</option>
             </select>
           </div>
 
           <div>
-            <label className="block text-gray-300 text-sm font-medium mb-2">Description (Optional)</label>
+            <label className="block text-charcoal text-sm font-medium mb-2">Descrição (Opcional)</label>
             <textarea
               value={newGoal.description}
               onChange={(e) => setNewGoal({ ...newGoal, description: e.target.value })}
-              placeholder="Describe your goal..."
+              placeholder="Descreva sua meta..."
               data-testid="goal-description-input"
               required
-              className="w-full bg-gray-700 text-white border border-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 min-h-[100px]"
+              className="w-full bg-surface-elevated text-ink border border-hairline-strong rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-blue min-h-[100px]"
             />
           </div>
 
-          <InputField
-            label="Deadline"
-            type="date"
+            <InputField
+              label="Prazo"
+              type="date"
             value={newGoal.deadline}
             onChange={(e) => setNewGoal({ ...newGoal, deadline: e.target.value })}
             data-testid="goal-deadline-input"
             required
           />
 
-          <GradientButton type="submit" className="w-full" data-testid="submit-goal-btn">
+          <Button variant="primary" type="submit" className="w-full" data-testid="submit-goal-btn">
             Criar meta
-          </GradientButton>
+          </Button>
         </form>
       </Modal>
     </div>

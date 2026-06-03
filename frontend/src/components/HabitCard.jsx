@@ -1,19 +1,28 @@
 ﻿import { Flame, Clock } from 'lucide-react';
 import Card from './Card';
 import ToggleSwitch from './ToggleSwitch';
+import { useXP } from '../hooks/useXP';
+import { XP_VALUES } from '../data/gamification';
 
 const HabitCard = ({ habit, onComplete }) => {
-  const isCompleted = new Date(habit.lastCompleted).toDateString() === new Date().toDateString();
+  const { addXP } = useXP();
+  const isCompletedToday = new Date(habit.lastCompleted).toDateString() === new Date().toDateString();
+
+  const handleComplete = (e) => {
+    e.stopPropagation();
+    if (!isCompletedToday) {
+      addXP(XP_VALUES.habit, 'hábito diário');
+    }
+    onComplete && onComplete(habit.id);
+  };
 
   return (
       <Card
         className={`
           cursor-pointer transition-all duration-300
-          bg-white/5 backdrop-blur-xl border border-white/10
-          shadow-[0_0_20px_rgba(0,0,0,0.2)]
-          ${isCompleted
-            ? 'bg-indigo-900/30 border-indigo-500/40 shadow-[0_0_25px_rgba(99,102,241,0.4)]'
-            : 'hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]'
+          ${isCompletedToday
+            ? 'bg-[rgba(59,158,255,0.08)] border-accent-blue/40'
+            : ''
           }
         `}
         onClick={() => onComplete && onComplete(habit.id)}
@@ -38,17 +47,14 @@ const HabitCard = ({ habit, onComplete }) => {
 
             {/* TOGGLE SWITCH */}
             <ToggleSwitch
-              checked={isCompleted}
-              onChange={(e) => {
-                e.stopPropagation();
-                onComplete && onComplete(habit.id)
-              }}
+              checked={isCompletedToday}
+              onChange={handleComplete}
             />
 
             {/* STREAK */}
-            <div className="flex items-center gap-1 bg-orange-500/10 px-2 py-1 rounded-lg">
-              <Flame size={14} className="text-orange-400" />
-              <span className="text-sm font-bold text-orange-400">
+            <div className="flex items-center gap-1 bg-accent-yellow/10 px-2 py-1 rounded-lg">
+              <Flame size={14} className="text-accent-yellow" />
+              <span className="text-sm font-bold text-accent-yellow">
                 {habit.streak}
               </span>
             </div>
@@ -57,13 +63,13 @@ const HabitCard = ({ habit, onComplete }) => {
         </div>
 
         {/* TITLE */}
-        <h3 className="text-lg md:text-xl font-semibold text-white mb-2 leading-tight">
+        <h3 className="text-lg md:text-xl font-semibold text-ink mb-2 leading-tight">
           {habit.name}
         </h3>
 
         {/* TIME */}
         {habit.startTime && habit.endTime && (
-          <div className="flex items-center text-sm text-gray-400 mb-2">
+          <div className="flex items-center text-sm text-mute mb-2">
             <Clock size={14} className="mr-2" />
             <span>{habit.startTime} → {habit.endTime}</span>
           </div>
@@ -73,14 +79,14 @@ const HabitCard = ({ habit, onComplete }) => {
         <div className="flex items-center justify-between mt-3">
 
           {/* MODE */}
-          <span className="text-xs text-gray-500">
-            {habit.mode === '21-day' ? '21-Day Challenge' : 'Permanent'}
+          <span className="text-xs text-ash">
+            {habit.mode === '21-day' ? 'Desafio de 21 Dias' : 'Permanente'}
           </span>
 
           {/* COMPLETION STATUS */}
-          {isCompleted && (
-            <span className="text-xs text-indigo-400 font-medium">
-              ✔ Concluido Today
+          {isCompletedToday && (
+            <span className="text-xs text-accent-blue font-medium">
+              ✔ Concluído Hoje
             </span>
           )}
         </div>

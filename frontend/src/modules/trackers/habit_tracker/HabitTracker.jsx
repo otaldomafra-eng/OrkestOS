@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Plus, TrendingUp, TrendingDown, Flame } from 'lucide-react';
-import { useApp } from '../../../store/AppContext';
+import { useApp } from '../../../hooks/useApp';
 import Card from '../../../components/Card';
 import HabitCard from '../../../components/HabitCard';
-import GradientButton from '../../../components/GradientButton';
+import Button from '../../../components/GradientButton';
 import InputField from '../../../components/InputField';
 import Modal from '../../../components/Modal';
 import { motion } from 'framer-motion';
@@ -21,7 +21,7 @@ const HabitTracker = () => {
 
   const handleAddHabit = () => {
     if (!newHabit.name.trim() || !newHabit.startTime || !newHabit.endTime) {
-      alert('Please fill in all required fields');
+      alert('Por favor, preencha todos os campos obrigatórios');
       return;
     }
     addHabit(newHabit);
@@ -33,18 +33,7 @@ const HabitTracker = () => {
   const breakHabits = habits.filter(h => h.type === 'break');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black pb-20 px-4 pt-6 relative overflow-hidden">
-      <motion.div
-        className="absolute top-20 left-10 w-72 h-72 bg-orange-500 rounded-full blur-3xl opacity-20"
-        animate={{ x: [0, 40, 0], y: [0, 20, 0] }}
-        transition={{ duration: 10, repeat: Infinity }}
-      />
-
-      <motion.div
-        className="absolute bottom-20 right-10 w-72 h-72 bg-red-500 rounded-full blur-3xl opacity-20"
-        animate={{ x: [0, -40, 0], y: [0, -20, 0] }}
-        transition={{ duration: 12, repeat: Infinity }}
-      />
+    <div className="min-h-screen bg-canvas pb-20 px-4 pt-6 relative overflow-hidden">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -52,46 +41,46 @@ const HabitTracker = () => {
           className="flex justify-between items-center mb-6"
         >
           <div>
-            <h1 className="text-3xl font-bold text-gray-200 young-serif-regular">Rastreador de hábitos</h1>
-            <p className="text-gray-400">Construa bons hábitos e reduza os ruins</p>
+            <h1 className="text-3xl font-bold text-ink young-serif-regular">Rastreador de hábitos</h1>
+            <p className="text-mute">Construa bons hábitos e reduza os ruins</p>
           </div>
-          <button
+          <Button
+            variant="primary"
             onClick={() => setShowAddHabit(true)}
             data-testid="add-habit-btn"
-            className="bg-gradient-to-r from-orange-600 to-red-600 hover:shadow-[0_0_20px_rgba(249,115,22,0.6)] hover:-translate-y-1 active:scale-95 text-white p-3 rounded-xl transition-all cursor-pointer"
           >
             <Plus size={24} />
-          </button>
+          </Button>
         </motion.div>
 
         {/* Overall Stats */}
         {habits.length > 0 && (
-          <Card className="bg-white/5 mb-6 backdrop-blur-xl border border-white/10 shadow-[0_0_40px_rgba(249,115,22,0.2)]">
+          <Card className="mb-6">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
 
               {/* LEFT */}
               <div>
-                <h2 className="text-xl font-bold text-white mb-1">
+                <h2 className="text-xl font-bold text-ink mb-1">
                   Análise de hábitos
                 </h2>
-                <p className="text-gray-400 text-sm">
-                  Consistency builds your identity
+                <p className="text-mute text-sm">
+                  A consistência constrói sua identidade
                 </p>
               </div>
 
               {/* STATS */}
               <div className="grid grid-cols-2 gap-4 w-full md:w-auto">
 
-                <div className="bg-white/5 border border-white/10 rounded-lg p-4 text-center">
-                  <p className="text-3xl font-bold text-orange-400">{habits.length}</p>
-                  <p className="text-xs text-gray-400 mt-1">Total de hábitos</p>
+                <div className="bg-surface-card border border-hairline-strong rounded-lg p-4 text-center">
+                  <p className="text-3xl font-bold text-accent-yellow">{habits.length}</p>
+                  <p className="text-xs text-mute mt-1">Total de hábitos</p>
                 </div>
 
-                <div className="bg-white/5 border border-white/10 rounded-lg p-4 text-center">
-                  <p className="text-3xl font-bold text-green-400">
+                <div className="bg-surface-card border border-hairline-strong rounded-lg p-4 text-center">
+                  <p className="text-3xl font-bold text-accent-green">
                     {Math.max(...habits.map(h => h.streak), 0)}
                   </p>
-                  <p className="text-xs text-gray-400 mt-1">Maior sequência</p>
+                  <p className="text-xs text-mute mt-1">Maior sequência</p>
                 </div>
 
               </div>
@@ -101,16 +90,16 @@ const HabitTracker = () => {
         )}
 
         {/* Construir habitos */}
-        <Card className="mb-6 bg-transparent border border-white/10 shadow-[0_0_30px_rgba(34,197,94,0.2)]">
+        <Card className="mb-6 bg-surface-deep border border-hairline-strong">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <TrendingUp size={24} className="text-green-400" />
-              <h2 className="text-xl font-bold text-white">
+              <TrendingUp size={24} className="text-accent-green" />
+              <h2 className="text-xl font-bold text-ink">
                 Construir hábitos ({buildHabits.length})
               </h2>
             </div>
 
-            <span className="text-xs text-green-400 bg-green-500/10 px-3 py-1 rounded-full">
+            <span className="text-xs text-accent-green bg-green-500/10 px-3 py-1 rounded-full">
               Zona de crescimento
             </span>
           </div>
@@ -132,21 +121,21 @@ const HabitTracker = () => {
               ))}
             </div>
           ) : (
-            <p className="text-gray-400 text-center py-8">Nenhum hábito de construção ainda. Adicione um para começar.</p>
+            <p className="text-mute text-center py-8">Nenhum hábito de construção ainda. Adicione um para começar.</p>
           )}
         </Card>
 
         {/* Romper habitos */}
-        <Card className="mb-6 bg-transparent border border-white/10 shadow-[0_0_30px_rgba(34,197,94,0.2)]">
+        <Card className="mb-6 bg-surface-deep border border-hairline-strong">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <TrendingDown size={24} className="text-red-400" />
-              <h2 className="text-xl font-bold text-white">
+              <TrendingDown size={24} className="text-accent-red" />
+              <h2 className="text-xl font-bold text-ink">
                 Romper hábitos ({breakHabits.length})
               </h2>
             </div>
 
-            <span className="text-xs text-red-400 bg-red-500/10 px-3 py-1 rounded-full">
+            <span className="text-xs text-accent-red bg-red-500/10 px-3 py-1 rounded-full">
               Zona de disciplina
             </span>
           </div>
@@ -162,28 +151,28 @@ const HabitTracker = () => {
               ))}
             </div>
           ) : (
-            <p className="text-gray-400 text-center py-8">Nenhum hábito para romper ainda.</p>
+            <p className="text-mute text-center py-8">Nenhum hábito para romper ainda.</p>
           )}
         </Card>
 
 
 
         {habits.length === 0 && (
-          <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-center">
+          <Card className="text-center">
             <div className="text-center py-16">
-              <Flame size={64} className="text-orange-400 mx-auto mb-4 animate-pulse" />
+              <Flame size={64} className="text-accent-yellow mx-auto mb-4 animate-pulse" />
 
-              <p className="text-gray-400 text-lg mb-2">
+              <p className="text-mute text-lg mb-2">
                 Nenhum hábito ainda.
               </p>
 
-              <p className="text-indigo-400 text-sm mb-6">
+              <p className="text-accent-blue text-sm mb-6">
                 Comece a construir seu sistema de disciplina 🚀
               </p>
 
-              <GradientButton onClick={() => setShowAddHabit(true)}>
+              <Button variant="primary" onClick={() => setShowAddHabit(true)}>
                 Adicionar primeiro hábito
-              </GradientButton>
+              </Button>
             </div>
           </Card>
         )}
@@ -196,35 +185,35 @@ const HabitTracker = () => {
             label="Nome do hábito"
             value={newHabit.name}
             onChange={(e) => setNewHabit({ ...newHabit, name: e.target.value })}
-            placeholder="e.g., Morning Exercise, Read 30 pages"
+            placeholder="Ex.: Exercício Matinal, Ler 30 páginas"
             required
             data-testid="habit-name-input"
           />
 
           <div>
-            <label className="block text-gray-300 text-sm font-medium mb-2">Tipo de hábito</label>
+            <label className="block text-charcoal text-sm font-medium mb-2">Tipo de hábito</label>
             <div className="flex gap-3">
               <button
                 onClick={() => setNewHabit({ ...newHabit, type: 'build' })}
                 className={`flex-1 py-3 rounded-lg transition-all ${newHabit.type === 'build'
-                  ? 'bg-green-600 text-white shadow-[0_0_15px_rgba(34,197,94,0.5)]'
-                  : 'bg-gray-700 text-gray-300'
+                  ? 'bg-accent-green text-black shadow-[0_0_15px_rgba(34,197,94,0.5)]'
+                  : 'bg-surface-elevated text-charcoal border border-hairline-strong'
                   }`}
                 data-testid="habit-type-build"
               >
                 <TrendingUp size={20} className="inline mr-2" />
-                Build
+                Construir
               </button>
               <button
                 onClick={() => setNewHabit({ ...newHabit, type: 'break' })}
                 className={`flex-1 py-3 rounded-lg transition-all ${newHabit.type === 'break'
-                  ? 'bg-red-600 text-white shadow-[0_0_15px_rgba(239,68,68,0.5)]'
-                  : 'bg-gray-700 text-gray-300'
+                  ? 'bg-accent-red text-black shadow-[0_0_15px_rgba(239,68,68,0.5)]'
+                  : 'bg-surface-elevated text-charcoal border border-hairline-strong'
                   }`}
                 data-testid="habit-type-break"
               >
                 <TrendingDown size={20} className="inline mr-2" />
-                Break
+                Romper
               </button>
             </div>
           </div>
@@ -249,34 +238,34 @@ const HabitTracker = () => {
           </div>
 
           <div>
-            <label className="block text-gray-300 text-sm font-medium mb-2">Modo</label>
+            <label className="block text-charcoal text-sm font-medium mb-2">Modo</label>
             <div className="flex gap-3">
               <button
                 onClick={() => setNewHabit({ ...newHabit, mode: '21-day' })}
                 className={`flex-1 py-3 rounded-lg transition-all ${newHabit.mode === '21-day'
-                  ? 'bg-indigo-600 text-white'
-                  : 'bg-gray-700 text-gray-300'
+                  ? 'bg-accent-blue text-black'
+                  : 'bg-surface-elevated text-charcoal border border-hairline-strong'
                   }`}
                 data-testid="habit-mode-21day"
               >
-                21-Day Challenge
+                Desafio de 21 Dias
               </button>
               <button
                 onClick={() => setNewHabit({ ...newHabit, mode: 'permanent' })}
                 className={`flex-1 py-3 rounded-lg transition-all ${newHabit.mode === 'permanent'
-                  ? 'bg-indigo-600 text-white'
-                  : 'bg-gray-700 text-gray-300'
+                  ? 'bg-accent-blue text-black'
+                  : 'bg-surface-elevated text-charcoal border border-hairline-strong'
                   }`}
                 data-testid="habit-mode-permanent"
               >
-                Permanent
+                Permanente
               </button>
             </div>
           </div>
 
-          <GradientButton onClick={handleAddHabit} className="w-full" data-testid="submit-habit-btn">
+          <Button variant="primary" onClick={handleAddHabit} className="w-full" data-testid="submit-habit-btn">
             Criar hábito
-          </GradientButton>
+          </Button>
         </div>
       </Modal>
     </div >

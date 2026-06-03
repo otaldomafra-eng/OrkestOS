@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useData } from '../context/DataContext';
+import { useData } from '../hooks/useData';
 import Card from '../components/Card';
 import GradientButton from '../components/GradientButton';
 import InputField from '../components/InputField';
@@ -141,21 +141,10 @@ const Onboarding = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center px-4 py-12 relative overflow-hidden">
-      <motion.div
-        className="absolute top-20 left-10 w-72 h-72 bg-purple-500 rounded-full blur-3xl opacity-20"
-        animate={{ x: [0, 40, 0], y: [0, 20, 0] }}
-        transition={{ duration: 10, repeat: Infinity }}
-      />
-
-      <motion.div
-        className="absolute bottom-20 right-10 w-72 h-72 bg-indigo-500 rounded-full blur-3xl opacity-20"
-        animate={{ x: [0, -40, 0], y: [0, -20, 0] }}
-        transition={{ duration: 12, repeat: Infinity }}
-      />
+    <div className="min-h-screen bg-canvas flex items-center justify-center px-4 py-12 relative overflow-hidden">
       <div className="w-full max-w-2xl">
         <div className="text-center mb-8">
-          <motion.h1 className="text-4xl young-serif-regular font-bold text-white mb-2"
+          <motion.h1 className="text-4xl young-serif-regular font-bold text-ink mb-2"
             animate={{
               textShadow: [
                 "0px 0px 0px rgba(99,102,241,0)",        // no glow
@@ -171,7 +160,7 @@ const Onboarding = () => {
             }}>
             Orkest<span className="bg-gradient-to-r from-indigo-400 baloo-2-700 md:text-5xl to-violet-400 bg-clip-text text-transparent">OS</span>
           </motion.h1>
-          <p className="text-gray-400">Let's set up your Life Operating System</p>
+          <p className="text-charcoal">Configure seu Sistema Operacional de Vida</p>
           <div className="flex items-center justify-center mt-6">
 
             {[1, 2, 3].map((s, index) => (
@@ -182,10 +171,10 @@ const Onboarding = () => {
                   className={`
           w-10 h-10 flex items-center justify-center rounded-full text-sm font-bold
           ${step > s
-                      ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white"
+                      ? "bg-accent-blue text-ink"
                       : step === s
-                        ? "bg-indigo-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.6)]"
-                        : "bg-gray-700 text-gray-400"
+                        ? "bg-accent-blue text-ink"
+                        : "bg-surface-elevated text-charcoal"
                     }
         `}
                   initial={{ scale: 0.8 }}
@@ -197,10 +186,10 @@ const Onboarding = () => {
 
                 {/* Line (except last) */}
                 {index < 2 && (
-                  <div className="w-16 h-1 mx-2 relative overflow-hidden rounded-full bg-gray-700">
+                  <div className="w-16 h-1 mx-2 relative overflow-hidden rounded-full bg-surface-elevated">
 
                     <motion.div
-                      className="absolute top-0 left-0 h-full bg-gradient-to-r from-indigo-500 to-purple-500"
+                      className="absolute top-0 left-0 h-full bg-accent-blue"
                       animate={{
                         width: step > s ? "100%" : "0%"
                       }}
@@ -217,10 +206,9 @@ const Onboarding = () => {
         </div>
 
         <Card className="
-bg-white/5 backdrop-blur-xl 
-border border-white/10 
-rounded-2xl p-8
-shadow-[0_0_40px_rgba(99,102,241,0.2)]
+bg-surface-card 
+border border-hairline-strong 
+rounded-xl p-6
 ">
           <motion.div
             key={step}
@@ -230,8 +218,8 @@ shadow-[0_0_40px_rgba(99,102,241,0.2)]
             transition={{ duration: 0.4 }}>
             {step === 1 && (
               <div data-testid="onboarding-step-1">
-                <h2 className="text-2xl font-bold young-serif-regular text-white mb-2">Step 1: Set Your Goals</h2>
-                <p className="text-gray-400 mb-6">Letâ€™s define what success looks like for you.</p>
+                <h2 className="text-2xl font-bold young-serif-regular text-ink mb-2">Etapa 1: Defina suas Metas</h2>
+                <p className="text-charcoal mb-6">Vamos definir o que o sucesso significa para você.</p>
 
                 <div className="space-y-4 mb-6">
                   <div className="grid grid-cols-2 gap-3">
@@ -239,54 +227,54 @@ shadow-[0_0_40px_rgba(99,102,241,0.2)]
                       label="Titulo da meta"
                       value={currentGoal.title}
                       onChange={(e) => setCurrentGoal({ ...currentGoal, title: e.target.value })}
-                      placeholder="Enter goal title"
+                      placeholder="Digite o título da meta"
                       data-testid="goal-title-input"
                     />
                     <div>
-                      <label className="block text-gray-300 text-sm font-medium mb-2">Category</label>
+                      <label className="block text-charcoal text-sm font-medium mb-2">Categoria</label>
                       <select
                         value={currentGoal.type}
                         onChange={(e) => setCurrentGoal({ ...currentGoal, type: e.target.value })}
-                        className="w-full bg-gray-700 text-white border border-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full bg-gray-700 text-ink border border-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-blue"
                         data-testid="goal-type-select"
                       >
-                        <option value="final">Final Goal</option>
-                        <option value="long-term">Long-term Goal</option>
-                        <option value="mid-term">Mid-term Goal</option>
+                        <option value="final">Meta Final</option>
+                        <option value="long-term">Meta de Longo Prazo</option>
+                        <option value="mid-term">Meta de Médio Prazo</option>
                       </select>
                     </div>
                   </div>
                   <button
                     onClick={handleAddGoal}
-                    className="w-full py-3 bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)]  hover:-translate-y-1 active:scale-95 transition-all duration-300
-        shadow-lg text-white rounded-lg"
+                    className="w-full py-3 bg-accent-blue text-ink hover:opacity-90 active:scale-95 transition-all duration-300
+        rounded-lg"
                     data-testid="add-goal-btn"
                   >
-                    + Add Goal
+                    + Adicionar Meta
                   </button>
                 </div>
 
                 {goals.length > 0 && (
                   <div className="mb-6">
-                    <h3 className="text-white font-semibold mb-3">Your Goals ({goals.length})</h3>
+                    <h3 className="text-ink font-semibold mb-3">Suas Metas ({goals.length})</h3>
                     <div className="space-y-2">
                       {goals.map(goal => (
                         <div
                           key={goal.id}
-                          className="flex items-center justify-between p-3 bg-white/5 backdrop-blur-lg border border-white/10
+                          className="flex items-center justify-between p-3 bg-surface-elevated border border-hairline-strong
 hover:scale-[1.01] transition-all rounded-lg"
                           data-testid={`goal-item-${goal.id}`}
                         >
                           <div>
-                            <p className="text-white font-medium">{goal.title}</p>
-                            <span className="text-xs text-gray-400 capitalize">{goal.type}</span>
+                            <p className="text-ink font-medium">{goal.title}</p>
+                            <span className="text-xs text-charcoal capitalize">{goal.type}</span>
                           </div>
                           <button
                             onClick={() => handleRemoveGoal(goal.id)}
                             className="text-red-400 hover:text-red-300"
                             data-testid={`remove-goal-${goal.id}`}
                           >
-                            Remove
+                            Remover
                           </button>
                         </div>
                       ))}
@@ -295,7 +283,7 @@ hover:scale-[1.01] transition-all rounded-lg"
                 )}
 
                 <div className="mb-6">
-                  <h3 className="text-white font-semibold mb-3">Or choose from suggestions:</h3>
+                  <h3 className="text-ink font-semibold mb-3">Ou escolha entre sugestões:</h3>
                   <div className="grid grid-cols-2 gap-2">
                     {predefinedGoals.map(goal => (
                       <button
@@ -303,8 +291,8 @@ hover:scale-[1.01] transition-all rounded-lg"
                         onClick={() => handleAddPredefinedGoal(goal)}
                         className="
 p-3 text-sm 
-bg-white/5 text-gray-200 backdrop-blur-lg border border-white/10
-hover:scale-[1.02] hover:bg-white/10
+bg-surface-elevated text-charcoal border border-hairline-strong
+hover:scale-[1.02] hover:bg-surface-card
 transition-all duration-300 rounded-lg
 "
                         data-testid={`predefined-goal-${goal.toLowerCase().replace(/\s+/g, '-')}`}
@@ -315,27 +303,27 @@ transition-all duration-300 rounded-lg
                   </div>
                 </div>
 
-                <GradientButton onClick={handleStep1Next} className="w-full" data-testid="step-1-next-btn">
-                  Next: Map to Execution
+                <GradientButton onClick={handleStep1Next} className="w-full" variant="primary" data-testid="step-1-next-btn">
+                  Próximo: Mapear para Execução
                 </GradientButton>
               </div>
             )}
 
             {step === 2 && (
               <div data-testid="onboarding-step-2">
-                <h2 className="text-2xl font-bold text-white mb-2">Step 2: Map to Execution</h2>
-                <p className="text-gray-400 mb-6">Break goals into actionable steps...</p>
+                <h2 className="text-2xl font-bold text-ink mb-2">Etapa 2: Mapear para Execução</h2>
+                <p className="text-charcoal mb-6">Divida metas em etapas acionáveis...</p>
 
                 <div className="space-y-4 mb-6">
                   <div>
-                    <label className="block text-gray-300 text-sm font-medium mb-2">Select Goal</label>
+                    <label className="block text-charcoal text-sm font-medium mb-2">Selecionar Meta</label>
                     <select
                       value={selectedGoalForMapping || ''}
                       onChange={(e) => setSelectedGoalForMapping(e.target.value)}
-                      className="w-full bg-gray-700 text-white border border-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="w-full bg-gray-700 text-ink border border-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-blue"
                       data-testid="select-goal-mapping"
                     >
-                      <option value="">Choose a goal...</option>
+                      <option value="">Escolha uma meta...</option>
                       {goals.map(goal => (
                         <option key={goal.id} value={goal.id}>{goal.title}</option>
                       ))}
@@ -347,23 +335,23 @@ transition-all duration-300 rounded-lg
                       <div className="flex gap-2">
                         <button
                           onClick={() => setCurrentExecution({ ...currentExecution, type: 'project' })}
-                          className={`flex-1 py-2 rounded-lg transition-all border border-white/10 duration-300 ${currentExecution.type === 'project'
-                            ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]'
-                            : 'bg-gray-700 text-gray-300'
+                          className={`flex-1 py-2 rounded-lg transition-all border border-hairline-strong duration-300 ${currentExecution.type === 'project'
+                            ? 'bg-accent-blue text-ink'
+                            : 'bg-surface-elevated text-charcoal'
                             }`}
                           data-testid="execution-type-project"
                         >
-                          Project
+                          Projeto
                         </button>
                         <button
                           onClick={() => setCurrentExecution({ ...currentExecution, type: 'task' })}
-                          className={`flex-1 py-2 rounded-lg transition-all border border-white/10 duration-300 ${currentExecution.type === 'task'
-                            ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]'
-                            : 'bg-gray-700 text-gray-300'
+                          className={`flex-1 py-2 rounded-lg transition-all border border-hairline-strong duration-300 ${currentExecution.type === 'task'
+                            ? 'bg-accent-blue text-ink'
+                            : 'bg-surface-elevated text-charcoal'
                             }`}
                           data-testid="execution-type-task"
                         >
-                          Solo Task
+                          Tarefa Avulsa
                         </button>
                       </div>
 
@@ -371,12 +359,12 @@ transition-all duration-300 rounded-lg
                         label={currentExecution.type === 'project' ? 'Titulo do projeto' : 'Titulo da tarefa'}
                         value={currentExecution.title}
                         onChange={(e) => setCurrentExecution({ ...currentExecution, title: e.target.value })}
-                        placeholder={`Enter ${currentExecution.type} title`}
+                        placeholder={`Digite o título ${currentExecution.type === 'project' ? 'do projeto' : 'da tarefa'}`}
                         data-testid="execution-title-input"
                       />
 
                       <InputField
-                        label="Deadline (Optional)"
+                        label="Prazo (Opcional)"
                         type="date"
                         value={currentExecution.deadline}
                         onChange={(e) => setCurrentExecution({ ...currentExecution, deadline: e.target.value })}
@@ -387,15 +375,14 @@ transition-all duration-300 rounded-lg
                         onClick={handleAddExecution}
                         className="
 w-full py-3 
-bg-gradient-to-r from-green-500 to-emerald-600 
-hover:shadow-[0_0_20px_rgba(34,197,94,0.6)]
-hover:-translate-y-1 active:scale-95 
+bg-accent-green text-ink
+active:scale-95 
 transition-all duration-300 
-text-white rounded-lg
+rounded-lg
 "
                         data-testid="add-execution-btn"
                       >
-                        + Add {currentExecution.type === 'project' ? 'Project' : 'Task'}
+                        + Adicionar {currentExecution.type === 'project' ? 'Projeto' : 'Tarefa'}
                       </button>
                     </>
                   )}
@@ -403,27 +390,27 @@ text-white rounded-lg
 
                 {Object.keys(executionMap).length > 0 && (
                   <div className="max-h-64 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-600">
-                    <h3 className="text-white font-semibold mb-3">Mapped Execution</h3>
+                    <h3 className="text-ink font-semibold mb-3">Execução Mapeada</h3>
                     {goals.map(goal => {
                       const map = executionMap[goal.id];
                       if (!map || (map.projects.length === 0 && map.tasks.length === 0)) return null;
 
                       return (
-                        <div key={goal.id} className="mb-4 p-3 bg-gray-700/30 rounded-lg">
-                          <p className="text-indigo-400 font-semibold mb-2">{goal.title}</p>
+                        <div key={goal.id} className="mb-4 p-3 bg-surface-elevated rounded-lg">
+                          <p className="text-accent-blue font-semibold mb-2">{goal.title}</p>
                           {map.projects.length > 0 && (
                             <div className="mb-2">
-                              <p className="text-xs text-gray-500 mb-1">Projects:</p>
+                              <p className="text-xs text-charcoal mb-1">Projetos:</p>
                               {map.projects.map(p => (
-                                <p key={p.id} className="text-sm text-gray-300 ml-3">â€¢ {p.title}</p>
+                                <p key={p.id} className="text-sm text-charcoal ml-3">â€¢ {p.title}</p>
                               ))}
                             </div>
                           )}
                           {map.tasks.length > 0 && (
                             <div>
-                              <p className="text-xs text-gray-500 mb-1">Tasks:</p>
+                              <p className="text-xs text-charcoal mb-1">Tarefas:</p>
                               {map.tasks.map(t => (
-                                <p key={t.id} className="text-sm text-gray-300 ml-3">â€¢ {t.title}</p>
+                                <p key={t.id} className="text-sm text-charcoal ml-3">â€¢ {t.title}</p>
                               ))}
                             </div>
                           )}
@@ -436,13 +423,13 @@ text-white rounded-lg
                 <div className="flex gap-3">
                   <button
                     onClick={() => setStep(1)}
-                    className="flex-1 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
+                          className="flex-1 py-3 bg-surface-elevated hover:bg-surface-card text-ink rounded-lg transition-colors"
                     data-testid="step-2-back-btn"
                   >
                     Back
                   </button>
-                  <GradientButton onClick={handleStep2Next} className="flex-1" data-testid="step-2-next-btn">
-                    Next: Initialize
+                  <GradientButton onClick={handleStep2Next} className="flex-1" variant="primary" data-testid="step-2-next-btn">
+                    Próximo: Inicializar
                   </GradientButton>
                 </div>
               </div>
@@ -455,75 +442,75 @@ text-white rounded-lg
 
               {step === 3 && (
                 <div data-testid="onboarding-step-3">
-                  <h2 className="text-2xl font-bold text-white mb-2">Step 3: System Ready!</h2>
-                  <p className="text-gray-400 mb-6">Your system is ready! Your OrkestOS is being initialized...</p>
+                  <h2 className="text-2xl font-bold text-ink mb-2">Etapa 3: Sistema Pronto!</h2>
+                  <p className="text-charcoal mb-6">Seu sistema está pronto! Seu OrkestOS está sendo inicializado...</p>
 
-                  <div className="bg-gray-700/30 rounded-lg p-6 mb-6">
+                  <div className="bg-surface-elevated rounded-lg p-6 mb-6">
                     <div className="grid grid-cols-3 gap-4 text-center">
                       <div>
                         <motion.p
-                          className="text-3xl young-serif-regular font-bold text-indigo-400 drop-shadow-[0_0_10px_rgba(99,102,241,0.6)]"
+                          className="text-3xl young-serif-regular font-bold text-accent-blue "
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
                           transition={{ delay: 0.2 }}
                         >
                           {goals.length}
                         </motion.p>
-                        <p className="text-sm text-gray-400">Goals</p>
+                        <p className="text-sm text-charcoal">Metas</p>
                       </div>
                       <div>
                         <motion.p
-                          className="text-3xl young-serif-regular font-bold text-indigo-400 drop-shadow-[0_0_10px_rgba(99,102,241,0.6)]"
+                          className="text-3xl young-serif-regular font-bold text-accent-blue "
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
                           transition={{ delay: 0.2 }}
                         >
                           {Object.values(executionMap).reduce((sum, map) => sum + map.projects.length, 0)}
                         </motion.p>
-                        <p className="text-sm text-gray-400">Projects</p>
+                        <p className="text-sm text-charcoal">Projetos</p>
                       </div>
                       <div>
                         <motion.p
-                          className="text-3xl young-serif-regular font-bold text-indigo-400 drop-shadow-[0_0_10px_rgba(99,102,241,0.6)]"
+                          className="text-3xl young-serif-regular font-bold text-accent-blue "
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
                           transition={{ delay: 0.2 }}
                         >
                           {Object.values(executionMap).reduce((sum, map) => sum + map.tasks.length, 0)}
                         </motion.p>
-                        <p className="text-sm text-gray-400">Tasks</p>
+                        <p className="text-sm text-charcoal">Tarefas</p>
                       </div>
                     </div>
                   </div>
 
                   <div className="mb-6 space-y-2">
                     <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-sm">â�""</div>
-                      <p className="text-white">Rastreador de metas populated</p>
+                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-ink text-sm">â�""</div>
+                      <p className="text-ink">Rastreador de metas populated</p>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-sm">â�""</div>
-                      <p className="text-white">Rastreador de projetos initialized</p>
+                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-ink text-sm">â�""</div>
+                      <p className="text-ink">Rastreador de projetos initialized</p>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-sm">â�""</div>
-                      <p className="text-white">Tarefas avulsas ready</p>
+                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-ink text-sm">â�""</div>
+                      <p className="text-ink">Tarefas avulsas ready</p>
                     </div>
                   </div>
 
-                  <p className="text-gray-400 text-sm mb-6">
+                  <p className="text-charcoal text-sm mb-6">
                     Você pode adicionar mais metas, projetos, tarefas e hábitos a qualquer momento na seção Rastreadores.
                   </p>
 
                   <div className="flex gap-3">
                     <button
                       onClick={() => setStep(2)}
-                      className="flex-1 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
+                            className="flex-1 py-3 bg-surface-elevated hover:bg-surface-card text-ink rounded-lg transition-colors"
                       data-testid="step-3-back-btn"
                     >
-                      Back
+                    Voltar
                     </button>
-                    <GradientButton onClick={handleFinishOnboarding} className="flex-1" data-testid="finish-onboarding-btn">
+                    <GradientButton onClick={handleFinishOnboarding} className="flex-1" variant="primary" data-testid="finish-onboarding-btn">
                       {loading ? "Inicializando..." : "Entrar no painel"}
                     </GradientButton>
                   </div>

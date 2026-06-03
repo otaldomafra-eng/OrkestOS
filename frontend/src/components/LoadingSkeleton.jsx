@@ -1,14 +1,14 @@
 import Card from './Card';
 
 const shimmer =
-  'relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_1.6s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent';
+  'relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_1.6s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/[0.06] before:to-transparent';
 
 export const SkeletonBlock = ({ className = '' }) => (
-  <div className={`${shimmer} rounded-lg bg-white/10 ${className}`} aria-hidden="true" />
+  <div className={`${shimmer} rounded-lg bg-surface-elevated ${className}`} aria-hidden="true" />
 );
 
 export const SkeletonCard = ({ className = '', children }) => (
-  <Card className={`bg-white/5 border border-white/10 backdrop-blur-xl ${className}`}>
+  <Card className={className}>
     {children}
   </Card>
 );

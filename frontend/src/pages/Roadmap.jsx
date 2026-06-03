@@ -21,51 +21,51 @@ import GradientButton from '../components/GradientButton';
 
 const roadmapItems = [
   {
-    title: 'Unified productivity dashboard',
-    status: 'Concluido',
+    title: 'Painel de produtividade unificado',
+    status: 'Concluído',
     category: 'Core',
     quarter: 'Q2 2026',
-    description: 'Centralize goals, habits, projects, and daily plans into one clear operating view.',
+    description: 'Centralize metas, hábitos, projetos e planos diários em uma visão operacional clara.',
     icon: BarChart3,
   },
   {
-    title: 'Focus room streaks',
-    status: 'Concluido',
-    category: 'Focus',
+    title: 'Sequências na sala de foco',
+    status: 'Concluído',
+    category: 'Foco',
     quarter: 'Q2 2026',
-    description: 'Track deep-work sessions and make short focus wins visible across the product.',
+    description: 'Acompanhe sessões de trabalho profundo e torne as pequenas vitórias de foco visíveis em todo o produto.',
     icon: TimerReset,
   },
   {
     title: 'FutureTwin decision simulator',
     status: 'Em andamento',
-    category: 'AI',
+    category: 'IA',
     quarter: 'Q3 2026',
-    description: 'Preview likely outcomes from routines, goals, and long-running commitments.',
+    description: 'Visualize resultados prováveis de rotinas, metas e compromissos de longo prazo.',
     icon: Brain,
   },
   {
-    title: 'Goal risk alerts',
+    title: 'Alertas de risco de metas',
     status: 'Em andamento',
     category: 'Insights',
     quarter: 'Q3 2026',
-    description: 'Detect stale goals, overloaded weeks, and habit drift before progress stalls.',
+    description: 'Detecte metas estagnadas, semanas sobrecarregadas e desvio de hábitos antes que o progresso pare.',
     icon: ShieldCheck,
   },
   {
-    title: 'Shared accountability circles',
-    status: 'Planned',
-    category: 'Collaboration',
+    title: 'Círculos de responsabilidade compartilhada',
+    status: 'Planejado',
+    category: 'Colaboração',
     quarter: 'Q4 2026',
-    description: 'Invite a small trusted group to follow milestones and celebrate completed sprints.',
+    description: 'Convide um pequeno grupo de confiança para acompanhar marcos e celebrar sprints concluídos.',
     icon: Layers3,
   },
   {
-    title: 'Adaptive planning assistant',
-    status: 'Planned',
-    category: 'AI',
+    title: 'Assistente de planejamento adaptativo',
+    status: 'Planejado',
+    category: 'IA',
     quarter: 'Q4 2026',
-    description: 'Suggest daily plans based on energy, overdue work, and upcoming personal deadlines.',
+    description: 'Sugira planos diários com base em energia, trabalho atrasado e prazos pessoais futuros.',
     icon: Sparkles,
   },
 ];
@@ -73,67 +73,67 @@ const roadmapItems = [
 const milestones = [
   {
     quarter: 'Q2 2026',
-    title: 'Foundation',
-    summary: 'Core tracking, dashboards, authentication polish, and responsive public pages.',
-    status: 'Concluido',
+    title: 'Fundação',
+    summary: 'Rastreamento principal, painéis, polimento de autenticação e páginas públicas responsivas.',
+    status: 'Concluído',
   },
   {
     quarter: 'Q3 2026',
-    title: 'Intelligence',
-    summary: 'FutureTwin simulations, insight alerts, stronger analytics, and guided planning.',
+    title: 'Inteligência',
+    summary: 'Simulações FutureTwin, alertas de insights, análises mais robustas e planejamento guiado.',
     status: 'Em andamento',
   },
   {
     quarter: 'Q4 2026',
-    title: 'Community',
-    summary: 'Accountability circles, richer sharing flows, and collaborative goal support.',
-    status: 'Planned',
+    title: 'Comunidade',
+    summary: 'Círculos de responsabilidade, fluxos de compartilhamento mais ricos e suporte colaborativo a metas.',
+    status: 'Planejado',
   },
   {
     quarter: 'Q1 2027',
-    title: 'Personalization',
-    summary: 'Adaptive routines, custom templates, and smarter recommendations from usage patterns.',
-    status: 'Planned',
+    title: 'Personalização',
+    summary: 'Rotinas adaptativas, modelos personalizados e recomendações mais inteligentes a partir de padrões de uso.',
+    status: 'Planejado',
   },
 ];
 
 const statusStyles = {
-  Concluido: 'border-emerald-400/30 bg-emerald-500/10 text-emerald-300',
-  'Em andamento': 'border-indigo-400/30 bg-indigo-500/10 text-indigo-300',
-  Planned: 'border-purple-400/30 bg-purple-500/10 text-purple-300',
+  'Concluído': 'border-emerald-400/30 bg-emerald-500/10 text-emerald-300',
+  'Em andamento': 'border-indigo-400/30 bg-indigo-500/10 text-accent-blue',
+  'Planejado': 'border-purple-400/30 bg-purple-500/10 text-accent-blue',
 };
 
-const statusOptions = ['All', 'Concluido', 'Em andamento', 'Planned'];
-const categoryOptions = ['All', 'Core', 'Focus', 'AI', 'Insights', 'Collaboration'];
+const statusOptions = ['Todos', 'Concluído', 'Em andamento', 'Planejado'];
+const categoryOptions = ['Todos', 'Core', 'Foco', 'IA', 'Insights', 'Colaboração'];
 
 const Roteiro = () => {
-  const [selectedStatus, setSelectedStatus] = useState('All');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedStatus, setSelectedStatus] = useState('Todos');
+  const [selectedCategory, setSelectedCategory] = useState('Todos');
 
   const filteredItems = useMemo(() => {
     return roadmapItems.filter((item) => {
-      const statusMatches = selectedStatus === 'All' || item.status === selectedStatus;
-      const categoryMatches = selectedCategory === 'All' || item.category === selectedCategory;
+      const statusMatches = selectedStatus === 'Todos' || item.status === selectedStatus;
+      const categoryMatches = selectedCategory === 'Todos' || item.category === selectedCategory;
       return statusMatches && categoryMatches;
     });
   }, [selectedCategory, selectedStatus]);
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-gradient-to-br from-black via-gray-900 to-black text-white">
-      <section className="border-b border-white/10 px-4 py-5">
+    <main className="min-h-screen overflow-x-hidden bg-canvas text-ink">
+      <section className="border-b border-hairline-strong px-4 py-5">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <Link
             to="/"
-            className="inline-flex w-fit items-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-sm text-gray-300 transition hover:border-indigo-400/50 hover:text-white"
+            className="inline-flex w-fit items-center gap-2 rounded-xl border border-hairline-strong px-4 py-2 text-sm text-charcoal transition hover:border-accent-blue/50 hover:text-ink"
           >
             <ArrowLeft size={16} />
-            Back to Home
+            Voltar ao Início
           </Link>
 
           <Link to="/signup">
             <GradientButton className="w-full sm:w-auto">
               <span className="flex items-center justify-center gap-2">
-                Start Tracking
+                Começar a Rastrear
                 <ArrowRight size={18} />
               </span>
             </GradientButton>
@@ -149,23 +149,23 @@ const Roteiro = () => {
             transition={{ duration: 0.4 }}
             className="max-w-3xl"
           >
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-indigo-400/30 bg-indigo-500/10 px-4 py-2 text-sm text-indigo-200">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-accent-blue/30 bg-accent-blue/10 px-4 py-2 text-sm text-accent-blue">
               <CalendarDays size={16} />
               Roteiro do produto
             </div>
-            <h1 className="young-serif-regular text-4xl font-bold leading-tight text-white sm:text-5xl md:text-6xl">
-              Building the operating system for intentional growth.
+            <h1 className="young-serif-regular text-4xl font-bold leading-tight text-ink sm:text-5xl md:text-6xl">
+              Construindo o sistema operacional para crescimento intencional.
             </h1>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-gray-300 sm:text-lg">
+            <p className="mt-5 max-w-2xl text-base leading-7 text-charcoal sm:text-lg">
               Acompanhe o que foi entregue, o que esta em construcao e o que vem a seguir no OrkestOS.
             </p>
           </Motion.div>
 
           <div className="mt-10 grid gap-4 sm:grid-cols-3">
             {[
-              { label: 'Milestones', value: milestones.length, icon: Target },
-              { label: 'Active builds', value: roadmapItems.filter((item) => item.status === 'Em andamento').length, icon: Clock3 },
-              { label: 'Concluido items', value: roadmapItems.filter((item) => item.status === 'Concluido').length, icon: CheckCircle2 },
+              { label: 'Marcos', value: milestones.length, icon: Target },
+              { label: 'Em construção', value: roadmapItems.filter((item) => item.status === 'Em andamento').length, icon: Clock3 },
+              { label: 'Itens Concluídos', value: roadmapItems.filter((item) => item.status === 'Concluído').length, icon: CheckCircle2 },
             ].map((stat, index) => {
               const Icon = stat.icon;
               return (
@@ -174,10 +174,10 @@ const Roteiro = () => {
                   whileHover={{ y: -4 }}
                   transition={{ duration: 0.2, delay: index * 0.02 }}
                 >
-                  <Card className="h-full border border-white/10 bg-white/5 backdrop-blur-lg">
-                    <Icon className="mb-4 text-indigo-300" size={24} />
-                    <div className="text-3xl font-bold text-white">{stat.value}</div>
-                    <p className="mt-1 text-sm text-gray-400">{stat.label}</p>
+                  <Card className="h-full bg-surface-card border border-hairline-strong">
+                    <Icon className="mb-4 text-accent-blue" size={24} />
+                    <div className="text-3xl font-bold text-ink">{stat.value}</div>
+                    <p className="mt-1 text-sm text-charcoal">{stat.label}</p>
                   </Card>
                 </Motion.div>
               );
@@ -190,11 +190,11 @@ const Roteiro = () => {
         <div className="mx-auto max-w-6xl">
           <div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <div className="mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-indigo-300">
+              <div className="mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-accent-blue">
                 <Filter size={16} />
-                Filter the plan
+                Filtrar o plano
               </div>
-              <h2 className="young-serif-regular text-3xl font-bold text-white">Feature pipeline</h2>
+              <h2 className="young-serif-regular text-3xl font-bold text-ink">Pipeline de Funcionalidades</h2>
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row">
@@ -206,8 +206,8 @@ const Roteiro = () => {
                     onClick={() => setSelectedStatus(status)}
                     className={`rounded-xl border px-4 py-2 text-sm transition ${
                       selectedStatus === status
-                        ? 'border-indigo-400 bg-indigo-500/20 text-white'
-                        : 'border-white/10 bg-white/5 text-gray-300 hover:border-white/30 hover:text-white'
+                        ? 'border-accent-blue bg-accent-blue/20 text-ink'
+                        : 'border-hairline-strong bg-surface-elevated text-charcoal hover:border-hairline-strong hover:text-ink'
                     }`}
                   >
                     {status}
@@ -218,11 +218,11 @@ const Roteiro = () => {
               <select
                 value={selectedCategory}
                 onChange={(event) => setSelectedCategory(event.target.value)}
-                className="rounded-xl border border-white/10 bg-white/10 px-4 py-2 text-sm text-white outline-none focus:border-indigo-400"
+                className="rounded-xl border border-hairline-strong bg-surface-elevated px-4 py-2 text-sm text-ink outline-none focus:border-accent-blue"
                 aria-label="Filter by category"
               >
                 {categoryOptions.map((category) => (
-                  <option key={category} value={category} className="bg-gray-900">
+                  <option key={category} value={category} className="bg-canvas">
                     {category}
                   </option>
                 ))}
@@ -239,9 +239,9 @@ const Roteiro = () => {
                   whileHover={{ y: -4 }}
                   transition={{ duration: 0.2, delay: index * 0.01 }}
                 >
-                  <Card className="flex h-full flex-col border border-white/10 bg-white/5 backdrop-blur-lg transition duration-300 hover:-translate-y-1 hover:border-indigo-400/40 hover:bg-white/10">
+                  <Card className="flex h-full flex-col bg-surface-card border border-hairline-strong transition duration-300 hover:-translate-y-1 hover:border-accent-blue/40">
                     <div className="mb-5 flex items-start justify-between gap-4">
-                      <div className="rounded-xl bg-indigo-500/15 p-3 text-indigo-300">
+                      <div className="rounded-xl bg-[rgba(59,158,255,0.1)] p-3 text-accent-blue">
                         <Icon size={24} />
                       </div>
                       <span className={`rounded-full border px-3 py-1 text-xs ${statusStyles[item.status]}`}>
@@ -249,13 +249,13 @@ const Roteiro = () => {
                       </span>
                     </div>
 
-                    <div className="mb-3 flex flex-wrap gap-2 text-xs text-gray-400">
-                      <span className="rounded-full bg-white/10 px-3 py-1">{item.category}</span>
-                      <span className="rounded-full bg-white/10 px-3 py-1">{item.quarter}</span>
+                    <div className="mb-3 flex flex-wrap gap-2 text-xs text-charcoal">
+                      <span className="rounded-full bg-surface-elevated px-3 py-1">{item.category}</span>
+                      <span className="rounded-full bg-surface-elevated px-3 py-1">{item.quarter}</span>
                     </div>
 
-                    <h3 className="text-xl font-semibold text-white">{item.title}</h3>
-                    <p className="mt-3 flex-1 text-sm leading-6 text-gray-400">{item.description}</p>
+                    <h3 className="text-xl font-semibold text-ink">{item.title}</h3>
+                    <p className="mt-3 flex-1 text-sm leading-6 text-charcoal">{item.description}</p>
                   </Card>
                 </Motion.div>
               );
@@ -267,8 +267,8 @@ const Roteiro = () => {
       <section className="px-4 pb-20">
         <div className="mx-auto max-w-6xl">
           <div className="mb-10 text-center">
-            <h2 className="young-serif-regular text-3xl font-bold text-white">Milestone timeline</h2>
-            <p className="mt-3 text-gray-400">A quarter-by-quarter view of how the product matures.</p>
+              <h2 className="young-serif-regular text-3xl font-bold text-ink">Linha do Tempo de Marcos</h2>
+            <p className="mt-3 text-charcoal">Uma visão trimestre a trimestre de como o produto amadurece.</p>
           </div>
 
           <div className="relative grid gap-4 lg:grid-cols-4">
@@ -278,15 +278,15 @@ const Roteiro = () => {
                 whileHover={{ y: -4 }}
                 transition={{ duration: 0.2, delay: index * 0.01 }}
               >
-                <Card className="h-full border border-white/10 bg-white/5 backdrop-blur-lg">
+                <Card className="h-full bg-surface-card border border-hairline-strong">
                   <div className="mb-5 flex items-center justify-between gap-3">
-                    <span className="text-sm font-semibold text-indigo-300">{milestone.quarter}</span>
+                    <span className="text-sm font-semibold text-accent-blue">{milestone.quarter}</span>
                     <span className={`rounded-full border px-3 py-1 text-xs ${statusStyles[milestone.status]}`}>
                       {milestone.status}
                     </span>
                   </div>
-                  <h3 className="text-xl font-semibold text-white">{milestone.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-gray-400">{milestone.summary}</p>
+                  <h3 className="text-xl font-semibold text-ink">{milestone.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-charcoal">{milestone.summary}</p>
                 </Card>
               </Motion.div>
             ))}

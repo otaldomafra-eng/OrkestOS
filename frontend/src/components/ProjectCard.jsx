@@ -15,25 +15,25 @@ const ProjectCard = ({ project, progress, linkedGoal, onClick }) => {
 
   return (
     <Card 
-      className="hover:scale-105 transition-transform duration-300 cursor-pointer bg-white/5 border border-white/10 backdrop-blur-lg" 
+      className="hover:scale-105 transition-transform duration-300 cursor-pointer" 
       onClick={onClick}
       data-testid={`project-card-${project.id}`}
     >
       <div className="flex justify-between items-start mb-4">
-        <div className="p-3 bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl">
-          <Folder size={24} className="text-white" />
+        <div className="p-3 bg-[rgba(17,255,153,0.1)] text-accent-green rounded-xl">
+          <Folder size={24} />
         </div>
         {linkedGoal && (
-          <span className="text-xs px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-400">
+          <span className="text-xs px-3 py-1 rounded-full bg-[rgba(59,158,255,0.1)] text-accent-blue">
             {linkedGoal}
           </span>
         )}
       </div>
       
-      <h3 className="text-lg font-bold text-white mb-2">{project.title}</h3>
+      <h3 className="text-lg font-bold text-ink mb-2">{project.title}</h3>
       
       {project.deadline && (
-        <div className="flex items-center text-gray-400 text-sm mb-4">
+        <div className="flex items-center text-mute text-sm mb-4">
           <Calendar size={14} className="mr-2" />
           <span>{getTimeRemaining(project.deadline)}</span>
         </div>

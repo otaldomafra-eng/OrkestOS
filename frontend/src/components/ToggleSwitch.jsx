@@ -19,8 +19,8 @@ const ToggleSwitch = ({ checked, onChange, label }) => {
           className={`
             w-14 h-8 rounded-full transition-all duration-300
             ${checked
-              ? 'bg-gradient-to-r from-green-500 to-emerald-500 shadow-[0_0_15px_rgba(34,197,94,0.6)]'
-              : 'bg-gray-600'
+              ? 'bg-accent-green'
+              : 'bg-stone'
             }
           `}
         />
@@ -39,21 +39,16 @@ const ToggleSwitch = ({ checked, onChange, label }) => {
           <div
             className={`
               w-2 h-2 rounded-full transition-all duration-300
-              ${checked ? 'bg-green-500' : 'bg-gray-400'}
+              ${checked ? 'bg-accent-green' : 'bg-ash'}
             `}
           />
         </motion.div>
-
-        {/* GLOW EFFECT */}
-        {checked && (
-          <div className="absolute inset-0 rounded-full bg-green-400 opacity-20 blur-md" />
-        )}
 
       </div>
 
       {/* LABEL */}
       {label && (
-        <span className="ml-3 text-sm text-gray-300">
+        <span className="ml-3 text-sm text-charcoal">
           {label}
         </span>
       )}

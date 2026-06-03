@@ -190,6 +190,22 @@ export const statsAPI = {
     }
 };
 
+// ============ FUTURETWIN APIs ============
+export const futureTwinAPI = {
+  getInsights: async () => {
+    const response = await axiosInstance.get('/api/futuretwin/insights');
+    return response.data;
+  },
+  chat: async (messages) => {
+    const response = await axiosInstance.post('/api/futuretwin/chat', { messages });
+    return response.data;
+  },
+  getWeeklyAnalysis: async () => {
+    const response = await axiosInstance.get('/api/futuretwin/weekly-analysis');
+    return response.data;
+  }
+};
+
 // ============ TELEGRAM APIs ============
 export const telegramAPI = {
     createLinkCode: async () => {

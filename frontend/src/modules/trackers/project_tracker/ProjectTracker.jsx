@@ -1,14 +1,17 @@
 ﻿import { useState } from 'react';
-import { Plus, ArrowLeft, Target } from 'lucide-react';
-import { useApp } from '../../../store/AppContext';
+import { Plus, ArrowLeft, Target, Trophy } from 'lucide-react';
+import { useApp } from '../../../hooks/useApp';
 import Card from '../../../components/Card';
 import ProjectCard from '../../../components/ProjectCard';
-import GradientButton from '../../../components/GradientButton';
+import Button from '../../../components/GradientButton';
 import InputField from '../../../components/InputField';
 import Modal from '../../../components/Modal';
 import TaskItem from '../../../components/TaskItem';
 import DonutChart from '../../../components/DonutChart';
 import { motion } from 'framer-motion';
+import { useXP } from '../../../hooks/useXP';
+import { XP_VALUES } from '../../../data/gamification';
+import { showToast } from '../../../utils/toastHelper';
 
 const ProjectTracker = () => {
   const {
@@ -26,6 +29,19 @@ const ProjectTracker = () => {
   const [showAddTask, setShowAddTask] = useState(false);
   const [newProject, setNewProject] = useState({ title: '', goalId: '', deadline: '', description: '' });
   const [newTask, setNewTask] = useState({ title: '', deadline: '', isImportant: false });
+  const { addXP, stats } = useXP();
+
+  const handleCompleteProject = (project) => {
+    const progress = calculateProjectProgress(project.id);
+    if (progress < 100) {
+      showToast({ message: 'Complete todas as tarefas do projeto primeiro', status: 'warning' });
+      return;
+    }
+    addXP(XP_VALUES.project, 'projeto concluído', {
+      projectsCompleted: (stats?.projectsCompleted ?? 0) + 1,
+    });
+    showToast({ message: 'Projeto concluído! +200 XP', status: 'success' });
+  };
 
   const handleAddProject = () => {
     if (!newProject.title.trim()) return;
@@ -52,48 +68,37 @@ const ProjectTracker = () => {
     const linkedGoal = goals.find(g => g.id === selectedProject.goalId);
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black pb-20 px-4 pt-6 relative overflow-hidden">
-        <motion.div
-          className="absolute top-20 left-10 w-72 h-72 bg-green-500 rounded-full blur-3xl opacity-20"
-          animate={{ x: [0, 40, 0], y: [0, 20, 0] }}
-          transition={{ duration: 10, repeat: Infinity }}
-        />
-
-        <motion.div
-          className="absolute bottom-20 right-10 w-72 h-72 bg-emerald-500 rounded-full blur-3xl opacity-20"
-          animate={{ x: [0, -40, 0], y: [0, -20, 0] }}
-          transition={{ duration: 12, repeat: Infinity }}
-        />
+      <div className="min-h-screen bg-canvas pb-20 px-4 pt-6 relative overflow-hidden">
         <div className="max-w-4xl mx-auto">
           <button
             onClick={() => setSelectedProject(null)}
-            className="flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-all hover:-translate-x-1 cursor-pointer"
+            className="flex items-center gap-2 text-mute hover:text-ink mb-6 transition-all hover:-translate-x-1 cursor-pointer"
             data-testid="back-to-projects-btn"
           >
             <ArrowLeft size={20} />
-            Back to Projects
+            Voltar aos Projetos
           </button>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <Card className="mb-6 bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_40px_rgba(16,185,129,0.2)]">
+            <Card className="mb-6">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-xl bg-gradient-to-r from-green-600 to-emerald-600">
-                    <Target size={22} className="text-white" />
+                  <div className="p-3 rounded-xl bg-[rgba(16,185,129,0.1)]">
+                    <Target size={22} className="text-accent-green" />
                   </div>
 
                   <div>
-                    <h1 className="text-2xl md:text-3xl font-bold text-white">
+                    <h1 className="text-2xl md:text-3xl font-bold text-ink">
                       {selectedProject.title}
                     </h1>
 
-                    <p className="text-sm text-emerald-400 mt-1">
+                    <p className="text-sm text-accent-green mt-1">
                       Progresso: {progress}%
                     </p>
 
                     {linkedGoal && (
-                      <span className="text-xs mt-1 inline-block text-indigo-400">
-                        Linked to: {linkedGoal.title}
+                      <span className="text-xs mt-1 inline-block text-accent-blue">
+                        Vinculado a: {linkedGoal.title}
                       </span>
                     )}
                   </div>
@@ -103,22 +108,34 @@ const ProjectTracker = () => {
                 </div>
               </div>
               {selectedProject.description && (
-                <p className="text-gray-400 mt-4">{selectedProject.description}</p>
+                <p className="text-mute mt-4">{selectedProject.description}</p>
+              )}
+              {progress >= 100 && (
+                <div className="mt-6 pt-4 border-t border-white/[0.07]">
+                  <Button
+                    variant="primary"
+                    onClick={() => handleCompleteProject(selectedProject)}
+                    className="w-full"
+                  >
+                    <Trophy size={18} />
+                    Receber XP por Concluir Projeto
+                  </Button>
+                </div>
               )}
             </Card>
           </motion.div>
 
-          <Card className="bg-white/5 backdrop-blur-xl border border-white/10">
+          <Card>
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-white">Tasks</h2>
-              <button
+              <h2 className="text-xl font-bold text-ink">Tarefas</h2>
+              <Button
+                variant="primary"
                 onClick={() => setShowAddTask(true)}
                 data-testid="add-task-btn"
-                className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] hover:-translate-y-1 active:scale-95 text-white px-4 py-2 rounded-lg transition-all cursor-pointer"
               >
                 <Plus size={20} className="inline mr-2" />
                 Adicionar tarefa
-              </button>
+              </Button>
             </div>
             {projectTasks.length > 0 ? (
               <div className="space-y-3">
@@ -138,31 +155,31 @@ const ProjectTracker = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-400 text-center py-8">No tasks yet. Add your first task!</p>
+              <p className="text-mute text-center py-8">Nenhuma tarefa ainda. Adicione sua primeira tarefa!</p>
             )}
           </Card>
         </div>
 
         {/* Adicionar tarefa Modal */}
-        <Modal isOpen={showAddTask} onClose={() => setShowAddTask(false)} title="Adicionar tarefa to Project">
+        <Modal isOpen={showAddTask} onClose={() => setShowAddTask(false)} title="Adicionar tarefa ao Projeto">
           <div className="space-y-4">
             <InputField
               label="Titulo da tarefa"
               value={newTask.title}
               onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-              placeholder="Enter task title"
+              placeholder="Digite o título da tarefa"
               data-testid="task-title-input"
             />
             <InputField
-              label="Deadline (Optional)"
+              label="Prazo (Opcional)"
               type="date"
               value={newTask.deadline}
               onChange={(e) => setNewTask({ ...newTask, deadline: e.target.value })}
               data-testid="task-deadline-input"
             />
-            <div className="flex items-center justify-between bg-white/5 border border-white/10 rounded-lg px-4 py-3">
-            <label htmlFor="important" className="text-gray-300 text-sm">
-              Mark as Importante
+            <div className="flex items-center justify-between bg-surface-card border border-hairline-strong rounded-lg px-4 py-3">
+            <label htmlFor="important" className="text-charcoal text-sm">
+              Marcar como Importante
             </label>
 
             <input
@@ -170,13 +187,13 @@ const ProjectTracker = () => {
               id="important"
               checked={newTask.isImportant}
               onChange={(e) => setNewTask({ ...newTask, isImportant: e.target.checked })}
-              className="w-5 h-5 accent-orange-500"
+              className="w-5 h-5 accent-yellow-500"
               data-testid="task-important-checkbox"
             />
           </div>
-            <GradientButton onClick={handleAddTask} className="w-full" data-testid="submit-task-btn">
+            <Button variant="primary" onClick={handleAddTask} className="w-full" data-testid="submit-task-btn">
               Adicionar tarefa
-            </GradientButton>
+            </Button>
           </div>
         </Modal>
       </div>
@@ -184,18 +201,7 @@ const ProjectTracker = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black pb-20 px-4 pt-6 relative overflow-hidden">
-      <motion.div
-        className="absolute top-20 left-10 w-72 h-72 bg-green-500 rounded-full blur-3xl opacity-20"
-        animate={{ x: [0, 40, 0], y: [0, 20, 0] }}
-        transition={{ duration: 10, repeat: Infinity }}
-      />
-
-      <motion.div
-        className="absolute bottom-20 right-10 w-72 h-72 bg-emerald-500 rounded-full blur-3xl opacity-20"
-        animate={{ x: [0, -40, 0], y: [0, -20, 0] }}
-        transition={{ duration: 12, repeat: Infinity }}
-      />
+    <div className="min-h-screen bg-canvas pb-20 px-4 pt-6 relative overflow-hidden">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -203,16 +209,16 @@ const ProjectTracker = () => {
           className="flex justify-between items-center mb-6"
         >
           <div>
-            <h1 className="text-3xl young-serif-regular font-bold text-gray-200">Rastreador de projetos</h1>
-            <p className="text-gray-400">Manage projects linked to your goals</p>
+            <h1 className="text-3xl young-serif-regular font-bold text-ink">Rastreador de projetos</h1>
+            <p className="text-mute">Gerencie projetos vinculados às suas metas</p>
           </div>
-          <button
+          <Button
+            variant="primary"
             onClick={() => setShowAddProject(true)}
             data-testid="add-project-btn"
-            className="bg-gradient-to-r from-green-600 to-emerald-600 hover:shadow-[0_0_20px_rgba(16,185,129,0.6)] hover:-translate-y-1 active:scale-95 text-white p-3 rounded-xl transition-all cursor-pointer"
           >
             <Plus size={24} />
-          </button>
+          </Button>
         </motion.div>
 
         {projects.length > 0 ? (
@@ -238,18 +244,18 @@ const ProjectTracker = () => {
             })}
           </div>
         ) : (
-          <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-center">
+          <Card className="text-center">
             <div className="text-center py-16">
-              <p className="text-gray-400 text-lg mb-4">
-                No projects yet.
+              <p className="text-mute text-lg mb-4">
+                Nenhum projeto ainda.
               </p>
-              <p className="text-indigo-400 text-sm mb-6">
-                Start building your execution system 🚀
+              <p className="text-accent-blue text-sm mb-6">
+                Comece a construir seu sistema de execução 🚀
               </p>
 
-              <GradientButton onClick={() => setShowAddProject(true)}>
-                Add Your First Project
-              </GradientButton>
+              <Button variant="primary" onClick={() => setShowAddProject(true)}>
+                Adicionar Primeiro Projeto
+              </Button>
             </div>
           </Card>
         )}
@@ -262,48 +268,48 @@ const ProjectTracker = () => {
             label="Titulo do projeto"
             value={newProject.title}
             onChange={(e) => setNewProject({ ...newProject, title: e.target.value })}
-            placeholder="Enter project title"
+            placeholder="Digite o título do projeto"
             required
             data-testid="project-title-input"
           />
 
           <div>
-            <label className="block text-gray-300 text-sm font-medium mb-2">Link to Goal (Optional)</label>
+            <label className="block text-charcoal text-sm font-medium mb-2">Vincular à Meta (Opcional)</label>
             <select
               value={newProject.goalId}
               onChange={(e) => setNewProject({ ...newProject, goalId: e.target.value })}
-              className="w-full bg-gray-700 text-white border border-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full bg-surface-elevated text-ink border border-hairline-strong rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-blue"
               data-testid="project-goal-select"
             >
-              <option value="">No goal (independent)</option>
+                <option value="">Sem meta (independente)</option>
               {goals.map(goal => (
                 <option key={goal.id} value={goal.id}>{goal.title}</option>
               ))}
             </select>
           </div>
 
-          <InputField
-            label="Deadline (Optional)"
-            type="date"
-            value={newProject.deadline}
-            onChange={(e) => setNewProject({ ...newProject, deadline: e.target.value })}
-            data-testid="project-deadline-input"
-          />
+            <InputField
+              label="Prazo (Opcional)"
+              type="date"
+              value={newProject.deadline}
+              onChange={(e) => setNewProject({ ...newProject, deadline: e.target.value })}
+              data-testid="project-deadline-input"
+            />
 
-          <div>
-            <label className="block text-gray-300 text-sm font-medium mb-2">Description (Optional)</label>
-            <textarea
-              value={newProject.description}
-              onChange={(e) => setNewProject({ ...newProject, description: e.target.value })}
-              placeholder="Describe your project..."
+            <div>
+              <label className="block text-charcoal text-sm font-medium mb-2">Descrição (Opcional)</label>
+              <textarea
+                value={newProject.description}
+                onChange={(e) => setNewProject({ ...newProject, description: e.target.value })}
+                placeholder="Descreva seu projeto..."
               data-testid="project-description-input"
-              className="w-full bg-gray-700 text-white border border-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500 min-h-[100px]"
+              className="w-full bg-surface-elevated text-ink border border-hairline-strong rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-blue min-h-[100px]"
             />
           </div>
 
-          <GradientButton onClick={handleAddProject} className="w-full" data-testid="submit-project-btn">
+          <Button variant="primary" onClick={handleAddProject} className="w-full" data-testid="submit-project-btn">
             Criar projeto
-          </GradientButton>
+          </Button>
         </div>
       </Modal>
     </div>

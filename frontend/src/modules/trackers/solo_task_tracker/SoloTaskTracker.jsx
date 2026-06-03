@@ -1,9 +1,9 @@
 ﻿import { useState } from 'react';
 import { Plus, Filter } from 'lucide-react';
-import { useApp } from '../../../store/AppContext';
+import { useApp } from '../../../hooks/useApp';
 import Card from '../../../components/Card';
 import TaskItem from '../../../components/TaskItem';
-import GradientButton from '../../../components/GradientButton';
+import Button from '../../../components/GradientButton';
 import InputField from '../../../components/InputField';
 import Modal from '../../../components/Modal';
 import { motion } from 'framer-motion';
@@ -51,18 +51,7 @@ const SoloTaskTracker = () => {
   const completedTasks = filteredTasks.filter(t => t.completed);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black pb-20 px-4 pt-6 relative overflow-hidden">
-      <motion.div
-        className="absolute top-20 left-10 w-72 h-72 bg-blue-500 rounded-full blur-3xl opacity-20"
-        animate={{ x: [0, 40, 0], y: [0, 20, 0] }}
-        transition={{ duration: 10, repeat: Infinity }}
-      />
-
-      <motion.div
-        className="absolute bottom-20 right-10 w-72 h-72 bg-cyan-500 rounded-full blur-3xl opacity-20"
-        animate={{ x: [0, -40, 0], y: [0, -20, 0] }}
-        transition={{ duration: 12, repeat: Infinity }}
-      />
+    <div className="min-h-screen bg-canvas pb-20 px-4 pt-6 relative overflow-hidden">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -70,24 +59,24 @@ const SoloTaskTracker = () => {
           className="flex justify-between items-center mb-6"
         >
           <div>
-            <h1 className="text-3xl font-bold young-serif-regular text-gray-200">Tarefas avulsas</h1>
-            <p className="text-gray-400">Track individual tasks and to-dos</p>
+            <h1 className="text-3xl font-bold young-serif-regular text-ink">Tarefas avulsas</h1>
+            <p className="text-mute">Acompanhe tarefas individuais e afazeres</p>
           </div>
-          <button
+          <Button
+            variant="primary"
             onClick={() => setShowAddTask(true)}
             data-testid="add-task-btn"
-            className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] hover:-translate-y-1 active:scale-95 text-white p-3 rounded-xl transition-all cursor-pointer"
           >
             <Plus size={24} />
-          </button>
+          </Button>
         </motion.div>
 
         {/* Filters */}
-        <Card className="mb-6 bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_rgba(59,130,246,0.2)]">
+        <Card className="mb-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <Filter size={20} className="text-blue-400" />
-              <h2 className="text-lg font-semibold text-white">Filters</h2>
+              <Filter size={20} className="text-accent-blue" />
+              <h2 className="text-lg font-semibold text-ink">Filtros</h2>
             </div>
 
             {(filterGoal || filterProject) && (
@@ -96,7 +85,7 @@ const SoloTaskTracker = () => {
                   setFilterGoal('');
                   setFilterProject('');
                 }}
-                className="text-xs text-indigo-400 hover:text-indigo-300"
+                className="text-xs text-accent-blue hover:underline"
               >
                 Reiniciar
               </button>
@@ -104,28 +93,28 @@ const SoloTaskTracker = () => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-gray-300 text-sm font-medium mb-2">Filter by Goal</label>
+              <label className="block text-charcoal text-sm font-medium mb-2">Filtrar por Meta</label>
               <select
                 value={filterGoal}
                 onChange={(e) => setFilterGoal(e.target.value)}
-                className="w-full bg-gray-700 text-white border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full bg-surface-elevated text-ink border border-hairline-strong rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-blue"
                 data-testid="filter-goal-select"
               >
-                <option value="">All Goals</option>
+                <option value="">Todas as Metas</option>
                 {goals.map(goal => (
                   <option key={goal.id} value={goal.id}>{goal.title}</option>
                 ))}
               </select>
             </div>
             <div>
-              <label className="block text-gray-300 text-sm font-medium mb-2">Filter by Project</label>
+              <label className="block text-charcoal text-sm font-medium mb-2">Filtrar por Projeto</label>
               <select
                 value={filterProject}
                 onChange={(e) => setFilterProject(e.target.value)}
-                className="w-full bg-gray-700 text-white border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full bg-surface-elevated text-ink border border-hairline-strong rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-blue"
                 data-testid="filter-project-select"
               >
-                <option value="">All Projects</option>
+                <option value="">Todos os Projetos</option>
                 {projects.map(project => (
                   <option key={project.id} value={project.id}>{project.title}</option>
                 ))}
@@ -138,17 +127,17 @@ const SoloTaskTracker = () => {
                 setFilterGoal('');
                 setFilterProject('');
               }}
-              className="mt-3 text-sm text-indigo-400 hover:text-indigo-300"
+              className="mt-3 text-sm text-accent-blue hover:underline"
               data-testid="clear-filters-btn"
             >
-              Clear Filters
+              Limpar Filtros
             </button>
           )}
         </Card>
 
         {/* Pending Tasks */}
-        <Card className="mb-6 bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_rgba(59,130,246,0.2)]">
-          <h2 className="text-xl font-bold text-white mb-4">Pending Tasks ({pendingTasks.length})</h2>
+        <Card className="mb-6">
+          <h2 className="text-xl font-bold text-ink mb-4">Tarefas Pendentes ({pendingTasks.length})</h2>
           {pendingTasks.length > 0 ? (
             <div className="space-y-3">
               {pendingTasks.map((task, index) => (
@@ -168,17 +157,17 @@ const SoloTaskTracker = () => {
               ))}
             </div>
           ) : (
-            <p className="text-gray-400 text-center py-8">No pending tasks. Great job! 🎉</p>
+            <p className="text-mute text-center py-8">Nenhuma tarefa pendente. Ótimo trabalho! 🎉</p>
           )}
         </Card>
 
         {/* Concluido Tasks */}
         {completedTasks.length > 0 && (
-          <Card className="bg-white/5 backdrop-blur-xl border border-white/10 opacity-80">
-            <h2 className="text-xl font-bold text-white mb-4">
-              Concluido Tasks ({completedTasks.length})
+          <Card className="opacity-80">
+            <h2 className="text-xl font-bold text-ink mb-4">
+              Tarefas Concluídas ({completedTasks.length})
             </h2>
-            <p className="text-xs text-gray-400 mb-3">Well done! Keep the streak going 🔥</p>
+            <p className="text-xs text-mute mb-3">Muito bem! Mantenha a sequência 🔥</p>
             <div className="space-y-3">
               {completedTasks.map(task => (
                 <TaskItem
@@ -193,21 +182,21 @@ const SoloTaskTracker = () => {
         )}
 
         {filteredTasks.length === 0 && (
-          <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-center">
+          <Card className="text-center">
             <div className="text-center py-16">
               <div className="text-5xl mb-4">📋</div>
 
-              <p className="text-gray-400 text-lg mb-2">
-                No tasks yet.
+              <p className="text-mute text-lg mb-2">
+                Nenhuma tarefa ainda.
               </p>
 
-              <p className="text-indigo-400 text-sm mb-6">
-                Start organizing your day like a pro 🚀
+              <p className="text-accent-blue text-sm mb-6">
+                Comece a organizar seu dia como um profissional 🚀
               </p>
 
-              <GradientButton onClick={() => setShowAddTask(true)}>
-                Add Your First Task
-              </GradientButton>
+              <Button variant="primary" onClick={() => setShowAddTask(true)}>
+                Adicionar Primeira Tarefa
+              </Button>
             </div>
           </Card>
         )}
@@ -220,67 +209,67 @@ const SoloTaskTracker = () => {
             label="Titulo da tarefa"
             value={newTask.title}
             onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-            placeholder="Enter task title"
+            placeholder="Digite o título da tarefa"
             required
             data-testid="task-title-input"
           />
 
-          <InputField
-            label="Deadline (Optional)"
-            type="date"
-            value={newTask.deadline}
-            onChange={(e) => setNewTask({ ...newTask, deadline: e.target.value })}
-            data-testid="task-deadline-input"
-          />
+            <InputField
+              label="Prazo (Opcional)"
+              type="date"
+              value={newTask.deadline}
+              onChange={(e) => setNewTask({ ...newTask, deadline: e.target.value })}
+              data-testid="task-deadline-input"
+            />
 
-          <div>
-            <label className="block text-gray-300 text-sm font-medium mb-2">Link to Goal (Optional)</label>
-            <select
-              value={newTask.goalId}
-              onChange={(e) => setNewTask({ ...newTask, goalId: e.target.value })}
-              className="w-full bg-gray-700 text-white border border-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              data-testid="task-goal-select"
-            >
-              <option value="">No goal</option>
-              {goals.map(goal => (
-                <option key={goal.id} value={goal.id}>{goal.title}</option>
-              ))}
-            </select>
-          </div>
+            <div>
+              <label className="block text-charcoal text-sm font-medium mb-2">Vincular à Meta (Opcional)</label>
+              <select
+                value={newTask.goalId}
+                onChange={(e) => setNewTask({ ...newTask, goalId: e.target.value })}
+                className="w-full bg-surface-elevated text-ink border border-hairline-strong rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-blue"
+                data-testid="task-goal-select"
+              >
+                <option value="">Sem meta</option>
+                {goals.map(goal => (
+                  <option key={goal.id} value={goal.id}>{goal.title}</option>
+                ))}
+              </select>
+            </div>
 
-          <div>
-            <label className="block text-gray-300 text-sm font-medium mb-2">Link to Project (Optional)</label>
-            <select
-              value={newTask.projectId}
-              onChange={(e) => setNewTask({ ...newTask, projectId: e.target.value })}
-              className="w-full bg-gray-700 text-white border border-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              data-testid="task-project-select"
-            >
-              <option value="">No project</option>
-              {projects.map(project => (
-                <option key={project.id} value={project.id}>{project.title}</option>
-              ))}
-            </select>
-          </div>
+            <div>
+              <label className="block text-charcoal text-sm font-medium mb-2">Vincular ao Projeto (Opcional)</label>
+              <select
+                value={newTask.projectId}
+                onChange={(e) => setNewTask({ ...newTask, projectId: e.target.value })}
+                className="w-full bg-surface-elevated text-ink border border-hairline-strong rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-blue"
+                data-testid="task-project-select"
+              >
+                <option value="">Sem projeto</option>
+                {projects.map(project => (
+                  <option key={project.id} value={project.id}>{project.title}</option>
+                ))}
+              </select>
+            </div>
 
-          <div className="flex items-center justify-between bg-white/5 border border-white/10 rounded-lg px-4 py-3">
-            <label htmlFor="important" className="text-gray-300 text-sm">
-              Mark as Importante
-            </label>
+            <div className="flex items-center justify-between bg-surface-card border border-hairline-strong rounded-lg px-4 py-3">
+              <label htmlFor="important" className="text-charcoal text-sm">
+                Marcar como Importante
+              </label>
 
             <input
               type="checkbox"
               id="important"
               checked={newTask.isImportant}
               onChange={(e) => setNewTask({ ...newTask, isImportant: e.target.checked })}
-              className="w-5 h-5 accent-orange-500"
+              className="w-5 h-5 accent-yellow-500"
               data-testid="task-important-checkbox"
             />
           </div>
 
-          <GradientButton onClick={handleAddTask} className="w-full" data-testid="submit-task-btn">
-            Create Task
-          </GradientButton>
+          <Button variant="primary" onClick={handleAddTask} className="w-full" data-testid="submit-task-btn">
+            Criar Tarefa
+          </Button>
         </div>
       </Modal>
     </div>

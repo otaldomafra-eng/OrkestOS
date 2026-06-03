@@ -1,20 +1,41 @@
-const GradientButton = ({ children, onClick, className = '', type = 'button', disabled = false }) => {
+const variants = {
+  primary: {
+    className: 'bg-white text-black font-semibold hover:opacity-90 active:scale-95',
+    style: { boxShadow: '0 0 20px rgba(255,255,255,0.2)' },
+  },
+  outline: {
+    className: 'bg-transparent text-white/70 border border-white/20 hover:border-white/40 hover:text-white active:scale-95',
+    style: {},
+  },
+  ghost: {
+    className: 'bg-transparent text-white/45 hover:text-white active:scale-95',
+    style: {},
+  },
+  danger: {
+    className: 'bg-transparent text-[#ff2047] border border-[#ff2047]/30 hover:border-[#ff2047]/60 active:scale-95',
+    style: {},
+  },
+};
+
+const Button = ({ children, onClick, className = '', type = 'button', disabled = false, variant = 'primary' }) => {
+  const v = variants[variant] ?? variants.primary;
   return (
     <button
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`relative overflow-hidden
-        bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600
-        bg-[length:200%_200%]
-        text-white font-semibold py-3 px-6 rounded-xl hover:shadow-[0_0_20px_rgba(99,102,241,0.6)]  hover:-translate-y-1 active:scale-95 transition-all duration-300
-        shadow-lg cursor-pointer
-        disabled:opacity-50 disabled:cursor-not-allowed
-        ${className}`}
+      className={`
+        inline-flex items-center justify-center gap-2
+        px-4 py-2 rounded-xl text-sm
+        transition-all duration-150
+        disabled:opacity-40 disabled:cursor-not-allowed
+        ${v.className} ${className}
+      `}
+      style={v.style}
     >
       {children}
     </button>
   );
 };
 
-export default GradientButton;
+export default Button;

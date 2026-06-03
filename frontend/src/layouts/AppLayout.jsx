@@ -1,19 +1,26 @@
 import { Outlet, Navigate } from 'react-router-dom';
+import Sidebar from '../components/Sidebar';
 import BottomNav from '../components/BottomNav';
-import { useAuth } from '../context/AuthContext';
+import XPToastLayer from '../components/XPToast';
+import LevelUpModal from '../components/LevelUpModal';
+import { useAuth } from '../hooks/useAuth';
 
 const AppLayout = () => {
   const { token } = useAuth();
 
-  // Protect all routes inside this layout
   if (!token) {
     return <Navigate to="/login" replace />;
   }
 
   return (
-    <div className="min-h-screen bg-gray-900">
-      <Outlet />
+    <div className="flex min-h-screen bg-black">
+      <Sidebar />
+      <main className="flex-1 min-w-0 pb-20 lg:pb-0 overflow-y-auto">
+        <Outlet />
+      </main>
       <BottomNav />
+      <XPToastLayer />
+      <LevelUpModal />
     </div>
   );
 };

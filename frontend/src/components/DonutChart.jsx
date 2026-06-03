@@ -1,13 +1,13 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
-const DonutChart = ({ value, size = 120, color = '#6366f1', label = '' }) => {
+const DonutChart = ({ value, size = 120, color = '#3b9eff', label = '' }) => {
   const percentage = Math.min(Math.max(value, 0), 100);
   const data = [
     { name: 'completed', value: percentage },
     { name: 'remaining', value: 100 - percentage }
   ];
 
-  const COLORS = [color, '#1F2937'];
+  const COLORS = [color, '#101012'];
 
   return (
     <div className="flex flex-col items-center" data-testid="donut-chart">
@@ -32,10 +32,10 @@ const DonutChart = ({ value, size = 120, color = '#6366f1', label = '' }) => {
           </PieChart>
         </ResponsiveContainer>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-2xl font-bold text-white">{percentage}</span>
+          <span className="text-2xl font-bold text-ink">{percentage}</span>
         </div>
       </div>
-      {label && <span className="text-sm text-gray-400 mt-2">{label}</span>}
+      {label && <span className="text-sm text-mute mt-2">{label}</span>}
     </div>
   );
 };

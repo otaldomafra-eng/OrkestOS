@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import { Calendar, Clock, Plus, ListTodo, X, CheckCircle2, CalendarSyncIcon, CheckSquare, CalendarClock } from 'lucide-react';
-import { useData } from '../../../context/DataContext';
-import { useDailyPlan } from '../../../context/DailyPlanContext';
+import { useData } from '../../../hooks/useData';
+import { useDailyPlan } from '../../../hooks/useDailyPlan';
 import Card from '../../../components/Card';
 import DonutChart from '../../../components/DonutChart';
-import GradientButton from '../../../components/GradientButton';
+import Button from '../../../components/GradientButton';
 import InputField from '../../../components/InputField';
 import { format } from 'date-fns';
 import { motion as Motion } from 'framer-motion';
 import Modal from '../../../components/Modal';
 import { showToast } from '../../../utils/toastHelper';
 import { PlannerSkeleton } from '../../../components/LoadingSkeleton';
+import { useXP } from '../../../hooks/useXP';
+import { XP_VALUES } from '../../../data/gamification';
 
 const DailyTaskTracker = () => {
   const { tasks, habits, loading } = useData();
@@ -61,6 +63,23 @@ const DailyTaskTracker = () => {
 
   const isPlanEmpty = dailyPlan.plannedTasks.length === 0;
 
+  const { addXP } = useXP();
+
+  const handleToggleTask = (taskId) => {
+    const task = dailyPlan.plannedTasks.find(t => t.id === taskId);
+    if (task && !task.completed) {
+      addXP(XP_VALUES.task_normal, 'tarefa do plano');
+      const updatedTasks = dailyPlan.plannedTasks.map(t =>
+        t.id === taskId ? { ...t, completed: true } : t
+      );
+      const allDone = updatedTasks.every(t => t.completed);
+      if (allDone && updatedTasks.length > 0) {
+        addXP(XP_VALUES.daily_plan_100, 'plano do dia 100%');
+      }
+    }
+    toggleDailyPlanTaskCompletion(taskId);
+  };
+
   // Get tasks not yet in daily plan
   const availableTasks = tasks.filter(
     task => !task.completed &&
@@ -90,7 +109,7 @@ const DailyTaskTracker = () => {
       if (diffMinutes < 30) {
         const newEnd = new Date(start.getTime() + 30 * 60 * 1000);
         endTime = format(newEnd, 'HH:mm');
-        showToast({ message: "Minimum 30 minutes applied" });
+        showToast({ message: "MÃ­nimo de 30 minutos aplicado" });
       }
     }
     addToDailyPlan({
@@ -108,7 +127,7 @@ const DailyTaskTracker = () => {
   const handleCreateManualTask = (e) => {
     e.preventDefault();
     if (!manualTaskForm.title.trim()) {
-      alert('Please enter a task title');
+      alert('Por favor, insira um tÃ­tulo para a tarefa');
       return;
     }
     const start = new Date(`2000-01-01T${manualTaskForm.startTime}:00`);
@@ -117,7 +136,7 @@ const DailyTaskTracker = () => {
     const diffMinutes = (end - start) / (1000 * 60);
 
     if (diffMinutes < 30) {
-      showToast({ message: "Minimum task duration should be 30 minutes", status: "error" });
+      showToast({ message: "A duraÃ§Ã£o mÃ­nima da tarefa deve ser de 30 minutos", status: "error" });
       return;
     }
 
@@ -140,7 +159,7 @@ const DailyTaskTracker = () => {
 
     if (diffMinutes < 30) {
       // alert("Minimum task duration should be 30 minutes");
-      showToast({ message: "Minimum task duration should be 30 minutes", status: "error" });
+      showToast({ message: "A duraÃ§Ã£o mÃ­nima da tarefa deve ser de 30 minutos", status: "error" });
       return;
     }
 
@@ -167,21 +186,11 @@ const DailyTaskTracker = () => {
   if (loading) {
     return (
       <Motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
-        <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black pb-20 px-4 pt-6 relative overflow-hidden">
-          <Motion.div
-            className="absolute top-20 left-10 w-72 h-72 bg-purple-500 rounded-full blur-3xl opacity-20"
-            animate={{ x: [0, 40, 0], y: [0, 20, 0] }}
-            transition={{ duration: 10, repeat: Infinity }}
-          />
-          <Motion.div
-            className="absolute bottom-20 right-10 w-72 h-72 bg-indigo-500 rounded-full blur-3xl opacity-20"
-            animate={{ x: [0, -40, 0], y: [0, -20, 0] }}
-            transition={{ duration: 12, repeat: Infinity }}
-          />
+        <div className="min-h-screen bg-canvas pb-20 px-4 pt-6 relative overflow-hidden">
           <div className="max-w-4xl mx-auto relative z-10">
             <div className="mb-6">
-              <h1 className="text-3xl young-serif-regular font-bold text-gray-200 mb-2">Planejador diário</h1>
-              <div className="flex items-center gap-2 text-gray-400">
+              <h1 className="text-3xl young-serif-regular font-bold text-ink mb-2">Planejador diÃ¡rio</h1>
+              <div className="flex items-center gap-2 text-mute">
                 <Calendar size={20} />
                 <p>{format(new Date(), 'EEEE, MMMM d, yyyy')}</p>
               </div>
@@ -195,19 +204,7 @@ const DailyTaskTracker = () => {
 
   return (
     <Motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
-      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black pb-20 px-4 pt-6 relative overflow-hidden">
-        <Motion.div
-          className="absolute top-20 left-10 w-72 h-72 bg-purple-500 rounded-full blur-3xl opacity-20"
-          animate={{ x: [0, 40, 0], y: [0, 20, 0] }}
-          transition={{ duration: 10, repeat: Infinity }}
-        />
-
-        <Motion.div
-          className="absolute bottom-20 right-10 w-72 h-72 bg-indigo-500 rounded-full blur-3xl opacity-20"
-          animate={{ x: [0, -40, 0], y: [0, -20, 0] }}
-          transition={{ duration: 12, repeat: Infinity }}
-        />
-
+      <div className="min-h-screen bg-canvas pb-20 px-4 pt-6 relative overflow-hidden">
         <div className="max-w-4xl mx-auto relative z-10">
           {/* Header */}
           <Motion.div
@@ -215,8 +212,8 @@ const DailyTaskTracker = () => {
             animate={{ opacity: 1, y: 0 }}
             className="mb-6"
           >
-            <h1 className="text-3xl young-serif-regular font-bold text-gray-200 mb-2\">Planejador diário</h1>
-            <div className="flex items-center gap-2 text-gray-400">
+            <h1 className="text-3xl young-serif-regular font-bold text-ink mb-2">Planejador diï¿½rio</h1>
+            <div className="flex items-center gap-2 text-mute">
               <Calendar size={20} />
               <p>{format(new Date(), 'EEEE, MMMM d, yyyy')}</p>
             </div>
@@ -224,24 +221,24 @@ const DailyTaskTracker = () => {
 
           {/* Scores */}
           <div className="grid grid-cols-2 gap-4 mb-6">
-            <Card className="bg-white/5 backdrop-blur-xl border border-white/10">
-              <h3 className="text-sm text-gray-400 mb-3 text-center">Produtividade Score</h3>
+            <Card>
+              <h3 className="text-sm text-mute mb-3 text-center">PontuaÃ§Ã£o de Produtividade</h3>
               <DonutChart value={productivityScore} color="#10b981" size={120} />
             </Card>
-            <Card className="bg-white/5 backdrop-blur-xl border border-white/10">
-              <h3 className="text-sm text-gray-400 mb-3 text-center">Discipline Score</h3>
+            <Card>
+              <h3 className="text-sm text-mute mb-3 text-center">PontuaÃ§Ã£o de Disciplina</h3>
               <DonutChart value={disciplineScore} color="#f59e0b" size={120} />
             </Card>
           </div>
 
           {/* Warning if past 8 AM and no plan */}
           {currentHour >= 8 && isPlanEmpty && (
-            <Card className="mb-6 bg-orange-900/20 border border-orange-500/30">
+            <Card className="mb-6 bg-accent-yellow/10 border border-accent-yellow/30">
               <div className="flex items-center gap-3">
-                <Clock size={24} className="text-orange-400" />
+                <Clock size={24} className="text-accent-yellow" />
                 <div>
-                  <p className="text-orange-400 font-semibold">You haven't planned your day yet!</p>
-                  <p className="text-sm text-gray-400">It's recommended to plan before 8 AM</p>
+                  <p className="text-accent-yellow font-semibold">VocÃª ainda nÃ£o planejou seu dia!</p>
+                  <p className="text-sm text-mute">Ã‰ recomendado planejar antes das 8h</p>
                 </div>
               </div>
             </Card>
@@ -256,8 +253,8 @@ const DailyTaskTracker = () => {
 
               }}
               className={`flex-1 py-3 px-4 rounded-lg font-semibold transition-all ${activeTab === 'timeline'
-                ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg'
-                : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                ? 'bg-surface-elevated text-ink border border-hairline-strong'
+                : 'bg-surface-deep text-mute hover:bg-surface-elevated'
                 }`}
               data-testid="timeline-tab"
             >
@@ -267,13 +264,13 @@ const DailyTaskTracker = () => {
             <button
               onClick={() => setActiveTab('add')}
               className={`flex-1 py-3 px-4 rounded-lg font-semibold transition-all ${activeTab === 'add'
-                ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg'
-                : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                ? 'bg-surface-elevated text-ink border border-hairline-strong'
+                : 'bg-surface-deep text-mute hover:bg-surface-elevated'
                 }`}
               data-testid="add-tasks-tab"
             >
               <Plus size={20} className="inline mr-2" />
-              Add to Plan
+              Adicionar ao Plano
             </button>
           </div>
 
@@ -285,37 +282,37 @@ const DailyTaskTracker = () => {
               transition={{ duration: 0.3 }}
             >
               {isPlanEmpty ? (
-                <Card className="text-center py-12 backdrop-blur-lg bg-white/5 border border-white/10 shadow-[0_0_30px_rgba(99,102,241,0.15)]">
-                  <CalendarSyncIcon size={48} className="mx-auto text-indigo-400 mb-4" />
-                  <h3 className="text-xl font-bold text-white mb-2">Your day is wide open!</h3>
-                  <p className="text-gray-400 mb-4">Start planning by adding tasks, habits, or creating manual tasks</p>
-                  <GradientButton onClick={() => setActiveTab('add')} data-testid="start-planning-btn">
-                    Start Planning
-                  </GradientButton>
+                <Card className="text-center py-12">
+                  <CalendarSyncIcon size={48} className="mx-auto text-accent-blue mb-4" />
+                  <h3 className="text-xl font-bold text-ink mb-2">Seu dia estÃ¡ livre!</h3>
+                  <p className="text-mute mb-4">Comece a planejar adicionando tarefas, hÃ¡bitos ou criando tarefas manuais</p>
+                  <Button variant="primary" onClick={() => setActiveTab('add')} data-testid="start-planning-btn">
+                    ComeÃ§ar a Planejar
+                  </Button>
                 </Card>
               ) : (
                 <>
                   {/* Progresso Summary */}
-                  <Card className="bg-white/10 backdrop-blur-3xl border-2 border-white/25 mb-6">
+                  <Card className="mb-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="text-lg font-semibold text-white mb-1">Progresso de hoje</h3>
-                        <p className="text-gray-400 text-sm">
-                          {completedCount} of {dailyPlan.plannedTasks.length} tasks completed
+                        <h3 className="text-lg font-semibold text-ink mb-1">Progresso de hoje</h3>
+                        <p className="text-mute text-sm">
+                          {completedCount} de {dailyPlan.plannedTasks.length} tarefas concluÃ­das
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="text-3xl default-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(99,102,241,0.8)]">
+                        <p className="text-3xl default-bold text-accent-blue">
                           {dailyPlan.plannedTasks.length > 0
                             ? Math.round((completedCount / dailyPlan.plannedTasks.length) * 100)
                             : 0}%
                         </p>
                         <button
                           onClick={clearDailyPlan}
-                          className="text-sm text-red-400 hover:text-red-300 mt-1"
+                          className="text-sm text-accent-red hover:underline mt-1"
                           data-testid="clear-plan-btn"
                         >
-                          Clear Plan
+                          Limpar Plano
                         </button>
                       </div>
                     </div>
@@ -326,37 +323,37 @@ const DailyTaskTracker = () => {
                     <button
                       onClick={() => setActiveView('timeline')}
                       className={`flex-1 py-3 px-4 rounded-lg font-semibold transition-all ${activeView === 'timeline'
-                        ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg'
-                        : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                        ? 'bg-surface-elevated text-ink border border-hairline-strong'
+                        : 'bg-surface-deep text-mute hover:bg-surface-elevated'
                         }`}
                       data-testid="timeline-view-tab"
                     >
                       <CalendarClock size={20} className="inline mr-2" />
-                      Visualização em linha do tempo ({dailyPlan.plannedTasks.length})
+                      VisualizaÃ§Ã£o em linha do tempo ({dailyPlan.plannedTasks.length})
                     </button>
                     <button
                       onClick={() => setActiveView('list')}
                       className={`flex-1 py-3 px-4 rounded-lg font-semibold transition-all ${activeView === 'list'
-                        ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg'
-                        : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                        ? 'bg-surface-elevated text-ink border border-hairline-strong'
+                        : 'bg-surface-deep text-mute hover:bg-surface-elevated'
                         }`}
                       data-testid="tasks-list-view-tab"
                     >
                       <CheckSquare size={20} className="inline mr-2" />
-                      Visualização em lista
+                      VisualizaÃ§Ã£o em lista
                     </button>
                   </div>
 
                   {/* NEW TIME GRID VIEW - POLISHED */}
                   {activeView === 'timeline' && (
-                    <div className="flex relative mt-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
+                    <div className="flex relative mt-6 bg-surface-card border border-hairline-strong rounded-2xl overflow-hidden">
 
                       {/* LEFT TIME COLUMN */}
-                      <div className="w-20 bg-black/30 border-r border-white/10">
+                      <div className="w-20 bg-surface-deep border-r border-hairline">
                         {hours.map(hour => (
                           <div
                             key={hour}
-                            className="h-[145px] flex items-start justify-end pr-3 pt-1 text-xs text-gray-400 border-b border-white/5"
+                            className="h-[145px] flex items-start justify-end pr-3 pt-1 text-xs text-mute border-b border-hairline"
                           >
                             {`${hour.toString().padStart(2, '0')}:00`}
                           </div>
@@ -371,24 +368,24 @@ const DailyTaskTracker = () => {
                           {hours.map(hour => (
                             <div
                               key={hour}
-                              className="h-[145px] border-b border-white/5"
+                              className="h-[145px] border-b border-hairline"
                             />
                           ))}
                         </div>
 
                         {/* SUBTLE VERTICAL GRID LINES */}
                         <div className="absolute inset-0 grid grid-cols-4 opacity-20">
-                          <div className="border-r border-white/10"></div>
-                          <div className="border-r border-white/10"></div>
-                          <div className="border-r border-white/10"></div>
+                          <div className="border-r border-hairline"></div>
+                          <div className="border-r border-hairline"></div>
+                          <div className="border-r border-hairline"></div>
                           <div></div>
                         </div>
 
                         {/* EMPTY STATE (temporary) */}
                         {dailyPlan.plannedTasks.length === 0 && (
                           <div className="absolute inset-0 flex items-center justify-center">
-                            <p className="text-gray-500 text-sm">
-                              No tasks scheduled yet
+                            <p className="text-ash text-sm">
+                              Nenhuma tarefa agendada ainda
                             </p>
                           </div>
                         )}
@@ -404,7 +401,7 @@ const DailyTaskTracker = () => {
                           const top = (startInHours - START_HOUR) * HOUR_HEIGHT;
                           const height = (endInHours - startInHours) * HOUR_HEIGHT;
 
-                          // ðŸ"¥ Adaptive UI logic
+                          // ï¿½"ï¿½ Adaptive UI logic
                           const isSmall = height < 60;
                           const isMedium = height >= 30 && height < 40;
 
@@ -414,7 +411,7 @@ const DailyTaskTracker = () => {
                               className={`group absolute left-4 right-4 pointer-events-auto rounded-xl p-2 backdrop-blur-lg border shadow-lg transition-all
         ${task.completed
                                   ? 'opacity-50 border-gray-500'
-                                  : 'border-indigo-400 hover:scale-[1.02]'
+                                  : 'border-accent-blue/50 hover:scale-[1.02]'
                                 }`}
                               style={{
                                 top: `${top}px`,
@@ -428,18 +425,18 @@ const DailyTaskTracker = () => {
                               }}
                             >
 
-                              {/* ðŸ"¥ ACTION BUTTONS (FIXED) */}
+                              {/* ï¿½"ï¿½ ACTION BUTTONS (FIXED) */}
                               <div
                                 className="absolute top-1 right-1 flex gap-1 transition z-20 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
                               >
                                 <button
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    toggleDailyPlanTaskCompletion(task.id);
+                                    handleToggleTask(task.id);
                                   }}
                                   className={`p-2 rounded ${task.completed
                                     ? 'bg-green-500/20 text-green-400'
-                                    : 'bg-black/40 text-gray-300 hover:bg-green-500/20 hover:text-green-400'
+                                    : 'bg-black/40 text-charcoal hover:bg-green-500/20 hover:text-green-400'
                                     }`}
                                 >
                                   <CheckCircle2 size={14} />
@@ -450,26 +447,26 @@ const DailyTaskTracker = () => {
                                     e.stopPropagation();
                                     removeFromDailyPlan(task.id);
                                   }}
-                                  className="p-2 rounded bg-black/40 text-gray-300 hover:bg-red-500/20 hover:text-red-400"
+                                  className="p-2 rounded bg-black/40 text-charcoal hover:bg-red-500/20 hover:text-red-400"
                                 >
                                   <X size={14} />
                                 </button>
                               </div>
 
-                              {/* ðŸ"¥ CONTENT */}
+                              {/* ï¿½"ï¿½ CONTENT */}
                               <div className="h-full flex flex-col justify-start overflow-hidden">
 
                                 {/* TITLE (ALWAYS VISIBLE) */}
                                 <p className={`text-sm font-semibold truncate ${task.completed
-                                  ? 'line-through text-gray-400'
-                                  : 'text-white'
+                                  ? 'line-through text-mute'
+                                  : 'text-ink'
                                   }`}>
                                   {task.title}
                                 </p>
 
                                 {/* TIME (ONLY IF SPACE AVAILABLE) */}
                                 {!isSmall && (
-                                  <p className="text-xs text-gray-300 mt-1 truncate">
+                                  <p className="text-xs text-charcoal mt-1 truncate">
                                     {task.startTime} - {task.endTime}
                                   </p>
                                 )}
@@ -477,12 +474,12 @@ const DailyTaskTracker = () => {
                                 {/* BADGES (ONLY IF LARGE BLOCK) */}
                                 {!isSmall && !isMedium && (
                                   <div className="flex gap-2 mt-1 flex-wrap">
-                                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 border border-white/10 text-gray-300">
+                                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-surface-elevated border border-hairline-strong text-charcoal">
                                       {task.source}
                                     </span>
 
                                     {task.isImportant && (
-                                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-400">
+                                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-accent-yellow/20 text-accent-yellow">
                                         Importante
                                       </span>
                                     )}
@@ -498,8 +495,8 @@ const DailyTaskTracker = () => {
                     </div>
                   )}
                   {activeView === 'list' && (
-                    <div className="space-y-3 p-5 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_0_40px_rgba(99,102,241,0.15)]">
-                      <h2 className="text-xl font-bold text-white mb-4">Tarefas planejadas para hoje</h2>
+                    <div className="space-y-3 p-5 bg-surface-card border border-hairline-strong rounded-2xl">
+                      <h2 className="text-xl font-bold text-ink mb-4">Tarefas planejadas para hoje</h2>
                       {activeTasks.map((item, index) => (
                         <Motion.div
                           key={item.id}
@@ -508,19 +505,19 @@ const DailyTaskTracker = () => {
                           transition={{ delay: index * 0.05 }}
                           className="relative"
                         >
-                          <div className="bg-white/5 rounded-lg shadow-lg backdrop-blur-lg p-3 border border-white/10 hover:border-white/50 transition-all">
+                          <div className="bg-surface-elevated rounded-lg p-3 border border-hairline-strong hover:border-white/50 transition-all">
                             <div className="flex items-start gap-3">
                               {/* Time */}
                               <div className="text-center min-w-[60px]">
-                                <p className="text-xs text-indigo-400 font-semibold">{item.startTime}</p>
-                                <p className="text-xs text-gray-500">{item.endTime}</p>
+                                <p className="text-xs text-accent-blue font-semibold">{item.startTime}</p>
+                                <p className="text-xs text-ash">{item.endTime}</p>
                               </div>
 
                               {/* Content */}
                               <div className="flex-1">
                                 <div className="flex items-start justify-between gap-3 mb-2">
                                   <div className="flex-1">
-                                    <h4 className={`font-medium ${item.completed ? 'line-through text-gray-500' : 'text-white'}`}>
+                                    <h4 className={`font-medium ${item.completed ? 'line-through text-ash' : 'text-ink'}`}>
                                       {item.title}
                                     </h4>
                                     <div className="flex items-center gap-2 mt-1">
@@ -528,7 +525,7 @@ const DailyTaskTracker = () => {
                                         {getSourceBadge(item.source).label}
                                       </span>
                                       {item.isImportant && (
-                                        <span className="text-xs px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30">
+                                        <span className="text-xs px-2 py-0.5 rounded-full bg-accent-yellow/20 text-accent-yellow border border-accent-yellow/30">
                                           Importante
                                         </span>
                                       )}
@@ -538,10 +535,10 @@ const DailyTaskTracker = () => {
                                   {/* Actions */}
                                   <div className="flex items-center gap-2">
                                     <button
-                                      onClick={() => toggleDailyPlanTaskCompletion(item.id)}
+                                      onClick={() => handleToggleTask(item.id)}
                                       className={`p-2 rounded-lg transition-all ${item.completed
                                         ? 'bg-green-500/20 text-green-400'
-                                        : 'bg-gray-700/50 text-gray-400 hover:bg-green-500/20 hover:text-green-400'
+                                        : 'bg-surface-deep text-mute hover:bg-green-500/20 hover:text-green-400'
                                         }`}
                                       data-testid={`complete-daily-task-${item.id}`}
                                     >
@@ -549,7 +546,7 @@ const DailyTaskTracker = () => {
                                     </button>
                                     <button
                                       onClick={() => removeFromDailyPlan(item.id)}
-                                      className="p-2 rounded-lg bg-gray-700/50 text-gray-400 hover:bg-red-500/20 hover:text-red-400 transition-all"
+                                      className="p-2 rounded-lg bg-surface-deep text-mute hover:bg-red-500/20 hover:text-red-400 transition-all"
                                       data-testid={`remove-daily-task-${item.id}`}
                                     >
                                       <X size={20} />
@@ -567,8 +564,8 @@ const DailyTaskTracker = () => {
                     <div className="mt-8">
 
                       {/* HEADER */}
-                      <h3 className="text-lg font-semibold text-gray-300 mb-4">
-                        Concluido Tasks ({completedTasks.length})
+                      <h3 className="text-lg font-semibold text-charcoal mb-4">
+                        Tarefas ConcluÃ­das ({completedTasks.length})
                       </h3>
 
                       {/* LIST */}
@@ -576,15 +573,15 @@ const DailyTaskTracker = () => {
                         {completedTasks.map(task => (
                           <div
                             key={task.id}
-                            className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-lg"
+                            className="flex items-center justify-between p-4 rounded-xl bg-surface-card border border-hairline-strong"
                           >
 
                             {/* LEFT */}
                             <div>
-                              <p className="text-gray-400 line-through">
+                              <p className="text-mute line-through">
                                 {task.title}
                               </p>
-                              <p className="text-xs text-gray-500">
+                              <p className="text-xs text-ash">
                                 {task.startTime} - {task.endTime}
                               </p>
                             </div>
@@ -594,7 +591,7 @@ const DailyTaskTracker = () => {
 
                               {/* UNDO (bring back to timeline) */}
                               <button
-                                onClick={() => toggleDailyPlanTaskCompletion(task.id)}
+                                onClick={() => handleToggleTask(task.id)}
                                 className="p-2 rounded-lg bg-green-500/20 text-green-400 hover:bg-green-500/30"
                               >
                                 <CheckCircle2 size={18} />
@@ -631,8 +628,8 @@ const DailyTaskTracker = () => {
                 <button
                   onClick={() => setAddModo('tasks')}
                   className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all ${addModo === 'tasks'
-                    ? 'bg-indigo-600 text-white'
-                    : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                    ? 'bg-surface-elevated text-ink border border-hairline-strong'
+                    : 'bg-surface-deep text-mute hover:bg-surface-elevated'
                     }`}
                   data-testid="add-from-tasks-tab"
                 >
@@ -641,29 +638,49 @@ const DailyTaskTracker = () => {
                 <button
                   onClick={() => setAddModo('habits')}
                   className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all ${addModo === 'habits'
-                    ? 'bg-indigo-600 text-white'
-                    : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                    ? 'bg-surface-elevated text-ink border border-hairline-strong'
+                    : 'bg-surface-deep text-mute hover:bg-surface-elevated'
                     }`}
                   data-testid="add-from-habits-tab"
                 >
-                  Hábitos sugeridos ({suggestedHabits.length})
+                  HÃ¡bitos sugeridos ({suggestedHabits.length})
                 </button>
                 <button
                   onClick={() => setAddModo('manual')}
                   className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all ${addModo === 'manual'
-                    ? 'bg-indigo-600 text-white'
-                    : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                    ? 'bg-surface-elevated text-ink border border-hairline-strong'
+                    : 'bg-surface-deep text-mute hover:bg-surface-elevated'
                     }`}
                   data-testid="create-manual-task-tab"
                 >
-                  Create Manual
+                  Criar Manual
+                </button>
+                <button
+                  onClick={() => setAddModo('habits')}
+                  className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all ${addModo === 'habits'
+                    ? 'bg-surface-elevated text-ink border border-hairline-strong'
+                    : 'bg-surface-deep text-mute hover:bg-surface-elevated'
+                    }`}
+                  data-testid="add-from-habits-tab"
+                >
+                  Hï¿½bitos sugeridos ({suggestedHabits.length})
+                </button>
+                <button
+                  onClick={() => setAddModo('manual')}
+                  className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all ${addModo === 'manual'
+                    ? 'bg-surface-elevated text-ink border border-hairline-strong'
+                    : 'bg-surface-deep text-mute hover:bg-surface-elevated'
+                    }`}
+                  data-testid="create-manual-task-tab"
+                >
+                  Criar Manual
                 </button>
               </div>
 
               {/* Add from Tasks */}
               {addModo === 'tasks' && (
-                <Card className='bg-white/5 border border-white/10 '>
-                  <h3 className="text-lg font-semibold text-white mb-4">Selecione a tarefa para adicionar</h3>
+                <Card>
+                  <h3 className="text-lg font-semibold text-ink mb-4">Selecionar tarefa para adicionar</h3>
                   {availableTasks.length > 0 ? (
                     <>
                       <div className="space-y-2 mb-6 max-h-96 overflow-y-auto pr-3">
@@ -671,14 +688,14 @@ const DailyTaskTracker = () => {
                           <Motion.div
                             key={task.id}
                             whileTap={{ scale: 0.98 }}
-                            className="p-4 bg-gray-700/50 rounded-lg border border-gray-600 hover:border-green-500/50 transition-all"
+                            className="p-4 bg-surface-elevated rounded-lg border border-hairline-strong hover:border-accent-green/50 transition-all"
                           >
                             <div className="flex items-center gap-3">
                               <div className="flex-1">
-                                <p className="text-white font-medium">{task.title}</p>
+                                <p className="text-ink font-medium">{task.title}</p>
                                 {task.deadline && (
-                                  <p className="text-xs text-gray-400">
-                                    Due: {format(new Date(task.deadline), 'MMM d, h:mm a')}
+                                  <p className="text-xs text-mute">
+                                    Prazo: {format(new Date(task.deadline), "d 'de' MMM 'Ã s' HH:mm")}
                                   </p>
                                 )}
                               </div>
@@ -687,10 +704,10 @@ const DailyTaskTracker = () => {
                                   setSelectedTask(task);
                                   setShowTimeModal(true);
                                 }}
-                                className="px-4 py-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg hover:shadow-lg transition-all"
+                                className="px-4 py-2 bg-[rgba(16,185,129,0.1)] text-accent-green rounded-lg hover:shadow-lg transition-all"
                                 data-testid={`select-task-${task.id}`}
                               >
-                                Add to Plan
+              Adicionar ao Plano
                               </button>
                             </div>
                           </Motion.div>
@@ -699,41 +716,41 @@ const DailyTaskTracker = () => {
                     </>
                   ) : (
                     <div className="text-center py-8">
-                      <p className="text-gray-400">Nenhuma tarefa disponível para adicionar</p>
-                      <p className="text-sm text-gray-500 mt-1">Todas as tarefas estão concluídas ou ja estão no plano</p>
+                      <p className="text-mute">Nenhuma tarefa disponÃ­vel para adicionar</p>
+                      <p className="text-sm text-ash mt-1">Todas as tarefas estÃ£o concluÃ­das ou ja estÃ£o no plano</p>
                     </div>
                   )}
                 </Card>
               )}
 
-              {/* Hábitos sugeridos */}
+              {/* Hï¿½bitos sugeridos */}
               {addModo === 'habits' && (
-                <Card className='bg-white/5 border backdrop-blur-2xl border-white/10'>
-                  <h3 className="text-lg font-semibold text-white mb-4">Hábitos sugeridos</h3>
+                <Card>
+                  <h3 className="text-lg font-semibold text-ink mb-4">Hï¿½bitos sugeridos</h3>
                   {suggestedHabits.length > 0 ? (
                     <div className="space-y-3 mb-6 max-h-96 overflow-y-auto px-3">
                       {suggestedHabits.map(habit => (
                         <Motion.div
                           key={habit.id}
                           whileHover={{ scale: 1.005 }}
-                          className="p-4 bg-gray-700/50 rounded-lg border border-gray-600 hover:border-green-500/50 transition-all"
+                          className="p-4 bg-surface-elevated rounded-lg border border-hairline-strong hover:border-accent-green/50 transition-all"
                         >
                           <div className="flex items-center justify-between">
                             <div>
-                              <h4 className="text-white font-medium">{habit.name}</h4>
-                              <p className="text-sm text-gray-400">
-                                {habit.startTime} - {habit.endTime || 'No end time'}
+                              <h4 className="text-ink font-medium">{habit.name}</h4>
+                              <p className="text-sm text-mute">
+                                {habit.startTime} - {habit.endTime || 'Sem horÃ¡rio final'}
                               </p>
                               <span className="text-xs px-2 py-1 rounded-full bg-green-500/20 text-green-400 border border-green-500/30 inline-block mt-1">
-                                Habit
+                                HÃ¡bito
                               </span>
                             </div>
                             <button
                               onClick={() => handleAddHabitToPlan(habit)}
-                              className="px-4 py-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg hover:shadow-lg transition-all"
+                              className="px-4 py-2 bg-[rgba(16,185,129,0.1)] text-accent-green rounded-lg hover:shadow-lg transition-all"
                               data-testid={`add-habit-${habit.id}`}
                             >
-                              Add to Plan
+                              Adicionar ao Plano
                             </button>
                           </div>
                         </Motion.div>
@@ -741,8 +758,8 @@ const DailyTaskTracker = () => {
                     </div>
                   ) : (
                     <div className="text-center py-8">
-                      <p className="text-gray-400">Nenhum hábito disponível</p>
-                      <p className="text-sm text-gray-500 mt-1">Hábitos sem horário ou ja adicionados ao plano ficam ocultos</p>
+                      <p className="text-mute">Nenhum hÃ¡bito disponÃ­vel</p>
+                      <p className="text-sm text-ash mt-1">HÃ¡bitos sem horÃ¡rio ou ja adicionados ao plano ficam ocultos</p>
                     </div>
                   )}
                 </Card>
@@ -750,15 +767,15 @@ const DailyTaskTracker = () => {
 
               {/* Criar tarefa manual */}
               {addModo === 'manual' && (
-                <Card className='bg-white/5 border border-white/10 backdrop-blur-2xl'>
-                  <h3 className="text-lg font-semibold text-white mb-4">Criar tarefa manual</h3>
+                <Card>
+                  <h3 className="text-lg font-semibold text-ink mb-4">Criar tarefa manual</h3>
                   <form onSubmit={handleCreateManualTask} className="space-y-4">
                     <InputField
                       label="Titulo da tarefa"
                       type="text"
                       value={manualTaskForm.title}
                       onChange={(e) => setManualTaskForm({ ...manualTaskForm, title: e.target.value })}
-                      placeholder="What do you need to do?"
+                      placeholder="O que vocÃª precisa fazer?"
                       required
                     />
 
@@ -779,19 +796,19 @@ const DailyTaskTracker = () => {
                       />
                     </div>
 
-                    <label className="flex items-center gap-2 text-gray-300 cursor-pointer">
+                    <label className="flex items-center gap-2 text-charcoal cursor-pointer">
                       <input
                         type="checkbox"
                         checked={manualTaskForm.isImportant}
                         onChange={(e) => setManualTaskForm({ ...manualTaskForm, isImportant: e.target.checked })}
                         className="w-5 h-5"
                       />
-                      Mark as Importante
+                      Marcar como Importante
                     </label>
 
-                    <GradientButton type="submit" className="w-full" data-testid="create-manual-task-btn">
-                      Create & Add to Plan
-                    </GradientButton>
+                    <Button variant="primary" type="submit" className="w-full" data-testid="create-manual-task-btn">
+                      Criar e Adicionar ao Plano
+                    </Button>
                   </form>
                 </Card>
               )}
@@ -803,7 +820,7 @@ const DailyTaskTracker = () => {
         <Modal
           isOpen={showTimeModal}
           onClose={() => setShowTimeModal(false)}
-          title={`Definir horário para ${selectedTask.title}`}
+          title={`Definir horï¿½rio para ${selectedTask.title}`}
         >
           <div className="space-y-4">
 
@@ -829,12 +846,13 @@ const DailyTaskTracker = () => {
               />
             </div>
 
-            <GradientButton
+            <Button
+              variant="primary"
               onClick={handleAddTaskToPlan}
               className="w-full"
             >
-              Add to Plan
-            </GradientButton>
+              Adicionar ao Plano
+            </Button>
           </div>
         </Modal>
       )}

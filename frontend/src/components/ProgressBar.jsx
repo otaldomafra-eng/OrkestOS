@@ -1,18 +1,35 @@
-const ProgressBar = ({ progress, className = '', showLabel = true }) => {
+const ProgressBar = ({ progress, className = '', color = 'white' }) => {
   const clampedProgress = Math.min(100, Math.max(0, progress));
-  
+
+  const barStyles = {
+    white: {
+      background: 'linear-gradient(90deg, rgba(255,255,255,0.6), #fff)',
+      boxShadow: '0 0 10px rgba(255,255,255,0.5)',
+    },
+    green: {
+      background: 'linear-gradient(90deg, rgba(17,255,153,0.6), #11ff99)',
+      boxShadow: '0 0 10px rgba(17,255,153,0.5)',
+    },
+    blue: {
+      background: 'linear-gradient(90deg, rgba(59,158,255,0.6), #3b9eff)',
+      boxShadow: '0 0 10px rgba(59,158,255,0.5)',
+    },
+    red: {
+      background: 'linear-gradient(90deg, rgba(255,32,71,0.6), #ff2047)',
+      boxShadow: '0 0 10px rgba(255,32,71,0.5)',
+    },
+    yellow: {
+      background: 'linear-gradient(90deg, rgba(255,197,61,0.6), #ffc53d)',
+      boxShadow: '0 0 10px rgba(255,197,61,0.5)',
+    },
+  };
+
   return (
     <div className={`w-full ${className}`}>
-      {showLabel && (
-        <div className="flex justify-between text-sm text-gray-400 mb-2">
-          <span>Progresso</span>
-          <span>{clampedProgress}%</span>
-        </div>
-      )}
-      <div className="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
+      <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
         <div
-          className="bg-gradient-to-r from-indigo-600 to-violet-600 h-full rounded-full transition-all duration-500"
-          style={{ width: `${clampedProgress}%` }}
+          className="h-full rounded-full transition-all duration-500"
+          style={{ width: `${clampedProgress}%`, ...(barStyles[color] ?? barStyles.white) }}
         />
       </div>
     </div>

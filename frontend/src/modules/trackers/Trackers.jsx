@@ -7,40 +7,40 @@ const Rastreadores = () => {
   const trackerOptions = [
     {
       icon: Target,
-      title: 'Goals',
-      description: 'Track your final, long-term, and mid-term goals',
+      title: 'Metas',
+      description: 'Acompanhe suas metas finais, de longo prazo e médio prazo',
       path: '/trackers/goals',
       color: 'from-purple-600 to-pink-600',
       testId: 'tracker-goals'
     },
     {
       icon: Folder,
-      title: 'Projects',
-      description: 'Manage projects linked to your goals',
+      title: 'Projetos',
+      description: 'Gerencie projetos vinculados às suas metas',
       path: '/trackers/projects',
       color: 'from-green-600 to-emerald-600',
       testId: 'tracker-projects'
     },
     {
       icon: CheckSquare,
-      title: 'Solo Tasks',
-      description: 'Track individual tasks and to-dos',
+      title: 'Tarefas Avulsas',
+      description: 'Acompanhe tarefas individuais e afazeres',
       path: '/trackers/tasks',
       color: 'from-blue-600 to-cyan-600',
       testId: 'tracker-tasks'
     },
     {
       icon: Repeat,
-      title: 'Habits',
+      title: 'Hábitos',
       description: 'Construa bons hábitos e reduza os ruins',
       path: '/trackers/habits',
-      color: 'from-orange-600 to-red-600',
+      color: 'from-yellow-600 to-red-600',
       testId: 'tracker-habits'
     },
     {
       icon: Calendar,
-      title: 'Daily Tasks',
-      description: 'Plan and track your daily schedule',
+      title: 'Tarefas Diárias',
+      description: 'Planeje e acompanhe sua agenda diária',
       path: '/trackers/daily-tasks',
       color: 'from-indigo-600 to-violet-600',
       testId: 'tracker-daily'
@@ -78,7 +78,7 @@ const Rastreadores = () => {
             transition={{ duration: 3, repeat: Infinity }}>
             Rastreadores
           </motion.h1>
-          <p className="text-gray-400 text-center">Manage all aspects of your life operating system</p>
+          <p className="text-gray-400 text-center">Gerencie todos os aspectos do seu sistema operacional de vida</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -106,7 +106,7 @@ const Rastreadores = () => {
                     <h3 className="text-xl font-bold text-white mb-2">{tracker.title}</h3>
                     <p className="text-gray-400">{tracker.description}</p>
                     <div className="flex items-center gap-2 mt-4 text-indigo-400 text-sm font-medium">
-                      Explore â†’
+                      Explorar →
                     </div>
                   </Card>
                 </motion.div>

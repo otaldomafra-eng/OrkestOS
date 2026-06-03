@@ -13,20 +13,26 @@ const Modal = ({ isOpen, onClose, title, children }) => {
       {/* Modal Box */}
       <div className="
         relative
-        bg-white/5 backdrop-blur-xl border border-white/10
+        bg-surface-card border border-hairline-strong
         rounded-2xl
         max-w-md w-full
         max-h-[calc(100vh-100px)]
         flex flex-col
-        shadow-2xl
+        overflow-hidden
       ">
 
+        {/* Linha de brilho */}
+        <div
+          className="absolute top-0 left-0 right-0 h-px pointer-events-none z-10"
+          style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)' }}
+        />
+
         {/* Header */}
-        <div className="flex justify-between items-center p-6 pb-3 border-b border-white/10">
-          <h2 className="text-xl font-bold text-white">{title}</h2>
+        <div className="flex justify-between items-center p-6 pb-3 border-b border-hairline">
+          <h2 className="text-xl font-bold text-ink">{title}</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white transition-colors"
+            className="text-mute hover:text-ink transition-colors"
           >
             ✕
           </button>

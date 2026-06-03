@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard';
 import Relatorios from './pages/Reports';
 import Roadmap from './pages/Roadmap';
 import Integrations from './pages/Integrations';
+import Achievements from './pages/Achievements';
 
 
 import FutureTwin from './modules/simulator_room/FutureTwin';
@@ -22,7 +23,7 @@ import DailyTaskTracker from './modules/trackers/daily_task_tracker/DailyTaskTra
 import FocusRoom from './modules/focus_room/FocusRoom';
 import Library from './modules/library_room/Library';
 
-import { useAuth } from './context/AuthContext';
+import { useAuth } from './hooks/useAuth';
 import { ToastContainer } from 'react-toastify';
 
   function App() {
@@ -53,6 +54,7 @@ import { ToastContainer } from 'react-toastify';
             <Route path="/future" element={<FutureTwin />} />
             <Route path="/library" element={<Library />} />
             <Route path="/integrations" element={<Integrations />} />
+            <Route path="/achievements" element={<Achievements />} />
 
           </Route>
 

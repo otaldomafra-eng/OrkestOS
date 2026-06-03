@@ -46,34 +46,34 @@ const Timer = ({ defaultMinutes = 25 }) => {
   const seconds = timeLeft % 60;
 
   return (
-    <Card className="bg-gradient-to-br from-indigo-900/40 to-purple-900/40 border-indigo-500/30" data-testid="timer-widget">
+    <Card data-testid="timer-widget">
       <div className="text-center">
         <div className="flex gap-2 justify-center mb-6">
           <button
             onClick={() => switchModo('focus')}
             className={`px-4 py-2 rounded-lg transition-all ${
               mode === 'focus'
-                ? 'bg-indigo-600 text-white'
-                : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
+                ? 'bg-accent-blue text-ink'
+                : 'bg-surface-elevated text-mute hover:bg-surface-deep'
             }`}
             data-testid="timer-focus-btn"
           >
-            Focus (25m)
+            Foco (25m)
           </button>
           <button
             onClick={() => switchModo('break')}
             className={`px-4 py-2 rounded-lg transition-all ${
               mode === 'break'
-                ? 'bg-green-600 text-white'
-                : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
+                ? 'bg-accent-green text-ink'
+                : 'bg-surface-elevated text-mute hover:bg-surface-deep'
             }`}
             data-testid="timer-break-btn"
           >
-            Break (5m)
+            Pausa (5m)
           </button>
         </div>
 
-        <div className="text-6xl font-bold text-white mb-6" data-testid="timer-display">
+        <div className="text-6xl font-bold text-ink mb-6" data-testid="timer-display">
           {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
         </div>
 
@@ -81,16 +81,16 @@ const Timer = ({ defaultMinutes = 25 }) => {
           <button
             onClick={toggleTimer}
             data-testid="timer-toggle-btn"
-            className="p-4 bg-indigo-600 hover:bg-indigo-700 rounded-full transition-colors"
+            className="p-4 bg-accent-blue hover:opacity-80 rounded-full transition-opacity"
           >
-            {isRunning ? <Pause size={24} className="text-white" /> : <Play size={24} className="text-white" />}
+            {isRunning ? <Pause size={24} className="text-ink" /> : <Play size={24} className="text-ink" />}
           </button>
           <button
             onClick={resetTimer}
             data-testid="timer-reset-btn"
-            className="p-4 bg-gray-700 hover:bg-gray-600 rounded-full transition-colors"
+            className="p-4 bg-surface-elevated hover:bg-stone rounded-full transition-colors"
           >
-            <RotateCcw size={24} className="text-white" />
+            <RotateCcw size={24} className="text-ink" />
           </button>
         </div>
       </div>

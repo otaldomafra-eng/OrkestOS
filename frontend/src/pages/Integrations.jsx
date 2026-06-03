@@ -62,7 +62,7 @@ const Integracoes = () => {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35 }}
-            className="rounded-2xl border border-white/10 bg-zinc-900/70 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] md:p-8"
+            className="rounded-2xl border border-hairline-strong bg-zinc-900/70 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] md:p-8"
           >
             <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
               <div className="max-w-2xl">
@@ -70,7 +70,7 @@ const Integracoes = () => {
                   <MessageCircle size={14} />
                   Camada KRONOS
                 </div>
-                <h1 className="text-3xl font-semibold tracking-normal text-white md:text-4xl">
+                <h1 className="text-3xl font-semibold tracking-normal text-ink md:text-4xl">
                   Assistente Telegram
                 </h1>
                 <p className="mt-3 max-w-xl text-sm leading-6 text-zinc-400">
@@ -78,16 +78,16 @@ const Integracoes = () => {
                 </p>
               </div>
 
-              <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-zinc-950/70 px-3 py-2 text-sm text-zinc-300">
+              <div className="flex items-center gap-2 rounded-xl border border-hairline-strong bg-zinc-950/70 px-3 py-2 text-sm text-zinc-300">
                 <ShieldCheck size={16} className="text-emerald-300" />
                 Webhook protegido
               </div>
             </div>
 
-            <div className="mt-8 rounded-xl border border-white/10 bg-zinc-950/70 p-4">
+            <div className="mt-8 rounded-xl border border-hairline-strong bg-zinc-950/70 p-4">
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div>
-                  <p className="text-sm font-medium text-white">Vínculo da conta</p>
+                  <p className="text-sm font-medium text-ink">Vínculo da conta</p>
                   <p className="mt-1 text-sm text-zinc-400">
                     Gere um código temporário e envie o comando ao bot no Telegram.
                   </p>
@@ -111,15 +111,15 @@ const Integracoes = () => {
 
               {linkCode && (
                 <div className="mt-5 grid gap-3 md:grid-cols-[1fr_auto] md:items-center">
-                  <div className="rounded-lg border border-white/10 bg-zinc-900 px-4 py-3">
+                  <div className="rounded-lg border border-hairline-strong bg-zinc-900 px-4 py-3">
                     <p className="text-xs uppercase tracking-[0.18em] text-zinc-500">Comando</p>
-                    <p className="mt-1 font-mono text-lg text-white">/link {linkCode}</p>
+                    <p className="mt-1 font-mono text-lg text-ink">/link {linkCode}</p>
                     <p className="mt-2 text-xs text-zinc-500">Expira às {formattedExpiry}</p>
                   </div>
                   <button
                     type="button"
                     onClick={copyCommand}
-                    className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-4 text-sm font-medium text-zinc-200 transition hover:bg-white/5 active:scale-[0.98]"
+                    className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-hairline-strong px-4 text-sm font-medium text-zinc-200 transition hover:bg-surface-elevated active:scale-[0.98]"
                   >
                     {copied ? <Check size={16} className="text-emerald-300" /> : <Clipboard size={16} />}
                     {copied ? 'Copiado' : 'Copiar'}
@@ -133,10 +133,10 @@ const Integracoes = () => {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, delay: 0.08 }}
-            className="rounded-2xl border border-white/10 bg-zinc-900/70 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+            className="rounded-2xl border border-hairline-strong bg-zinc-900/70 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
           >
-            <p className="text-sm font-medium text-white">Comandos ativos</p>
-            <div className="mt-4 divide-y divide-white/10">
+            <p className="text-sm font-medium text-ink">Comandos ativos</p>
+            <div className="mt-4 divide-y divide-hairline-strong">
               {commandRows.map(([command, label]) => (
                 <div key={command} className="py-3">
                   <p className="font-mono text-sm text-emerald-200">{command}</p>

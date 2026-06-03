@@ -12,6 +12,7 @@ import notebookRouter from './routes/notebookRoute.js';
 import pageRouter from './routes/pageRoute.js';
 import weeklyStatRouter from './routes/weeklyStatRoute.js';
 import telegramRouter from './routes/telegramRoute.js';
+import futureTwinRouter from './routes/futuretwinRoute.js';
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -32,6 +33,7 @@ app.use('/api/notebooks', notebookRouter);
 app.use('/api/pages', pageRouter);
 app.use('/api/stats', weeklyStatRouter);
 app.use('/api/telegram', telegramRouter);
+app.use('/api/futuretwin', futureTwinRouter);
 
 
 

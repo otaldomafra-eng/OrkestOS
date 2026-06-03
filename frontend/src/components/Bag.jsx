@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Plus, Trash2, Search, Pencil, Book, FileText, Edit } from "lucide-react";
-import { useData } from "../context/DataContext";
+import { useData } from "../hooks/useData";
 import { showToast } from "../utils/toastHelper";
 
 const Bag = () => {
@@ -31,8 +31,8 @@ const Bag = () => {
   };
 
   const addNotebook = async() => {
-    await createNotebook("New Notebook");
-    showToast({message: 'New Notebook Created', status: "success"})
+    await createNotebook("Novo Caderno");
+    showToast({message: 'Novo Caderno Criado', status: "success"})
   };
 
   const addPage = async () => {
@@ -51,14 +51,14 @@ const Bag = () => {
   const renderNotebooksView = () => (
     <div className="h-full flex flex-col">
       <div className="flex justify-between items-center mb-4 px-3">
-        <h2 className="text-white text-xl font-semibold">Notebooks</h2>
+        <h2 className="text-white text-xl font-semibold">Cadernos</h2>
         <button className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-[0_0_20px_rgba(99,102,241,0.3)] hover:translate-y-1 active:scale-95 text-white p-3 rounded-lg transition-all cursor-pointer" onClick={addNotebook}>
           <Plus size={24} />
         </button>
       </div>
 
       <input
-        placeholder="Search notebooks..."
+        placeholder="Pesquisar cadernos..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         className="mb-4 px-3 py-2 bg-gray-800 text-white rounded-lg outline-none"
@@ -141,7 +141,7 @@ const Bag = () => {
     if (!currentNotebook) {
       return (
         <div className="flex items-center justify-center h-full text-gray-400">
-          Select a notebook first
+          Selecione um caderno primeiro
         </div>
       );
     }
@@ -159,7 +159,7 @@ const Bag = () => {
 
         {/* Page Search */}
         <input
-          placeholder="Search pages..."
+          placeholder="Pesquisar páginas..."
           value={pageSearch}
           onChange={(e) => setPageSearch(e.target.value)}
           className="mb-4 px-3 py-2 bg-gray-800 text-white rounded-lg outline-none"
@@ -214,7 +214,7 @@ const Bag = () => {
             }`}
         >
           <Book size={20} />
-          <span className="text-xs">Notebooks</span>
+          <span className="text-xs">Cadernos</span>
         </button>
 
         <button
@@ -223,7 +223,7 @@ const Bag = () => {
             }`}
         >
           <FileText size={20} />
-          <span className="text-xs">Pages</span>
+          <span className="text-xs">Páginas</span>
         </button>
 
         <button
@@ -277,19 +277,19 @@ const Bag = () => {
               try {
                 if (!activePage) return;
                 await updatePage(activePage, editorContent);
-                showToast({ message: "Saved Content", status: "success" }); 
+                showToast({ message: "Conteúdo Salvo", status: "success" }); 
               } catch (error) {
-                showToast({ message: error.message || "Error Saving", status: "success" });
+                showToast({ message: error.message || "Erro ao Salvar", status: "success" });
               }
             }}
             className="mt-3 px-4 py-2 cursor-pointer bg-green-600 hover:bg-green-700 text-white rounded-lg self-end"
           >
-            Save
+            Salvar
           </button>
         </div>)}
         {view === "editor" && !currentPage && (
           <div className="flex items-center justify-center flex-1 text-gray-400 h-full">
-            Select a page to start writing...
+            Selecione uma página para começar a escrever...
           </div>
         )}
       </div>
