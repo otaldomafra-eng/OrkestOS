@@ -109,9 +109,9 @@ const FocusRoom = () => {
   const hasPlannedTasks = todayPlannedTasks.length > 0;
 
   const getModoColor = () => {
-    if (mode === 'work') return 'from-red-600 to-yellow-600';
-    if (mode === 'shortBreak') return 'from-green-600 to-emerald-600';
-    return 'from-blue-600 to-cyan-600';
+    if (mode === 'work') return 'from-[#7850ff] to-[#3b9eff]';
+    if (mode === 'shortBreak') return 'from-[#11ff99] to-[#3b9eff]';
+    return 'from-[#3b9eff] to-[#7850ff]';
   };
 
   const getModoText = () => {
@@ -155,8 +155,10 @@ const FocusRoom = () => {
               <div className="flex justify-center gap-2 mb-6">
                 <button
                   onClick={() => switchModo('work')}
+                  aria-label="Modo Foco"
+                  aria-pressed={mode === 'work'}
                   className={`px-4 py-2 rounded-lg border cursor-pointer border-hairline-strong transition-all duration-300 ${mode === 'work'
-                    ? 'bg-red-600 text-ink'
+                    ? 'bg-[#7850ff] text-ink'
                     : 'bg-surface-elevated text-charcoal hover:bg-surface-card'
                     }`}
                   data-testid="mode-work"
@@ -165,8 +167,10 @@ const FocusRoom = () => {
                 </button>
                 <button
                   onClick={() => switchModo('shortBreak')}
+                  aria-label="Modo Pausa Curta"
+                  aria-pressed={mode === 'shortBreak'}
                   className={`px-4 py-2 rounded-lg border cursor-pointer border-hairline-strong transition-all duration-300 ${mode === 'shortBreak'
-                    ? 'bg-green-600 text-ink'
+                    ? 'bg-[#11ff99] text-canvas'
                     : 'bg-surface-elevated text-charcoal hover:bg-surface-card'
                     }`}
                   data-testid="mode-short-break"
@@ -175,8 +179,10 @@ const FocusRoom = () => {
                 </button>
                 <button
                   onClick={() => switchModo('longBreak')}
+                  aria-label="Modo Pausa Longa"
+                  aria-pressed={mode === 'longBreak'}
                   className={`px-4 py-2 rounded-lg border cursor-pointer border-hairline-strong transition-all duration-300 ${mode === 'longBreak'
-                    ? 'bg-blue-600 text-ink'
+                    ? 'bg-[#3b9eff] text-canvas'
                     : 'bg-surface-elevated text-charcoal hover:bg-surface-card'
                     }`}
                   data-testid="mode-long-break"
@@ -207,6 +213,7 @@ const FocusRoom = () => {
               <div className="flex justify-center gap-4">
                 <button
                   onClick={toggleTimer}
+                  aria-label={isActive ? 'Pausar timer' : 'Iniciar timer'}
                   data-testid="timer-toggle"
                   className={`bg-gradient-to-r ${getModoColor()} hover:opacity-90 text-ink px-8 py-4 rounded-xl
 hover:scale-105 cursor-pointer active:scale-95 transition-all flex items-center gap-2 text-lg font-semibold`}
@@ -225,6 +232,7 @@ hover:scale-105 cursor-pointer active:scale-95 transition-all flex items-center 
                 </button>
                 <button
                   onClick={resetTimer}
+                  aria-label="Reiniciar timer"
                   data-testid="timer-reset"
                   className="bg-surface-elevated hover:bg-surface-card text-ink px-6 py-4 rounded-xl
 hover:scale-110 active:scale-95 cursor-pointer transition-all"

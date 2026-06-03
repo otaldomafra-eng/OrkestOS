@@ -22,7 +22,6 @@ export default function FutureTwin() {
   const chatEndRef = useRef(null);
 
   useEffect(() => {
-    setLoadingInsights(true);
     Promise.all([futureTwinAPI.getInsights(), futureTwinAPI.getWeeklyAnalysis()])
       .then(([insightData, weeklyData]) => {
         setInsights(insightData?.insights ?? []);
@@ -162,20 +161,28 @@ export default function FutureTwin() {
           </div>
 
           <div
-            className="flex gap-3 p-4"
+            className="flex gap-3 p-4 items-end"
             style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}
           >
-            <input
+            <textarea
               value={input}
-              onChange={(e) => setInput(e.target.value)}
+              onChange={(e) => {
+                setInput(e.target.value);
+                e.target.style.height = 'auto';
+                e.target.style.height = `${Math.min(e.target.scrollHeight, 120)}px`;
+              }}
               onKeyDown={handleKeyDown}
               placeholder="Pergunte ao seu FutureTwin..."
-              className="flex-1 bg-white/[0.06] border border-white/[0.12] rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/45 outline-none focus:border-white/30"
+              rows={1}
+              aria-label="Mensagem para o FutureTwin"
+              className="flex-1 bg-white/[0.06] border border-white/[0.12] rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/45 outline-none focus:border-white/30 resize-none overflow-hidden"
+              style={{ minHeight: '40px' }}
             />
             <button
               onClick={sendMessage}
               disabled={!input.trim() || isLoading}
-              className="w-9 h-9 rounded-xl flex items-center justify-center text-black font-bold text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+              aria-label="Enviar mensagem"
+              className="w-9 h-9 rounded-xl flex items-center justify-center text-black font-bold text-sm disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0"
               style={{ background: '#fff', boxShadow: '0 0 12px rgba(255,255,255,0.2)' }}
             >
               ↑
