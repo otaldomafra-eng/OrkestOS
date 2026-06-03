@@ -88,19 +88,19 @@ export default function FutureTwin() {
             🧠
           </div>
           <div className="flex-1">
-            <h1 className="text-xl font-bold">FutureTwin — Seu Eu do Futuro</h1>
-            <p className="text-sm text-white/45 mt-1 max-w-lg">
+            <h1 className="text-2xl font-bold text-white">FutureTwin — Seu Eu do Futuro</h1>
+            <p className="text-sm text-white/65 mt-1.5 max-w-lg leading-relaxed">
               Analiso seus hábitos, tarefas e metas para mostrar onde você está indo — e o que ajustar para chegar onde quer estar.
             </p>
-            <div className="flex gap-6 mt-3">
+            <div className="flex gap-8 mt-4">
               {[
                 { val: weekly?.daysTracked ?? '—', lbl: 'Dias Analisados' },
                 { val: insights.length, lbl: 'Insights Hoje' },
                 { val: `${weekly?.completionRate ?? '—'}%`, lbl: 'Conclusão' },
               ].map(({ val, lbl }) => (
                 <div key={lbl}>
-                  <div className="text-lg font-bold text-[#3b9eff]" style={{ textShadow: '0 0 12px rgba(59,158,255,0.5)' }}>{val}</div>
-                  <div className="text-[10px] text-white/50 uppercase tracking-wider mt-0.5">{lbl}</div>
+                  <div className="text-xl font-bold text-[#3b9eff]" style={{ textShadow: '0 0 12px rgba(59,158,255,0.5)' }}>{val}</div>
+                  <div className="text-xs text-white/60 uppercase tracking-wider mt-1">{lbl}</div>
                 </div>
               ))}
             </div>
@@ -170,7 +170,7 @@ export default function FutureTwin() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Pergunte ao seu FutureTwin..."
-              className="flex-1 bg-white/[0.04] border border-white/[0.1] rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-white/25"
+              className="flex-1 bg-white/[0.06] border border-white/[0.12] rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/45 outline-none focus:border-white/30"
             />
             <button
               onClick={sendMessage}
