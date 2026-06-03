@@ -28,46 +28,51 @@ export default function Achievements() {
       <div
         className="relative overflow-hidden rounded-2xl p-6 mb-8"
         style={{
-          background: 'linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02))',
-          border: '1px solid rgba(255,255,255,0.13)',
+          background: 'linear-gradient(135deg, rgba(120,80,255,0.25) 0%, rgba(59,158,255,0.15) 50%, rgba(17,255,153,0.08) 100%)',
+          border: '1px solid rgba(120,80,255,0.35)',
+          boxShadow: '0 0 40px rgba(120,80,255,0.12), inset 0 1px 0 rgba(255,255,255,0.1)',
         }}
       >
         <div
           className="absolute top-0 left-0 right-0 h-px"
-          style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent)' }}
+          style={{ background: 'linear-gradient(90deg, transparent, rgba(120,80,255,0.8), rgba(59,158,255,0.6), transparent)' }}
         />
-        <div className="flex items-center gap-5 mb-4">
+        <div className="absolute right-0 top-0 w-48 h-full opacity-20 pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse at right, rgba(120,80,255,0.6), transparent 70%)' }} />
+
+        <div className="flex items-center gap-5 mb-4 relative z-10">
           <div
             className="w-20 h-20 rounded-full flex items-center justify-center text-2xl font-extrabold flex-shrink-0"
             style={{
-              background: `conic-gradient(#fff 0% ${levelProgress}%, rgba(255,255,255,0.07) ${levelProgress}% 100%)`,
+              background: `conic-gradient(#7850ff 0% ${levelProgress}%, rgba(255,255,255,0.08) ${levelProgress}% 100%)`,
               padding: '4px',
+              boxShadow: '0 0 20px rgba(120,80,255,0.4)',
             }}
           >
             <div className="w-full h-full rounded-full bg-black flex items-center justify-center flex-col">
               <span className="text-xl font-extrabold leading-none text-white">{level}</span>
-              <span className="text-[9px] text-white/30 uppercase tracking-wider">Nível</span>
+              <span className="text-[9px] text-white/50 uppercase tracking-wider">Nível</span>
             </div>
           </div>
           <div>
             <div className="text-xl font-bold text-white">{levelTitle}</div>
-            <div className="text-sm text-white/40 mt-1">
-              {totalXP.toLocaleString('pt-BR')} XP total
+            <div className="text-sm text-white/60 mt-1">
+              <span className="text-[#11ff99] font-bold">{totalXP.toLocaleString('pt-BR')}</span> XP total
             </div>
           </div>
         </div>
-        <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
+        <div className="h-2 rounded-full overflow-hidden relative z-10" style={{ background: 'rgba(255,255,255,0.08)' }}>
           <div
             className="h-full rounded-full transition-all duration-700"
             style={{
               width: `${levelProgress}%`,
-              background: 'linear-gradient(90deg, rgba(255,255,255,0.5), #fff)',
-              boxShadow: '0 0 12px rgba(255,255,255,0.6)',
+              background: 'linear-gradient(90deg, #7850ff, #3b9eff)',
+              boxShadow: '0 0 14px rgba(120,80,255,0.8), 0 0 28px rgba(59,158,255,0.4)',
             }}
           />
         </div>
         {nextLevelXP && (
-          <div className="text-[11px] text-white/45 mt-1.5">
+          <div className="text-xs text-white/60 mt-2 relative z-10">
             {(nextLevelXP - totalXP).toLocaleString('pt-BR')} XP para o próximo nível
           </div>
         )}

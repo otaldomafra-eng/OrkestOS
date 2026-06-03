@@ -4,16 +4,20 @@ const Card = ({ children, className = '', onClick }) => {
       onClick={onClick}
       className={`
         relative overflow-hidden
-        bg-[#0a0a0c] border border-white/[0.07]
+        border border-white/[0.08]
         rounded-2xl p-4
-        ${onClick ? 'cursor-pointer transition-colors hover:border-white/[0.13]' : ''}
+        ${onClick ? 'cursor-pointer transition-all hover:border-[rgba(120,80,255,0.35)]' : ''}
         ${className}
       `}
+      style={{
+        background: 'linear-gradient(135deg, rgba(120,80,255,0.04) 0%, rgba(10,10,14,0.9) 45%, rgba(10,10,14,0.9) 100%)',
+        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)',
+      }}
     >
       <div
         className="absolute top-0 left-0 right-0 h-px pointer-events-none"
         style={{
-          background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent)',
+          background: 'linear-gradient(90deg, transparent, rgba(120,80,255,0.35), transparent)',
         }}
       />
       {children}
