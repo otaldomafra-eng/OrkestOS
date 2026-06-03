@@ -37,29 +37,34 @@ export default function Sidebar() {
     <aside
       className="hidden lg:flex flex-col h-screen sticky top-0 w-[220px] flex-shrink-0"
       style={{
-        background: 'rgba(5,5,8,0.85)',
-        borderRight: '1px solid rgba(255,255,255,0.07)',
+        background: 'linear-gradient(180deg, rgba(18,10,40,0.97) 0%, rgba(8,6,20,0.97) 100%)',
+        borderRight: '1px solid rgba(120,80,255,0.2)',
         backdropFilter: 'blur(20px)',
+        boxShadow: 'inset -1px 0 0 rgba(120,80,255,0.08)',
       }}
     >
+      {/* Blob de luz roxo no canto superior */}
+      <div className="absolute top-0 left-0 w-full h-32 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 30% 0%, rgba(120,80,255,0.15), transparent 70%)' }} />
+
       {/* Logo */}
       <div
-        className="px-5 py-6"
-        style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}
+        className="px-5 py-6 relative z-10"
+        style={{ borderBottom: '1px solid rgba(120,80,255,0.15)' }}
       >
         <div
-          className="text-sm font-bold tracking-tight text-white"
-          style={{ textShadow: '0 0 20px rgba(255,255,255,0.2)' }}
+          className="text-base font-bold tracking-tight text-white"
+          style={{ textShadow: '0 0 20px rgba(120,80,255,0.5)' }}
         >
           WiseMindOS
         </div>
-        <div className="text-[11px] text-white/40 mt-0.5 tracking-wide">
+        <div className="text-[11px] text-white/50 mt-0.5 tracking-wide">
           Sistema de Produtividade
         </div>
       </div>
 
       {/* Nav groups */}
-      <nav className="flex-1 px-3 py-4 overflow-y-auto">
+      <nav className="flex-1 px-3 py-4 overflow-y-auto relative z-10">
         {NAV_GROUPS.map((group) => (
           <div key={group.label} className="mb-5">
             <div className="text-[10px] font-semibold text-white/40 uppercase tracking-widest px-2.5 mb-2">
@@ -79,12 +84,16 @@ export default function Sidebar() {
                   key={item.to}
                   to={item.to}
                   className={({ isActive }) =>
-                    `relative flex items-center gap-2.5 px-2.5 py-2 rounded-[10px] text-sm mb-0.5 transition-colors ${
+                    `relative flex items-center gap-2.5 px-2.5 py-2 rounded-[10px] text-sm mb-0.5 transition-all ${
                       isActive
-                        ? 'bg-white/[0.07] text-white'
-                        : 'text-white/45 hover:bg-white/[0.04] hover:text-white'
+                        ? 'text-white'
+                        : 'text-white/50 hover:text-white'
                     }`
                   }
+                  style={({ isActive }) => isActive ? {
+                    background: 'linear-gradient(135deg, rgba(120,80,255,0.2), rgba(59,158,255,0.1))',
+                    border: '1px solid rgba(120,80,255,0.25)',
+                  } : {}}
                 >
                   {({ isActive }) => (
                     <>
@@ -92,8 +101,8 @@ export default function Sidebar() {
                         <span
                           className="absolute -left-3 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r"
                           style={{
-                            background: '#fff',
-                            boxShadow: '0 0 8px rgba(255,255,255,0.7)',
+                            background: 'linear-gradient(180deg, #7850ff, #3b9eff)',
+                            boxShadow: '0 0 8px rgba(120,80,255,0.8)',
                           }}
                         />
                       )}
@@ -119,19 +128,19 @@ export default function Sidebar() {
 
       {/* Footer com usuário */}
       <div
-        className="px-3 py-3"
-        style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}
+        className="px-3 py-3 relative z-10"
+        style={{ borderTop: '1px solid rgba(120,80,255,0.15)' }}
       >
         <div
-          className="flex items-center gap-2.5 p-2.5 rounded-[10px] cursor-pointer hover:bg-white/[0.04] transition-colors"
+          className="flex items-center gap-2.5 p-2.5 rounded-[10px] cursor-pointer transition-all hover:bg-white/[0.05]"
           onClick={() => navigate('/profile')}
         >
           <div
             className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0"
             style={{
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.04))',
-              border: '1px solid rgba(255,255,255,0.18)',
-              boxShadow: '0 0 16px rgba(255,255,255,0.06)',
+              background: 'linear-gradient(135deg, rgba(120,80,255,0.3), rgba(59,158,255,0.15))',
+              border: '1px solid rgba(120,80,255,0.4)',
+              boxShadow: '0 0 16px rgba(120,80,255,0.2)',
             }}
           >
             {user?.name?.[0]?.toUpperCase() ?? 'U'}

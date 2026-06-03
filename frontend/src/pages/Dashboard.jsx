@@ -260,41 +260,49 @@ const Painel = () => {
         <div
           className="relative overflow-hidden rounded-2xl p-5 mb-6"
           style={{
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))',
-            border: '1px solid rgba(255,255,255,0.12)',
+            background: 'linear-gradient(135deg, rgba(120,80,255,0.25) 0%, rgba(59,158,255,0.15) 50%, rgba(17,255,153,0.08) 100%)',
+            border: '1px solid rgba(120,80,255,0.35)',
+            boxShadow: '0 0 40px rgba(120,80,255,0.12), inset 0 1px 0 rgba(255,255,255,0.1)',
           }}
         >
+          {/* Linha de brilho topo */}
           <div
             className="absolute top-0 left-0 right-0 h-px"
-            style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent)' }}
+            style={{ background: 'linear-gradient(90deg, transparent, rgba(120,80,255,0.8), rgba(59,158,255,0.6), transparent)' }}
           />
-          <div className="flex items-center justify-between mb-3">
+          {/* Blob de brilho interno */}
+          <div className="absolute right-0 top-0 w-48 h-full opacity-20 pointer-events-none"
+            style={{ background: 'radial-gradient(ellipse at right, rgba(120,80,255,0.6), transparent 70%)' }} />
+
+          <div className="flex items-center justify-between mb-3 relative z-10">
             <span
-              className="text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full"
+              className="text-sm font-bold tracking-widest uppercase px-4 py-1.5 rounded-full"
               style={{
-                background: 'rgba(255,255,255,0.08)',
-                border: '1px solid rgba(255,255,255,0.18)',
+                background: 'linear-gradient(135deg, rgba(120,80,255,0.4), rgba(59,158,255,0.3))',
+                border: '1px solid rgba(120,80,255,0.5)',
+                boxShadow: '0 0 16px rgba(120,80,255,0.3)',
+                color: '#fff',
               }}
             >
-              NÍVEL {level} — {levelTitle.replace(/^.+?\s/, '')}
+              ⚡ NÍVEL {level} — {levelTitle.replace(/^.+?\s/, '')}
             </span>
-            <span className="text-xs text-white/40">
-              <span className="text-[#11ff99] font-semibold">{totalXP.toLocaleString('pt-BR')}</span>
+            <span className="text-sm text-white/70 font-medium">
+              <span className="text-[#11ff99] font-bold text-base">{totalXP.toLocaleString('pt-BR')}</span>
               {nextLevelXP ? ` / ${nextLevelXP.toLocaleString('pt-BR')} XP` : ' XP (máx)'}
             </span>
           </div>
-          <div className="relative h-1.5 bg-white/[0.06] rounded-full overflow-visible">
+          <div className="relative h-2 rounded-full overflow-hidden z-10" style={{ background: 'rgba(255,255,255,0.08)' }}>
             <div
               className="h-full rounded-full transition-all duration-700"
               style={{
-                width: `${levelProgress}%`,
-                background: 'linear-gradient(90deg, rgba(255,255,255,0.5), #fff)',
-                boxShadow: '0 0 12px rgba(255,255,255,0.7)',
+                width: `${levelProgress || 0}%`,
+                background: 'linear-gradient(90deg, #7850ff, #3b9eff)',
+                boxShadow: '0 0 14px rgba(120,80,255,0.8), 0 0 28px rgba(59,158,255,0.4)',
               }}
             />
           </div>
           {nextLevelXP && (
-            <div className="text-[11px] text-white/45 mt-1.5">
+            <div className="text-xs text-white/60 mt-2 z-10 relative">
               {(nextLevelXP - totalXP).toLocaleString('pt-BR')} XP para o próximo nível
             </div>
           )}
@@ -303,24 +311,28 @@ const Painel = () => {
         {/* Stats pills */}
         <div className="grid grid-cols-4 gap-3 mb-6">
           {[
-            { val: `${productivityScore ?? 0}%`, label: 'Produtividade', color: '#11ff99' },
-            { val: goals?.filter(g => g.status !== 'concluida').length ?? 0, label: 'Metas Ativas', color: '#fff' },
-            { val: todayPlannedTasks?.length ?? 0, label: 'Tarefas Hoje', color: '#3b9eff' },
-            { val: `🔥 ${streakValue ?? 0}`, label: 'Streak', color: '#ffc53d' },
-          ].map(({ val, label, color }) => (
+            { val: `${productivityScore ?? 0}%`, label: 'Produtividade', color: '#11ff99', glow: 'rgba(17,255,153,0.15)', border: 'rgba(17,255,153,0.2)' },
+            { val: goals?.filter(g => g.status !== 'concluida').length ?? 0, label: 'Metas Ativas', color: '#fff', glow: 'rgba(255,255,255,0.08)', border: 'rgba(255,255,255,0.12)' },
+            { val: todayPlannedTasks?.length ?? 0, label: 'Tarefas Hoje', color: '#3b9eff', glow: 'rgba(59,158,255,0.15)', border: 'rgba(59,158,255,0.2)' },
+            { val: `🔥 ${streakValue ?? 0}`, label: 'Streak', color: '#ffc53d', glow: 'rgba(255,197,61,0.15)', border: 'rgba(255,197,61,0.2)' },
+          ].map(({ val, label, color, glow, border }) => (
             <div
               key={label}
               className="rounded-2xl p-4 relative overflow-hidden"
-              style={{ background: '#0a0a0c', border: '1px solid rgba(255,255,255,0.07)' }}
+              style={{
+                background: `linear-gradient(135deg, ${glow} 0%, rgba(10,10,12,0.9) 100%)`,
+                border: `1px solid ${border}`,
+                boxShadow: `0 0 20px ${glow}`,
+              }}
             >
               <div
                 className="absolute top-0 left-0 right-0 h-px"
-                style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent)' }}
+                style={{ background: `linear-gradient(90deg, transparent, ${border}, transparent)` }}
               />
-              <div className="text-3xl font-extrabold tracking-tight leading-none mb-1.5" style={{ color }}>
+              <div className="text-3xl font-extrabold tracking-tight leading-none mb-1.5" style={{ color, textShadow: `0 0 20px ${glow}` }}>
                 {val}
               </div>
-              <div className="text-[10px] uppercase tracking-widest text-white/45">{label}</div>
+              <div className="text-xs uppercase tracking-widest text-white/60 font-medium">{label}</div>
             </div>
           ))}
         </div>
