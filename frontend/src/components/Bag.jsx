@@ -61,7 +61,7 @@ const Bag = () => {
         placeholder="Pesquisar cadernos..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="mb-4 px-3 py-2 bg-white/5 border border-white/10 text-white rounded-lg outline-none placeholder-white/30 focus:border-white/30"
+        className="mb-4 px-3 py-2 bg-white/5 border border-white/10 text-white rounded-lg outline-none placeholder-white/50 focus:border-white/30"
       />
 
       <div className="flex-1 overflow-y-auto space-y-2">
@@ -162,7 +162,7 @@ const Bag = () => {
           placeholder="Pesquisar páginas..."
           value={pageSearch}
           onChange={(e) => setPageSearch(e.target.value)}
-          className="mb-4 px-3 py-2 bg-white/5 border border-white/10 text-white rounded-lg outline-none placeholder-white/30 focus:border-white/30"
+          className="mb-4 px-3 py-2 bg-white/5 border border-white/10 text-white rounded-lg outline-none placeholder-white/50 focus:border-white/30"
         />
 
         <div className="flex-1 overflow-y-auto space-y-2">
@@ -204,13 +204,13 @@ const Bag = () => {
   };
 
   return (
-    <div className="relative h-[80vh] md:h-[85vh] bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-4 flex flex-col">
+    <div className="relative h-[80vh] md:h-[85vh] bg-surface-card border border-white/10 rounded-xl p-4 flex flex-col">
 
       {/* Bottom Navigation */}
       <div className="mb-4 flex justify-around border-b border-white/10 pb-3">
         <button
           onClick={() => setView("notebooks")}
-          className={`flex flex-col cursor-pointer items-center ${view === "notebooks" ? "text-indigo-400" : "text-gray-400"
+          className={`flex flex-col cursor-pointer items-center ${view === "notebooks" ? "text-indigo-400" : "text-white/40"
             }`}
         >
           <Book size={20} />
@@ -219,7 +219,7 @@ const Bag = () => {
 
         <button
           onClick={() => setView("pages")}
-          className={`flex flex-col cursor-pointer items-center ${view === "pages" ? "text-green-400" : "text-gray-400"
+          className={`flex flex-col cursor-pointer items-center ${view === "pages" ? "text-green-400" : "text-white/40"
             }`}
         >
           <FileText size={20} />
@@ -228,7 +228,7 @@ const Bag = () => {
 
         <button
           onClick={() => setView("editor")}
-          className={`flex flex-col cursor-pointer items-center ${view === "editor" ? "text-purple-400" : "text-gray-400"
+          className={`flex flex-col cursor-pointer items-center ${view === "editor" ? "text-purple-400" : "text-white/40"
             }`}
         >
           <Edit size={20} />
@@ -270,7 +270,7 @@ const Bag = () => {
               setEditorContent(e.target.value);
               updateContent(e.target.value);
             }}
-            className="flex-1 w-full bg-white/5 border border-white/10 text-white rounded-lg p-4 focus:outline-none focus:border-white/25 resize-none placeholder-white/30"
+            className="flex-1 w-full bg-white/5 border border-white/10 text-white rounded-lg p-4 focus:outline-none focus:border-white/25 resize-none placeholder-white/50"
           />
           <button
             onClick={async() => {

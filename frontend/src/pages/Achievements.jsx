@@ -88,7 +88,7 @@ export default function Achievements() {
                 border: isUnlocked
                   ? '1px solid rgba(255,197,61,0.25)'
                   : '1px solid rgba(255,255,255,0.07)',
-                opacity: isUnlocked ? 1 : 0.35,
+                opacity: isUnlocked ? 1 : 0.55,
               }}
             >
               {isUnlocked && (
@@ -101,7 +101,7 @@ export default function Achievements() {
               <div className="text-[12px] font-bold text-white leading-tight">
                 {ach.name.split(' ').slice(1).join(' ')}
               </div>
-              <div className="text-[10px] text-white/40 mt-1 leading-tight">{ach.desc}</div>
+              <div className="text-[10px] text-white/60 mt-1 leading-tight">{ach.desc}</div>
             </div>
           );
         })}
