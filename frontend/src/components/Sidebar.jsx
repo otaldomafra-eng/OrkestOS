@@ -1,30 +1,35 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { useXP } from '../hooks/useXP';
+import {
+  Home, Target, Zap, Brain, Trophy, BookOpen, Link2,
+  Wallet, Salad, LogOut,
+} from 'lucide-react';
 
 const NAV_GROUPS = [
   {
     label: 'Principal',
     items: [
-      { to: '/dashboard',   icon: '🏠', label: 'Início' },
-      { to: '/trackers',    icon: '🎯', label: 'Rastreadores' },
-      { to: '/focus-room',  icon: '⚡', label: 'Sala de Foco' },
-      { to: '/future-twin', icon: '🧠', label: 'FutureTwin AI', dot: true },
+      { to: '/dashboard',   icon: Home,    label: 'Início' },
+      { to: '/trackers',    icon: Target,  label: 'Rastreadores' },
+      { to: '/focus-room',  icon: Zap,     label: 'Sala de Foco' },
+      { to: '/future-twin', icon: Brain,   label: 'FutureTwin AI', dot: true },
     ],
   },
   {
     label: 'Ferramentas',
     items: [
-      { to: '/achievements', icon: '🏆', label: 'Conquistas' },
-      { to: '/library',      icon: '📚', label: 'Biblioteca' },
-      { to: '/integrations', icon: '🔗', label: 'Integrações' },
+      { to: '/achievements', icon: Trophy,   label: 'Conquistas' },
+      { to: '/library',      icon: BookOpen, label: 'Biblioteca' },
+      { to: '/integrations', icon: Link2,    label: 'Integrações' },
     ],
   },
   {
     label: 'Em breve',
     items: [
-      { to: null, icon: '💰', label: 'Finance', disabled: true },
-      { to: null, icon: '🥗', label: 'Diet',    disabled: true },
+      { to: null, icon: Wallet, label: 'Finance', disabled: true },
+      { to: null, icon: Salad,  label: 'Diet',    disabled: true },
     ],
   },
 ];
@@ -32,6 +37,7 @@ const NAV_GROUPS = [
 export default function Sidebar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const { level } = useXP();
 
   return (
     <aside
@@ -64,19 +70,21 @@ export default function Sidebar() {
       </div>
 
       {/* Nav groups */}
-      <nav className="flex-1 px-3 py-4 overflow-y-auto relative z-10">
+      <nav className="flex-1 px-3 py-4 overflow-y-auto relative z-10" aria-label="Navegação principal">
         {NAV_GROUPS.map((group) => (
           <div key={group.label} className="mb-5">
             <div className="text-[10px] font-semibold text-white/40 uppercase tracking-widest px-2.5 mb-2">
               {group.label}
             </div>
-            {group.items.map((item) =>
-              item.disabled ? (
+            {group.items.map((item) => {
+              const Icon = item.icon;
+              return item.disabled ? (
                 <div
                   key={item.label}
-                  className="flex items-center gap-2.5 px-2.5 py-2 rounded-[10px] text-sm text-white/20 cursor-default mb-0.5"
+                  aria-disabled="true"
+                  className="flex items-center gap-2.5 px-2.5 py-2 rounded-[10px] text-sm text-white/20 cursor-default mb-0.5 select-none"
                 >
-                  <span className="w-5 text-center text-[14px]">{item.icon}</span>
+                  <Icon size={15} className="flex-shrink-0 opacity-50" />
                   {item.label}
                 </div>
               ) : (
@@ -84,7 +92,7 @@ export default function Sidebar() {
                   key={item.to}
                   to={item.to}
                   className={({ isActive }) =>
-                    `relative flex items-center gap-2.5 px-2.5 py-2 rounded-[10px] text-sm mb-0.5 transition-all ${
+                    `relative flex items-center gap-2.5 px-2.5 py-2 rounded-[10px] text-sm mb-0.5 transition-all outline-none focus-visible:ring-1 focus-visible:ring-white/30 ${
                       isActive
                         ? 'text-white'
                         : 'text-white/50 hover:text-white'
@@ -106,7 +114,7 @@ export default function Sidebar() {
                           }}
                         />
                       )}
-                      <span className="w-5 text-center text-[14px]">{item.icon}</span>
+                      <Icon size={15} className="flex-shrink-0" />
                       <span className="flex-1">{item.label}</span>
                       {item.dot && (
                         <span
@@ -120,8 +128,8 @@ export default function Sidebar() {
                     </>
                   )}
                 </NavLink>
-              )
-            )}
+              );
+            })}
           </div>
         ))}
       </nav>
@@ -132,8 +140,11 @@ export default function Sidebar() {
         style={{ borderTop: '1px solid rgba(120,80,255,0.15)' }}
       >
         <div
-          className="flex items-center gap-2.5 p-2.5 rounded-[10px] cursor-pointer transition-all hover:bg-white/[0.05]"
+          className="flex items-center gap-2.5 p-2.5 rounded-[10px] cursor-pointer transition-all hover:bg-white/[0.05] outline-none focus-visible:ring-1 focus-visible:ring-white/30"
           onClick={() => navigate('/profile')}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === 'Enter' && navigate('/profile')}
         >
           <div
             className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0"
@@ -149,14 +160,14 @@ export default function Sidebar() {
             <div className="text-sm font-semibold text-white truncate">
               {user?.name ?? 'Usuário'}
             </div>
-            <div className="text-[11px] text-white/50">Nível 7</div>
+            <div className="text-[11px] text-white/50">Nível {level}</div>
           </div>
           <button
             onClick={(e) => { e.stopPropagation(); logout(); }}
-            className="text-white/25 hover:text-white/60 text-sm transition-colors"
-            title="Sair"
+            className="text-white/25 hover:text-white/60 transition-colors p-1 rounded outline-none focus-visible:ring-1 focus-visible:ring-white/30"
+            aria-label="Sair"
           >
-            ⇥
+            <LogOut size={13} />
           </button>
         </div>
       </div>

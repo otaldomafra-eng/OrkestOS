@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-canvas: #000000;
+  --color-canvas: #06060a;
   --color-surface-card: #0a0a0c;
   --color-surface-elevated: #101012;
   --color-surface-deep: #06060a;
@@ -81,10 +81,18 @@ body::after {
 }
 
 * {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Outfit", -apple-system, BlinkMacSystemFont, sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 .default-bold {

@@ -1,12 +1,16 @@
 const Card = ({ children, className = '', onClick }) => {
+  const interactive = Boolean(onClick);
   return (
     <div
       onClick={onClick}
+      tabIndex={interactive ? 0 : undefined}
+      role={interactive ? 'button' : undefined}
+      onKeyDown={interactive ? (e) => (e.key === 'Enter' || e.key === ' ') && onClick(e) : undefined}
       className={`
         relative overflow-hidden
         border border-white/[0.08]
         rounded-2xl p-4
-        ${onClick ? 'cursor-pointer transition-all hover:border-[rgba(120,80,255,0.35)]' : ''}
+        ${interactive ? 'cursor-pointer transition-all hover:border-[rgba(120,80,255,0.35)] outline-none focus-visible:ring-1 focus-visible:ring-white/30' : ''}
         ${className}
       `}
       style={{

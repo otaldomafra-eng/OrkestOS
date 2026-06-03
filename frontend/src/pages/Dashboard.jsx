@@ -1,9 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LabelList } from 'recharts';
-import { TrendingUp, Target, CheckCircle, Zap, ArrowRight, UserPlus2, Camera, CalendarDays, Star, AlertTriangle, UserPen, LucideTrophy, Pencil, Activity, Flame, BarChart3 } from 'lucide-react';
+import { TrendingUp, Target, CheckCircle, Zap, ArrowRight, UserPlus2, Camera, CalendarDays, Star, AlertTriangle, UserPen, LucideTrophy, Pencil, Activity, Flame, BarChart3, Brain, Trophy, BookOpen, DollarSign } from 'lucide-react';
 import { useApp } from '../hooks/useApp';
 import Card from '../components/Card';
-import StatCard from '../components/StatCard';
 import ClockWidget from '../components/ClockWidget';
 import DonutChart from '../components/DonutChart';
 import GoalCard from '../components/GoalCard';
@@ -18,8 +17,9 @@ import { useState, useEffect } from 'react';
 import { statsAPI } from '../api/apiService';
 import Modal from '../components/Modal';
 import InputField from '../components/InputField';
-import { AnalyticsSkeleton, DashboardStatsSkeleton, SkeletonCard, SkeletonBlock, TrackerGridSkeleton } from '../components/LoadingSkeleton';
+import { AnalyticsSkeleton, SkeletonCard, SkeletonBlock, TrackerGridSkeleton } from '../components/LoadingSkeleton';
 import { useXP } from '../hooks/useXP';
+import { ACHIEVEMENTS } from '../data/gamification';
 
 
 const Painel = () => {
@@ -36,6 +36,8 @@ const Painel = () => {
     tasks,
     habits,
     dailyPlan,
+    notebooks,
+    pages,
     updateUser,
     updateUserProfilePic,
     calculateGoalProgress,
@@ -53,7 +55,7 @@ const Painel = () => {
   const [weeklyLoading, setWeeklyLoading] = useState(true);
 
   const navigate = useNavigate();
-  const { totalXP, level, levelTitle, levelProgress, nextLevelXP } = useXP();
+  const { totalXP, level, levelTitle, levelProgress, nextLevelXP, unlockedAchievements } = useXP();
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -329,7 +331,7 @@ const Painel = () => {
                 className="absolute top-0 left-0 right-0 h-px"
                 style={{ background: `linear-gradient(90deg, transparent, ${border}, transparent)` }}
               />
-              <div className="text-3xl font-extrabold tracking-tight leading-none mb-1.5" style={{ color, textShadow: `0 0 20px ${glow}` }}>
+              <div className="text-3xl font-extrabold tracking-tight leading-none mb-1.5 tabular-nums" style={{ color, textShadow: `0 0 20px ${glow}` }}>
                 {val}
               </div>
               <div className="text-xs uppercase tracking-widest text-white/60 font-medium">{label}</div>
@@ -342,20 +344,22 @@ const Painel = () => {
           <h2 className="text-xs font-semibold text-white/45 uppercase tracking-widest mb-3">Módulos</h2>
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
             {[
-              { to: '/future-twin', icon: '🧠', name: 'FutureTwin AI',  sub: '3 insights hoje', badge: 'Novo',    badgeColor: '#11ff99' },
-              { to: '/trackers',    icon: '🎯', name: 'Rastreadores',   sub: 'Metas · Hábitos · Projetos' },
-              { to: '/achievements',icon: '🏆', name: 'Conquistas',     sub: '12 / 30 desbloqueadas' },
-              { to: '/focus-room',  icon: '⚡', name: 'Sala de Foco',   sub: 'Pomodoro · Timer' },
-              { to: '/library',     icon: '📚', name: 'Biblioteca',     sub: '8 notas · 2 cadernos' },
-              { to: null,           icon: '💰', name: 'Finance',        sub: 'Em breve', disabled: true },
-            ].map(({ to, icon, name, sub, badge, badgeColor, disabled }) => (
-              <div
+              { to: '/future-twin', Icon: Brain,      name: 'FutureTwin AI',  sub: 'Insights · Chat IA', badge: 'Novo',    badgeColor: '#11ff99' },
+              { to: '/trackers',    Icon: Target,      name: 'Rastreadores',   sub: `${goals.filter(g => g.status !== 'concluida').length} metas · ${habits.length} hábitos` },
+              { to: '/achievements',Icon: Trophy,      name: 'Conquistas',     sub: `${unlockedAchievements.length} / ${ACHIEVEMENTS.length} desbloqueadas` },
+              { to: '/focus-room',  Icon: Zap,         name: 'Sala de Foco',   sub: 'Pomodoro · Timer' },
+              { to: '/library',     Icon: BookOpen,    name: 'Biblioteca',     sub: `${pages.length} notas · ${notebooks.length} cadernos` },
+              { to: null,           Icon: DollarSign,  name: 'Finance',        sub: 'Em breve', disabled: true },
+            ].map(({ to, Icon, name, sub, badge, badgeColor, disabled }) => (
+              <button
                 key={name}
                 onClick={() => to && navigate(to)}
-                className={`relative overflow-hidden rounded-2xl p-4 transition-colors ${
+                disabled={disabled}
+                aria-label={name}
+                className={`relative overflow-hidden rounded-2xl p-4 text-left transition-colors w-full ${
                   disabled
                     ? 'opacity-40 cursor-default border-dashed'
-                    : 'cursor-pointer hover:border-white/[0.13]'
+                    : 'cursor-pointer hover:border-white/[0.13] focus-visible:ring-1 focus-visible:ring-white/30 outline-none'
                 }`}
                 style={{
                   background: disabled ? 'transparent' : 'rgba(255,255,255,0.03)',
@@ -366,7 +370,9 @@ const Painel = () => {
                   className="absolute top-0 left-0 right-0 h-px"
                   style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)' }}
                 />
-                <div className="text-2xl mb-2.5">{icon}</div>
+                <div className="mb-2.5 text-white/70">
+                  <Icon size={20} />
+                </div>
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <div className="text-sm font-semibold text-white">{name}</div>
@@ -385,7 +391,7 @@ const Painel = () => {
                     </span>
                   )}
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         </div>
@@ -398,32 +404,30 @@ const Painel = () => {
         >
           <Card className="mb-6">
             <div className="flex items-center justify-end mb-4">
-              <button onClick={() => setShowEditProfile(true)} className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-surface-elevated border border-hairline-strong text-charcoal hover:text-ink hover:bg-[#1a1a1e] transition-all duration-200 cursor-pointer">
+              <button
+                onClick={() => setShowEditProfile(true)}
+                aria-label="Editar perfil"
+                className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-surface-elevated border border-hairline-strong text-charcoal hover:text-ink hover:bg-[#1a1a1e] transition-colors duration-200 outline-none focus-visible:ring-1 focus-visible:ring-white/30"
+              >
                 <UserPen size={16} />
               </button>
             </div>
             <div className="flex flex-col items-center">
               <div className="w-20 h-20 rounded-full relative group shrink-0 mb-4">
-                <img src={user.profile_picture || profile_pic} className="w-full h-full object-cover rounded-full border-2 border-hairline-strong" alt="" />
-                <div onClick={()=>setShowEditProfilePic(true)} className="w-full h-full bg-black/50 absolute rounded-full inset-0 cursor-pointer opacity-0 z-10 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                <img src={user.profile_picture || profile_pic} className="w-full h-full object-cover rounded-full border-2 border-hairline-strong" alt={user.name || 'Foto de perfil'} />
+                <button
+                  type="button"
+                  onClick={() => setShowEditProfilePic(true)}
+                  aria-label="Alterar foto de perfil"
+                  className="w-full h-full bg-black/50 absolute rounded-full inset-0 opacity-0 z-10 group-hover:opacity-100 flex items-center justify-center transition-opacity outline-none focus-visible:opacity-100"
+                >
                   <Camera size={16} className="text-ink" />
-                </div>
+                </button>
                 <div className="w-4 h-4 rounded-full bg-accent-green border-2 border-surface-card absolute bottom-0 right-0" />
               </div>
               <span className="text-2xl font-semibold text-ink text-center">{user.name || 'Usuário'}</span>
               <span className="text-sm text-mute mt-0.5">@{user.username || 'username'}</span>
               {user.bio && <p className="text-sm text-charcoal mt-3 text-center max-w-md">{user.bio}</p>}
-            </div>
-
-            <div className="flex justify-center gap-8 mt-6">
-              <div className="text-center">
-                <p className="text-lg font-semibold text-accent-blue">{productivityScore}%</p>
-                <p className="text-xs text-mute">Produtividade</p>
-              </div>
-              <div className="text-center">
-                <p className="text-lg font-semibold text-accent-green">{disciplineScore}%</p>
-                <p className="text-xs text-mute">Disciplina</p>
-              </div>
             </div>
 
             <div className="mt-6">
@@ -440,48 +444,13 @@ const Painel = () => {
             <ClockWidget />
           </div>
 
-          {/* Stats Grid */}
-          {loading ? (
-            <DashboardStatsSkeleton />
-          ) : (
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              <StatCard
-                title="Produtividade"
-                value={`${productivityScore}%`}
-                icon={<Zap size={20} />}
-                data-testid="productivity-score-card"
-                accent="blue"
-              />
-              <StatCard
-                title="Disciplina"
-                value={`${disciplineScore}%`}
-                icon={<TrendingUp size={20} />}
-                data-testid="discipline-score-card"
-                accent="blue"
-              />
-              <StatCard
-                title="Metas Ativas"
-                value={goals.length.toString()}
-                icon={<Target size={20} />}
-                data-testid="active-goals-card"
-                accent="green"
-              />
-              <StatCard
-                title="Tarefas Hoje"
-                value={`${dailyPlan?.plannedTasks.filter(t => t.completed).length}/${dailyPlan?.plannedTasks.length}`}
-                icon={<CheckCircle size={20} />}
-                data-testid="tasks-today-card"
-                accent="blue"
-              />
-            </div>
-          )}
         </Card>
 
         {/* Produtividade Insights */}
         <div className="mb-6">
           <div className="flex items-center justify-between gap-4 mb-4">
             <div>
-              <h2 className="text-lg font-semibold text-ink">Produtividade Insights</h2>
+              <h2 className="text-lg font-semibold text-ink" style={{ textWrap: 'balance' }}>Produtividade Insights</h2>
               <p className="text-sm text-mute">Sinais ao vivo das suas metas, hábitos, tarefas e ritmo semanal</p>
             </div>
             <div className={`hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-hairline bg-surface-elevated ${productivityInsights.trendDelta >= 0 ? 'text-accent-green' : 'text-accent-red'}`}>
@@ -498,7 +467,7 @@ const Painel = () => {
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="text-sm text-mute">{insight.title}</p>
-                    <p className="text-2xl font-semibold text-ink mt-1">{insight.value}</p>
+                    <p className="text-2xl font-semibold text-ink mt-1 tabular-nums">{insight.value}</p>
                   </div>
                   <div className={`p-2 rounded-lg ${
                     insight.accent === 'green' ? 'bg-[rgba(17,255,153,0.1)] text-accent-green' :
@@ -717,7 +686,8 @@ const Painel = () => {
                       </div>
                       <button
                         onClick={() => toggleDailyPlanTaskCompletion(item.id)}
-                        className={`p-1.5 rounded-lg transition-all shrink-0 ${
+                        aria-label={item.completed ? 'Marcar como pendente' : 'Marcar como concluída'}
+                        className={`p-1.5 rounded-lg transition-colors shrink-0 outline-none focus-visible:ring-1 focus-visible:ring-white/30 ${
                           item.completed
                             ? 'bg-accent-green/10 text-accent-green'
                             : 'bg-surface-elevated text-mute hover:bg-accent-green/10 hover:text-accent-green'
@@ -887,31 +857,39 @@ const Painel = () => {
       <Modal isOpen={showEditProfile} onClose={() => setShowEditProfile(false)} title="Editar Perfil">
         <form onSubmit={handleEditProfile} className="space-y-4">
           <InputField
+            id="profile-name"
+            name="name"
             label="Nome completo"
             value={newProfile.name}
             onChange={(e) => setNewProfile({ ...newProfile, name: e.target.value })}
             placeholder="Informe seu nome completo"
+            autoComplete="name"
             required
             data-testid="profile-name-input"
           />
           <InputField
+            id="profile-username"
+            name="username"
             label="Usuário"
             value={newProfile.username}
             onChange={(e) => setNewProfile({ ...newProfile, username: e.target.value })}
             placeholder="Usuário"
+            autoComplete="username"
+            spellCheck={false}
             required
             data-testid="profile-username-input"
           />
 
           <div>
-            <label className="block text-sm text-charcoal font-medium mb-2">Bio</label>
+            <label htmlFor="profile-bio" className="block text-sm text-charcoal font-medium mb-2">Bio</label>
             <textarea
+              id="profile-bio"
               value={newProfile.bio}
               onChange={(e) => setNewProfile({ ...newProfile, bio: e.target.value })}
-              placeholder="Fale algo interessante sobre você..."
+              placeholder="Fale algo interessante sobre você…"
               data-testid="profile-bio-input"
               required
-              className="w-full bg-surface-card text-ink border border-hairline-strong rounded-lg px-4 py-3 focus:outline-none focus:border-ink min-h-[100px]"
+              className="w-full bg-surface-card text-ink border border-hairline-strong rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent transition-shadow min-h-[100px]"
             />
           </div>
 
