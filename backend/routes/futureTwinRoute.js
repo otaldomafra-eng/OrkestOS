@@ -87,7 +87,7 @@ router.post('/chat', authUser, async (req, res) => {
 
     const chat = model.startChat({
       history: historyForGemini,
-      systemInstruction: `${SYSTEM_PROMPT}\n\n${userContext}`,
+      systemInstruction: { parts: [{ text: `${SYSTEM_PROMPT}\n\n${userContext}` }] },
     });
 
     const lastMessage = history[history.length - 1].content;
