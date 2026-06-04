@@ -3,6 +3,7 @@ import Sidebar from '../components/Sidebar';
 import BottomNav from '../components/BottomNav';
 import XPToastLayer from '../components/XPToast';
 import LevelUpModal from '../components/LevelUpModal';
+import FloatingActionButton from '../components/FloatingActionButton';
 import { useAuth } from '../hooks/useAuth';
 
 const AppLayout = () => {
@@ -21,6 +22,7 @@ const AppLayout = () => {
       <BottomNav />
       <XPToastLayer />
       <LevelUpModal />
+      <FloatingActionButton />
     </div>
   );
 };
