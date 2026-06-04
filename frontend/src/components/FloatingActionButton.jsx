@@ -22,6 +22,7 @@ const SUBMIT_STYLE = {
 export default function FloatingActionButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const [taskForm, setTaskForm]       = useState({ title: '', priority: 'normal' });
   const [habitForm, setHabitForm]     = useState({ name: '', frequency: 'daily' });
@@ -45,23 +46,29 @@ export default function FloatingActionButton() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (activeModal === 'task') {
-      if (!taskForm.title.trim()) return;
-      await addTask({ title: taskForm.title.trim(), priority: taskForm.priority, createdFrom: 'fab' });
-    } else if (activeModal === 'habit') {
-      if (!habitForm.name.trim()) return;
-      await addHabit({ name: habitForm.name.trim(), frequency: habitForm.frequency });
-    } else if (activeModal === 'goal') {
-      if (!goalForm.title.trim()) return;
-      await addGoal({
-        title: goalForm.title.trim(),
-        ...(goalForm.deadline && { deadline: goalForm.deadline }),
-      });
-    } else if (activeModal === 'project') {
-      if (!projectForm.name.trim()) return;
-      await addProject({ name: projectForm.name.trim(), goalId: projectForm.goalId || null });
+    if (submitting) return;
+    setSubmitting(true);
+    try {
+      if (activeModal === 'task') {
+        if (!taskForm.title.trim()) return;
+        await addTask({ title: taskForm.title.trim(), priority: taskForm.priority, createdFrom: 'fab' });
+      } else if (activeModal === 'habit') {
+        if (!habitForm.name.trim()) return;
+        await addHabit({ name: habitForm.name.trim(), frequency: habitForm.frequency });
+      } else if (activeModal === 'goal') {
+        if (!goalForm.title.trim()) return;
+        await addGoal({
+          title: goalForm.title.trim(),
+          ...(goalForm.deadline && { deadline: goalForm.deadline }),
+        });
+      } else if (activeModal === 'project') {
+        if (!projectForm.name.trim()) return;
+        await addProject({ name: projectForm.name.trim(), goalId: projectForm.goalId || null });
+      }
+      closeModal();
+    } finally {
+      setSubmitting(false);
     }
-    closeModal();
   };
 
   return (
@@ -74,7 +81,7 @@ export default function FloatingActionButton() {
             style={{ background: 'rgba(0,0,0,0.4)' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            exit={{ opacity: 0, transition: { duration: 0 } }}
             onClick={() => setIsOpen(false)}
           />
         )}
@@ -166,8 +173,13 @@ export default function FloatingActionButton() {
               <option value="importante">Importante</option>
             </select>
           </div>
-          <button type="submit" className="w-full py-2.5 rounded-lg text-white font-medium" style={SUBMIT_STYLE}>
-            Criar Tarefa
+          <button
+            type="submit"
+            disabled={submitting}
+            className="w-full py-2.5 rounded-lg text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+            style={SUBMIT_STYLE}
+          >
+            {submitting ? 'Salvando...' : 'Criar Tarefa'}
           </button>
         </form>
       </Modal>
@@ -193,8 +205,13 @@ export default function FloatingActionButton() {
               <option value="weekly">Semanal</option>
             </select>
           </div>
-          <button type="submit" className="w-full py-2.5 rounded-lg text-white font-medium" style={SUBMIT_STYLE}>
-            Criar Hábito
+          <button
+            type="submit"
+            disabled={submitting}
+            className="w-full py-2.5 rounded-lg text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+            style={SUBMIT_STYLE}
+          >
+            {submitting ? 'Salvando...' : 'Criar Hábito'}
           </button>
         </form>
       </Modal>
@@ -218,8 +235,13 @@ export default function FloatingActionButton() {
               className={SELECT_CLASS}
             />
           </div>
-          <button type="submit" className="w-full py-2.5 rounded-lg text-white font-medium" style={SUBMIT_STYLE}>
-            Criar Meta
+          <button
+            type="submit"
+            disabled={submitting}
+            className="w-full py-2.5 rounded-lg text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+            style={SUBMIT_STYLE}
+          >
+            {submitting ? 'Salvando...' : 'Criar Meta'}
           </button>
         </form>
       </Modal>
@@ -249,8 +271,13 @@ export default function FloatingActionButton() {
                 ))}
             </select>
           </div>
-          <button type="submit" className="w-full py-2.5 rounded-lg text-white font-medium" style={SUBMIT_STYLE}>
-            Criar Projeto
+          <button
+            type="submit"
+            disabled={submitting}
+            className="w-full py-2.5 rounded-lg text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+            style={SUBMIT_STYLE}
+          >
+            {submitting ? 'Salvando...' : 'Criar Projeto'}
           </button>
         </form>
       </Modal>
