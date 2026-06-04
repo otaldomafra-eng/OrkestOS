@@ -18,7 +18,7 @@ export default function FloatingActionButton() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed inset-0 z-40"
+            className="fixed inset-0 z-[55]"
             style={{ background: 'rgba(0,0,0,0.4)' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -29,7 +29,7 @@ export default function FloatingActionButton() {
       </AnimatePresence>
 
       {/* Speed Dial container */}
-      <div className="fixed bottom-24 right-5 lg:bottom-8 lg:right-8 z-50 flex flex-col items-end gap-3">
+      <div className="fixed bottom-24 right-5 lg:bottom-8 lg:right-8 z-[60] flex flex-col items-end gap-3" role="region" aria-label="Ações rápidas">
 
         {/* Sub-botões */}
         <AnimatePresence>
@@ -48,7 +48,7 @@ export default function FloatingActionButton() {
                 transition: { delay: i * 0.04 },
               }}
               onClick={() => console.log('open modal:', key)}
-              className="flex items-center gap-3 px-4 py-2.5 rounded-full text-sm font-medium text-white transition-all outline-none"
+              className="flex items-center gap-3 px-4 py-2.5 rounded-full text-sm font-medium text-white transition-all outline-none focus-visible:ring-2 focus-visible:ring-purple-400/60"
               style={{
                 background: 'rgba(18,10,40,0.95)',
                 border: '1px solid rgba(120,80,255,0.3)',
@@ -71,7 +71,7 @@ export default function FloatingActionButton() {
         {/* Botão principal FAB */}
         <motion.button
           onClick={() => setIsOpen(prev => !prev)}
-          className="w-14 h-14 rounded-full flex items-center justify-center outline-none"
+          className="w-14 h-14 rounded-full flex items-center justify-center outline-none focus-visible:ring-2 focus-visible:ring-white/40"
           style={{
             background: 'linear-gradient(135deg, #7850ff, #3b9eff)',
             boxShadow: isOpen
