@@ -10,7 +10,7 @@ export const authAPI = {
         const response = await axiosInstance.post('/api/user/login', data);
         return response.data;
     },
-    GoogleLogin: async (credential) => {
+    googleLogin: async (credential) => {
         const response = await axiosInstance.post('/api/user/google', { credential });
         return response.data;
     },
