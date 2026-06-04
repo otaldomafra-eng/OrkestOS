@@ -349,7 +349,7 @@ const Painel = () => {
               { to: '/achievements',Icon: Trophy,      name: 'Conquistas',     sub: `${unlockedAchievements.length} / ${ACHIEVEMENTS.length} desbloqueadas` },
               { to: '/focus-room',  Icon: Zap,         name: 'Sala de Foco',   sub: 'Pomodoro · Timer' },
               { to: '/library',     Icon: BookOpen,    name: 'Biblioteca',     sub: `${pages.length} notas · ${notebooks.length} cadernos` },
-              { to: null,           Icon: DollarSign,  name: 'Finance',        sub: 'Em breve', disabled: true },
+              { to: null,           Icon: DollarSign,  name: 'Finanças',       sub: 'Em breve', disabled: true },
             ].map(({ to, Icon, name, sub, badge, badgeColor, disabled }) => (
               <button
                 key={name}

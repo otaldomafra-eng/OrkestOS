@@ -1,3 +1,16 @@
 node_modules
 .env
 package-lock.json
+
+# Credenciais e acesso VPS — NUNCA publicar
+VPS-ORACLE/
+
+# Arquivos locais de sessão e rascunhos
+.claude/
+_temp/
+SESSAO-*.md
+DESIGN-*.md
+
+# Logs do backend
+backend/backend.err
+backend/backend.log

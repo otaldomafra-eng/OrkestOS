@@ -29,8 +29,8 @@ const NAV_GROUPS = [
   {
     label: 'Em breve',
     items: [
-      { to: null, icon: Wallet, label: 'Finance', disabled: true },
-      { to: null, icon: Salad,  label: 'Diet',    disabled: true },
+      { to: null, icon: Wallet, label: 'Finanças', disabled: true },
+      { to: null, icon: Salad,  label: 'Dieta',   disabled: true },
     ],
   },
 ];

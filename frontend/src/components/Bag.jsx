@@ -122,7 +122,7 @@ const Bag = () => {
                       onClick={async(e) => {
                         e.stopPropagation();
                         await deleteNotebook(nb.id);
-                        showToast({message: `Notebook: ${nb.name} Deleted`, status: "success"})
+                        showToast({message: `Caderno "${nb.name}" excluído`, status: "success"})
                         setActiveNotebook(null);
                         setActivePage(null);
                         setView("notebooks");
