@@ -78,12 +78,18 @@ router.post('/chat', authUser, async (req, res) => {
 
     const history = messages.slice(-20);
 
-    // Montar histórico para o Gemini (alternar user/model)
+    // Gemini exige histórico começando com 'user' e alternando user/model
+    const historyForGemini = history
+      .slice(0, -1)
+      .map((m) => ({ role: m.role === 'assistant' ? 'model' : 'user', parts: [{ text: m.content }] }))
+      .filter((_, i, arr) => {
+        // Remove mensagens iniciais de 'model' até encontrar o primeiro 'user'
+        const firstUser = arr.findIndex((m) => m.role === 'user');
+        return i >= firstUser;
+      });
+
     const chat = model.startChat({
-      history: history.slice(0, -1).map((m) => ({
-        role: m.role === 'assistant' ? 'model' : 'user',
-        parts: [{ text: m.content }],
-      })),
+      history: historyForGemini,
       systemInstruction: `${SYSTEM_PROMPT}\n\n${userContext}`,
     });
 
