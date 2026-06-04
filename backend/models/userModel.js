@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: function() { return !this.googleId } },
     googleId: { type: String, unique: true, sparse: true },
-    bio: { type: String, default: 'Boosting Myself...Kicking off the limits' },
+    bio: { type: String, default: 'Evoluindo todos os dias, um hábito de cada vez.' },
     
     
 }, { minimize: false, timestamps: true })
