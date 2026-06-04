@@ -7,6 +7,7 @@ import DonutChart from '../../../components/DonutChart';
 import Button from '../../../components/GradientButton';
 import InputField from '../../../components/InputField';
 import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { motion as Motion } from 'framer-motion';
 import Modal from '../../../components/Modal';
 import { showToast } from '../../../utils/toastHelper';
@@ -192,7 +193,7 @@ const DailyTaskTracker = () => {
               <h1 className="text-3xl young-serif-regular font-bold text-ink mb-2">Planejador diário</h1>
               <div className="flex items-center gap-2 text-mute">
                 <Calendar size={20} />
-                <p>{format(new Date(), 'EEEE, MMMM d, yyyy')}</p>
+                <p>{format(new Date(), "EEEE, d 'de' MMMM 'de' yyyy", { locale: ptBR })}</p>
               </div>
             </div>
             <PlannerSkeleton />
@@ -212,10 +213,10 @@ const DailyTaskTracker = () => {
             animate={{ opacity: 1, y: 0 }}
             className="mb-6"
           >
-            <h1 className="text-3xl young-serif-regular font-bold text-ink mb-2">Planejador di�rio</h1>
+            <h1 className="text-3xl young-serif-regular font-bold text-ink mb-2">Planejador diário</h1>
             <div className="flex items-center gap-2 text-mute">
               <Calendar size={20} />
-              <p>{format(new Date(), 'EEEE, MMMM d, yyyy')}</p>
+              <p>{format(new Date(), "EEEE, d 'de' MMMM 'de' yyyy", { locale: ptBR })}</p>
             </div>
           </Motion.div>
 

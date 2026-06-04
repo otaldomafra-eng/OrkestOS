@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { Clock } from 'lucide-react';
 import Card from './Card';
 import { motion } from "framer-motion";
@@ -37,7 +38,7 @@ const ClockWidget = () => {
 
         {/* Date */}
         <p className="text-mute mt-3 text-sm">
-          {format(currentTime, 'EEEE, MMMM dd, yyyy')}
+          {format(currentTime, "EEEE, d 'de' MMMM 'de' yyyy", { locale: ptBR })}
         </p>
 
       </div>

@@ -1,6 +1,6 @@
 export const formatDate = (dateString) => {
   const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  return date.toLocaleDateString('pt-BR', { month: 'short', day: 'numeric', year: 'numeric' });
 };
 
 export const calculateStreak = (completedDays) => {
