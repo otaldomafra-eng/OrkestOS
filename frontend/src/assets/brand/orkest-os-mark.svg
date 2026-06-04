@@ -1,0 +1,31 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Orkest OS mark</title>
+  <desc id="desc">Minimal orbit symbol for Orkest OS, representing a personal operating system with connected modules.</desc>
+  <defs>
+    <linearGradient id="orbit-gradient" x1="57" y1="62" x2="202" y2="197" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FCFDFF"/>
+      <stop offset="0.42" stop-color="#7850FF"/>
+      <stop offset="1" stop-color="#3B9EFF"/>
+    </linearGradient>
+    <radialGradient id="core-glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(128 128) rotate(90) scale(88)">
+      <stop stop-color="#7850FF" stop-opacity="0.34"/>
+      <stop offset="0.52" stop-color="#3B9EFF" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#06060A" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft-glow" x="15" y="15" width="226" height="226" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.47 0 0 0 0 0.31 0 0 0 0 1 0 0 0 0.38 0"/>
+      <feBlend in="SourceGraphic" mode="screen"/>
+    </filter>
+  </defs>
+  <rect width="256" height="256" rx="56" fill="#06060A"/>
+  <circle cx="128" cy="128" r="92" fill="url(#core-glow)"/>
+  <g filter="url(#soft-glow)">
+    <circle cx="128" cy="128" r="45" stroke="#FCFDFF" stroke-width="12"/>
+    <path d="M61 146C78 100 121 65 165 68C190 70 207 84 210 102C214 125 194 150 160 165C123 181 81 175 61 146Z" stroke="url(#orbit-gradient)" stroke-width="9" stroke-linecap="round"/>
+    <path d="M195 85C177 128 134 160 91 158C69 157 53 146 49 130C44 109 62 84 94 68" stroke="#FCFDFF" stroke-opacity="0.58" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="197" cy="86" r="9" fill="#3B9EFF"/>
+    <circle cx="61" cy="146" r="7" fill="#11FF99"/>
+    <circle cx="94" cy="68" r="6" fill="#7850FF"/>
+  </g>
+</svg>

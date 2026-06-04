@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LabelList } from 'recharts';
-import { TrendingUp, Target, CheckCircle, Zap, ArrowRight, UserPlus2, Camera, CalendarDays, Star, AlertTriangle, UserPen, LucideTrophy, Pencil, Activity, Flame, BarChart3, Brain, Trophy, BookOpen, DollarSign } from 'lucide-react';
+import { TrendingUp, Target, CheckCircle, Zap, ArrowRight, Camera, CalendarDays, Star, AlertTriangle, UserPen, LucideTrophy, Pencil, Activity, Flame, BarChart3, Brain, Trophy, BookOpen, DollarSign } from 'lucide-react';
 import { useApp } from '../hooks/useApp';
 import Card from '../components/Card';
 import ClockWidget from '../components/ClockWidget';
@@ -430,12 +430,6 @@ const Painel = () => {
               {user.bio && <p className="text-sm text-charcoal mt-3 text-center max-w-md">{user.bio}</p>}
             </div>
 
-            <div className="mt-6">
-              <Button variant="primary" className="w-full">
-                <UserPlus2 size={18} />
-                <span>Conectar</span>
-              </Button>
-            </div>
           </Card>
         </Motion.div>
 

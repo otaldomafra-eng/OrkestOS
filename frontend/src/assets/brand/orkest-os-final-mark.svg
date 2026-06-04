@@ -1,0 +1,23 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Orkest OS final mark</title>
+  <desc id="desc">Minimal OK monogram for Orkest OS.</desc>
+  <defs>
+    <linearGradient id="ring" x1="140" y1="132" x2="374" y2="384" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FCFDFF"/>
+      <stop offset="0.46" stop-color="#8E6DFF"/>
+      <stop offset="1" stop-color="#3B9EFF"/>
+    </linearGradient>
+    <linearGradient id="k" x1="223" y1="171" x2="337" y2="340" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FCFDFF"/>
+      <stop offset="1" stop-color="#67B7FF"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(256 256) rotate(90) scale(170)">
+      <stop stop-color="#7850FF" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#06060A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="256" cy="256" r="170" fill="url(#halo)"/>
+  <circle cx="256" cy="256" r="125" stroke="url(#ring)" stroke-width="31"/>
+  <path d="M221 179V333" stroke="#FCFDFF" stroke-width="24" stroke-linecap="round"/>
+  <path d="M324 184L250 255L330 331" stroke="url(#k)" stroke-width="29" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

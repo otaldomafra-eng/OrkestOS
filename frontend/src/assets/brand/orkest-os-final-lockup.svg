@@ -1,0 +1,32 @@
+<svg width="760" height="192" viewBox="0 0 760 192" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Orkest OS final logo</title>
+  <desc id="desc">Final Orkest OS logo with OK monogram and wordmark.</desc>
+  <defs>
+    <linearGradient id="ring" x1="39" y1="35" x2="153" y2="157" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FCFDFF"/>
+      <stop offset="0.46" stop-color="#8E6DFF"/>
+      <stop offset="1" stop-color="#3B9EFF"/>
+    </linearGradient>
+    <linearGradient id="k" x1="78" y1="60" x2="132" y2="136" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FCFDFF"/>
+      <stop offset="1" stop-color="#67B7FF"/>
+    </linearGradient>
+    <linearGradient id="os" x1="439" y1="62" x2="552" y2="122" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FCFDFF"/>
+      <stop offset="0.44" stop-color="#8E6DFF"/>
+      <stop offset="1" stop-color="#3B9EFF"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(96 96) rotate(90) scale(78)">
+      <stop stop-color="#7850FF" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#06060A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="760" height="192" rx="34" fill="#06060A"/>
+  <circle cx="96" cy="96" r="80" fill="url(#halo)"/>
+  <circle cx="96" cy="96" r="58" stroke="url(#ring)" stroke-width="14"/>
+  <path d="M80 61V131" stroke="#FCFDFF" stroke-width="11" stroke-linecap="round"/>
+  <path d="M127 64L93 96L130 130" stroke="url(#k)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="198" y="113" fill="#FCFDFF" font-family="Outfit, Inter, Arial, sans-serif" font-size="58" font-weight="650" letter-spacing="0">Orkest</text>
+  <text x="410" y="113" fill="url(#os)" font-family="Outfit, Inter, Arial, sans-serif" font-size="58" font-weight="760" letter-spacing="1">OS</text>
+  <text x="202" y="143" fill="#B8BCBD" font-family="Outfit, Inter, Arial, sans-serif" font-size="14" font-weight="600" letter-spacing="3">SISTEMA OPERACIONAL PESSOAL</text>
+</svg>

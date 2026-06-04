@@ -1,0 +1,7 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Orkest OS monochrome mark</title>
+  <desc id="desc">Monochrome OK monogram for Orkest OS.</desc>
+  <circle cx="256" cy="256" r="125" stroke="#FCFDFF" stroke-width="31"/>
+  <path d="M221 179V333" stroke="#FCFDFF" stroke-width="24" stroke-linecap="round"/>
+  <path d="M324 184L250 255L330 331" stroke="#FCFDFF" stroke-width="29" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

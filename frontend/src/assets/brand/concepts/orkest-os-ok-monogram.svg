@@ -1,0 +1,24 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Orkest OS OK Monogram logo concept</title>
+  <desc id="desc">Minimal O and K monogram for Orkest OS.</desc>
+  <defs>
+    <linearGradient id="monoRing" x1="123" y1="126" x2="386" y2="388" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FCFDFF"/>
+      <stop offset="0.5" stop-color="#7850FF"/>
+      <stop offset="1" stop-color="#3B9EFF"/>
+    </linearGradient>
+    <linearGradient id="kStroke" x1="239" y1="170" x2="332" y2="340" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FCFDFF"/>
+      <stop offset="1" stop-color="#3B9EFF"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(256 256) rotate(90) scale(160)">
+      <stop stop-color="#7850FF" stop-opacity="0.17"/>
+      <stop offset="1" stop-color="#06060A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#06060A"/>
+  <circle cx="256" cy="256" r="168" fill="url(#glow)"/>
+  <circle cx="256" cy="256" r="129" stroke="url(#monoRing)" stroke-width="32"/>
+  <path d="M225 178V334" stroke="#FCFDFF" stroke-width="26" stroke-linecap="round"/>
+  <path d="M317 185L247 255L323 332" stroke="url(#kStroke)" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

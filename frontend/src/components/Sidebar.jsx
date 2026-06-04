@@ -1,4 +1,5 @@
 import React from 'react';
+import logoLockup from '../assets/brand/logo-lockup.svg';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useXP } from '../hooks/useXP';
@@ -55,18 +56,15 @@ export default function Sidebar() {
 
       {/* Logo */}
       <div
-        className="px-5 py-6 relative z-10"
+        className="px-4 py-5 relative z-10"
         style={{ borderBottom: '1px solid rgba(120,80,255,0.15)' }}
       >
-        <div
-          className="text-base font-bold tracking-tight text-white"
-          style={{ textShadow: '0 0 20px rgba(120,80,255,0.5)' }}
-        >
-          OrkestOS
-        </div>
-        <div className="text-[11px] text-white/50 mt-0.5 tracking-wide">
-          Sistema de Produtividade
-        </div>
+        <img
+          src={logoLockup}
+          alt="OrkestOS"
+          className="h-9 w-auto object-contain"
+          style={{ filter: 'drop-shadow(0 0 12px rgba(120,80,255,0.35))' }}
+        />
       </div>
 
       {/* Nav groups */}

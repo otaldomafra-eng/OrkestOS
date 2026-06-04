@@ -1,0 +1,27 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Orkest OS Prism Core</title>
+  <desc id="desc">Premium geometric prism mark for Orkest OS.</desc>
+  <defs>
+    <linearGradient id="g1" x1="154" y1="104" x2="371" y2="415" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFF"/>
+      <stop offset="0.46" stop-color="#8E6DFF"/>
+      <stop offset="1" stop-color="#3B9EFF"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="211" y1="160" x2="330" y2="353" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0E0E15"/>
+      <stop offset="1" stop-color="#06060A"/>
+    </linearGradient>
+    <filter id="shadow" x="90" y="80" width="340" height="360" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="28" stdDeviation="30" flood-color="#000000" flood-opacity="0.46"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="18" flood-color="#3B9EFF" flood-opacity="0.13"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#06060A"/>
+  <g filter="url(#shadow)">
+    <path d="M256 101L384 175V337L256 411L128 337V175L256 101Z" fill="url(#g1)"/>
+    <path d="M256 148L343 198V314L256 364L169 314V198L256 148Z" fill="#06060A"/>
+    <path d="M229 178H262V246L322 178H361L293 254L365 334H324L262 265V334H229V178Z" fill="url(#g1)"/>
+    <path d="M169 198L256 148L343 198L256 247L169 198Z" fill="#FCFDFF" fill-opacity="0.08"/>
+    <path d="M256 247L343 198V314L256 364V247Z" fill="#3B9EFF" fill-opacity="0.12"/>
+  </g>
+</svg>

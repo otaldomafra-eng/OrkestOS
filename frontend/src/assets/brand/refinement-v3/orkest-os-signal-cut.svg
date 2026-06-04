@@ -1,0 +1,25 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Orkest OS Signal Cut</title>
+  <desc id="desc">Premium minimal O mark with an abstract K cut for Orkest OS.</desc>
+  <defs>
+    <linearGradient id="ring" x1="128" y1="124" x2="386" y2="388" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFF"/>
+      <stop offset="0.5" stop-color="#8E6DFF"/>
+      <stop offset="1" stop-color="#3B9EFF"/>
+    </linearGradient>
+    <linearGradient id="cut" x1="245" y1="174" x2="348" y2="336" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFF"/>
+      <stop offset="1" stop-color="#5EB5FF"/>
+    </linearGradient>
+    <filter id="shadow" x="86" y="86" width="340" height="340" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="24" stdDeviation="26" flood-color="#000000" flood-opacity="0.44"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#06060A"/>
+  <g filter="url(#shadow)">
+    <path d="M395 256C395 332.768 332.768 395 256 395C179.232 395 117 332.768 117 256C117 179.232 179.232 117 256 117C332.768 117 395 179.232 395 256ZM155 256C155 311.781 200.219 357 256 357C311.781 357 357 311.781 357 256C357 200.219 311.781 155 256 155C200.219 155 155 200.219 155 256Z" fill="url(#ring)"/>
+    <path d="M247 164H276V241L347 164H388L306 254L392 348H350L276 267V348H247V164Z" fill="#06060A"/>
+    <path d="M280 244L351 167" stroke="url(#cut)" stroke-width="18" stroke-linecap="round"/>
+    <path d="M281 267L354 346" stroke="url(#cut)" stroke-width="18" stroke-linecap="round"/>
+  </g>
+</svg>

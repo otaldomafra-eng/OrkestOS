@@ -1,0 +1,32 @@
+<svg width="720" height="192" viewBox="0 0 720 192" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Orkest OS logo</title>
+  <desc id="desc">Premium minimal Orkest OS logo with orbit mark and wordmark.</desc>
+  <defs>
+    <linearGradient id="orbit-gradient" x1="39" y1="44" x2="138" y2="139" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FCFDFF"/>
+      <stop offset="0.44" stop-color="#7850FF"/>
+      <stop offset="1" stop-color="#3B9EFF"/>
+    </linearGradient>
+    <linearGradient id="os-gradient" x1="485" y1="62" x2="612" y2="126" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FCFDFF"/>
+      <stop offset="0.43" stop-color="#7850FF"/>
+      <stop offset="1" stop-color="#3B9EFF"/>
+    </linearGradient>
+    <radialGradient id="mark-glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(96 96) rotate(90) scale(72)">
+      <stop stop-color="#7850FF" stop-opacity="0.24"/>
+      <stop offset="0.58" stop-color="#3B9EFF" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#06060A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="720" height="192" rx="32" fill="#06060A"/>
+  <circle cx="96" cy="96" r="72" fill="url(#mark-glow)"/>
+  <circle cx="96" cy="96" r="35" stroke="#FCFDFF" stroke-width="9"/>
+  <path d="M43 110C56 74 91 47 125 50C145 52 158 62 161 76C164 94 149 114 122 127C93 140 58 133 43 110Z" stroke="url(#orbit-gradient)" stroke-width="7" stroke-linecap="round"/>
+  <path d="M150 63C136 96 103 121 70 120C53 119 41 111 38 99C35 83 49 64 73 52" stroke="#FCFDFF" stroke-opacity="0.54" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="150" cy="63" r="6.5" fill="#3B9EFF"/>
+  <circle cx="43" cy="110" r="5.5" fill="#11FF99"/>
+  <circle cx="73" cy="52" r="4.8" fill="#7850FF"/>
+  <text x="205" y="113" fill="#FCFDFF" font-family="Outfit, Inter, Arial, sans-serif" font-size="58" font-weight="600" letter-spacing="0">Orkest</text>
+  <text x="411" y="113" fill="url(#os-gradient)" font-family="Outfit, Inter, Arial, sans-serif" font-size="58" font-weight="700" letter-spacing="1">OS</text>
+  <text x="208" y="142" fill="#B8BCBD" font-family="Outfit, Inter, Arial, sans-serif" font-size="15" font-weight="500" letter-spacing="3">SISTEMA OPERACIONAL PESSOAL</text>
+</svg>

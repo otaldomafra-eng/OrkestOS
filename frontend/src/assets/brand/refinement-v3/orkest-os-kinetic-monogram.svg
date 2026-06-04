@@ -1,0 +1,26 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Orkest OS Kinetic Monogram</title>
+  <desc id="desc">Refined abstract OK monogram for Orkest OS.</desc>
+  <defs>
+    <linearGradient id="a" x1="128" y1="114" x2="386" y2="398" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFF"/>
+      <stop offset="0.42" stop-color="#9C80FF"/>
+      <stop offset="1" stop-color="#3B9EFF"/>
+    </linearGradient>
+    <linearGradient id="b" x1="215" y1="156" x2="336" y2="346" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFF"/>
+      <stop offset="1" stop-color="#7BC3FF"/>
+    </linearGradient>
+    <filter id="s" x="80" y="80" width="352" height="352" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="24" stdDeviation="28" flood-color="#000000" flood-opacity="0.42"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="14" flood-color="#7850FF" flood-opacity="0.16"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#06060A"/>
+  <g filter="url(#s)">
+    <path d="M256 395C179.232 395 117 332.768 117 256C117 179.232 179.232 117 256 117C332.768 117 395 179.232 395 256C395 332.768 332.768 395 256 395ZM256 359C312.885 359 359 312.885 359 256C359 199.115 312.885 153 256 153C199.115 153 153 199.115 153 256C153 312.885 199.115 359 256 359Z" fill="url(#a)"/>
+    <path d="M238 176C238 168.82 243.82 163 251 163H268C275.18 163 281 168.82 281 176V241L337 177C341.64 171.698 349.692 171.161 354.994 175.8L367.795 187C373.097 191.64 373.634 199.692 368.995 204.994L318 263L371 317.9C375.887 322.964 375.743 331.034 370.679 335.921L358.446 347.724C353.382 352.611 345.312 352.467 340.425 347.403L281 285.84V336C281 343.18 275.18 349 268 349H251C243.82 349 238 343.18 238 336V176Z" fill="#06060A"/>
+    <path d="M252 181V331" stroke="#F8FAFF" stroke-width="22" stroke-linecap="round"/>
+    <path d="M343 192L276 261L345 330" stroke="url(#b)" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

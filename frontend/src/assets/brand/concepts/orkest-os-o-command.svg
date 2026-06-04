@@ -1,0 +1,20 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Orkest OS O Command logo concept</title>
+  <desc id="desc">Minimal command-center O symbol for Orkest OS.</desc>
+  <defs>
+    <linearGradient id="commandRing" x1="125" y1="121" x2="391" y2="388" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FCFDFF"/>
+      <stop offset="0.46" stop-color="#7850FF"/>
+      <stop offset="1" stop-color="#3B9EFF"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(256 256) rotate(90) scale(164)">
+      <stop stop-color="#3B9EFF" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#06060A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#06060A"/>
+  <circle cx="256" cy="256" r="170" fill="url(#glow)"/>
+  <path d="M256 126C184.203 126 126 184.203 126 256C126 327.797 184.203 386 256 386C327.797 386 386 327.797 386 256" stroke="url(#commandRing)" stroke-width="34" stroke-linecap="round"/>
+  <path d="M340 154L388 106" stroke="#FCFDFF" stroke-width="34" stroke-linecap="round"/>
+  <path d="M256 192V256H319" stroke="#FCFDFF" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

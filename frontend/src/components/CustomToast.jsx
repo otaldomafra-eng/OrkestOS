@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../assets/logo.jpeg";
+import logo from "../assets/brand/logo-mark.svg";
 
 const CustomToast = ({ message, duration = 4000, status = "default" }) => {
   return (
@@ -10,8 +10,8 @@ const CustomToast = ({ message, duration = 4000, status = "default" }) => {
       {/* Avatar */}
       <img
         src={logo}
-        alt="logo"
-        className="w-10 h-10 rounded-full object-cover"
+        alt="OrkestOS"
+        className="w-10 h-10 rounded-lg object-contain bg-[#06060A] p-0.5"
       />
 
       {/* Content */}
