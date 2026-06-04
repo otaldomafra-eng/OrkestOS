@@ -24,6 +24,14 @@ Regras:
 router.get('/insights', authUser, async (req, res) => {
   try {
     const userId = req.body.userId;
+
+    if (userId === 'demo') {
+      return res.json({ insights: [
+        { type: 'previsao', title: 'Modo demonstração', text: 'Cadastre tarefas, hábitos e metas para receber insights personalizados sobre sua produtividade.' },
+        { type: 'destaque', title: 'Bem-vindo ao FutureTwin', text: 'Analiso seus padrões e te mostro onde você estará em 90 dias. Comece registrando seus dados.' },
+      ]});
+    }
+
     const today = new Date().toDateString();
 
     if (insightsCache.has(userId) && insightsCache.get(userId).date === today) {
@@ -56,6 +64,8 @@ router.get('/insights', authUser, async (req, res) => {
   }
 });
 
+const DEMO_CONTEXT = `Contexto do usuário: Este é um usuário em modo demonstração explorando o OrkestOS. Não há dados reais de produtividade disponíveis ainda. Apresente-se e explique o que você pode fazer quando o usuário tiver dados reais cadastrados (tarefas, hábitos, metas). Seja acolhedor e incentivador.`;
+
 router.post('/chat', authUser, async (req, res) => {
   try {
     const { messages } = req.body;
@@ -64,7 +74,7 @@ router.post('/chat', authUser, async (req, res) => {
     }
 
     const userId = req.body.userId;
-    const userContext = await buildUserContext(userId);
+    const userContext = userId === 'demo' ? DEMO_CONTEXT : await buildUserContext(userId);
 
     const history = messages.slice(-20);
 
