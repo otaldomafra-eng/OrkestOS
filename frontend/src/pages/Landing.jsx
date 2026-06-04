@@ -4,8 +4,7 @@ import { Target, TrendingUp, Sparkles, Brain, CheckCircle, Zap } from 'lucide-re
 import GradientButton from '../components/GradientButton';
 import Card from '../components/Card';
 import { ArrowRight } from 'lucide-react';
-import logoMark from '../assets/brand/logo-mark.svg';
-import logoLockup from '../assets/brand/logo-lockup.svg';
+import symbolOnly from '../assets/brand/symbol-only.svg';
 
 const Landing = () => {
   const features = [
@@ -53,7 +52,7 @@ const Landing = () => {
 
                 {/* Logo */}
                 <Motion.img
-                  src={logoMark}
+                  src={symbolOnly}
                   alt="OrkestOS Logo"
                   className="w-20 h-20 md:w-28 md:h-28 mb-4 object-contain"
                   animate={{ y: [0, -10, 0] }}
