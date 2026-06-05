@@ -1,4 +1,4 @@
-# WiseMindOS — Redesign v2.0: Design Spec
+# OrkestOS — Redesign v2.0: Design Spec
 
 **Data:** 2026-06-03  
 **Status:** Aprovado  
@@ -8,9 +8,9 @@
 
 ## Contexto
 
-O WiseMindOS já tem uma base sólida: dark mode, stack React/Vite/Tailwind, módulos de rastreamento (metas, projetos, tarefas, hábitos, foco, biblioteca) e integração Telegram. O sistema de design atual usa laranja como acento primário com identidade visual funcional mas sem personalidade forte.
+O OrkestOS já tem uma base sólida: dark mode, stack React/Vite/Tailwind, módulos de rastreamento (metas, projetos, tarefas, hábitos, foco, biblioteca) e integração Telegram. O sistema de design atual usa laranja como acento primário com identidade visual funcional mas sem personalidade forte.
 
-O objetivo deste redesign é transformar o WiseMindOS em uma plataforma de produtividade de alto impacto visual — inspirada em Habitica, SuperBetter, Mindbloom e Fitocracy — com três pilares:
+O objetivo deste redesign é transformar o OrkestOS em uma plataforma de produtividade de alto impacto visual — inspirada em Habitica, SuperBetter, Mindbloom e Fitocracy — com três pilares:
 
 1. **Redesign visual** — fundo preto, neon branco como acento primário, minimalismo com profundidade
 2. **Gamificação** — sistema de XP, níveis e conquistas integrado ao fluxo de produtividade

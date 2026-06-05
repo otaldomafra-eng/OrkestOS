@@ -1,0 +1,10 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Orkest OS monochrome mark</title>
+  <desc id="desc">Monochrome Signal Cut mark for Orkest OS.</desc>
+  <rect width="512" height="512" rx="112" fill="#06060A"/>
+  <path d="M397 256C397 333.872 333.872 397 256 397C178.128 397 115 333.872 115 256C115 178.128 178.128 115 256 115C333.872 115 397 178.128 397 256ZM155 256C155 311.781 200.219 357 256 357C311.781 357 357 311.781 357 256C357 200.219 311.781 155 256 155C200.219 155 155 200.219 155 256Z" fill="#FCFDFF"/>
+  <path d="M358 256C358 312.333 312.333 358 256 358C199.667 358 154 312.333 154 256C154 199.667 199.667 154 256 154C312.333 154 358 199.667 358 256Z" fill="#06060A"/>
+  <path d="M246 163H279V238L349 163H393L309 254L397 349H352L279 270V349H246V163Z" fill="#06060A"/>
+  <path d="M283 242L354 166" stroke="#FCFDFF" stroke-width="18" stroke-linecap="round"/>
+  <path d="M284 270L357 347" stroke="#FCFDFF" stroke-width="18" stroke-linecap="round"/>
+</svg>

@@ -7,16 +7,16 @@ import { AuthContext } from './AuthContext';
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
-  const [token, setToken] = useState(() => localStorage.getItem('wisemind_token') || '');
+  const [token, setToken] = useState(() => localStorage.getItem('orkest_token') || '');
   const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem('wisemind_user');
+    const saved = localStorage.getItem('orkest_user');
     return saved ? JSON.parse(saved) : null;
   });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem('wisemind_user', JSON.stringify(user));
+      localStorage.setItem('orkest_user', JSON.stringify(user));
     }
   }, [user]);
 
@@ -91,8 +91,8 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setToken('');
     setUser(null);
-    localStorage.removeItem('wisemind_token');
-    localStorage.removeItem('wisemind_user');
+    localStorage.removeItem('orkest_token');
+    localStorage.removeItem('orkest_user');
     navigate('/login');
     showToast({
       message: 'Você foi desconectado',

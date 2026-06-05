@@ -162,7 +162,7 @@ import {
   ACHIEVEMENTS,
 } from '../data/gamification';
 
-const STORAGE_KEY = 'wisemind_gamification';
+const STORAGE_KEY = 'orkest_gamification';
 
 function loadState() {
   try {

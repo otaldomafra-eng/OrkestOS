@@ -11,22 +11,22 @@ export const DataProvider = ({ children }) => {
   const [pages, setPages] = useState([]);
 
   const [goals, setGoals] = useState(() => {
-    const saved = localStorage.getItem('wisemind_goals');
+    const saved = localStorage.getItem('orkest_goals');
     return saved ? JSON.parse(saved) : [];
   });
 
   const [projects, setProjects] = useState(() => {
-    const saved = localStorage.getItem('wisemind_projects');
+    const saved = localStorage.getItem('orkest_projects');
     return saved ? JSON.parse(saved) : [];
   });
 
   const [tasks, setTasks] = useState(() => {
-    const saved = localStorage.getItem('wisemind_tasks');
+    const saved = localStorage.getItem('orkest_tasks');
     return saved ? JSON.parse(saved) : [];
   });
 
   const [habits, setHabits] = useState(() => {
-    const saved = localStorage.getItem('wisemind_habits');
+    const saved = localStorage.getItem('orkest_habits');
     return saved ? JSON.parse(saved) : [];
   });
 

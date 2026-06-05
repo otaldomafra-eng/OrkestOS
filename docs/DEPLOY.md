@@ -1,4 +1,4 @@
-# Deploy — WiseMindOS / OrkestOS
+# Deploy — OrkestOS
 
 ## Infraestrutura
 
@@ -9,9 +9,9 @@ api.orkest.pro  ──┘
                         │
                 Oracle VPS (Ubuntu 24.04 arm64 — free tier)
                 ├── Nginx 1.24 (reverse proxy + SSL Let's Encrypt)
-                ├── /var/www/wisemindos  (React build estático)
+                ├── /var/www/orkestos  (React build estático)
                 ├── PM2 → Node.js backend (porta 3001)
-                └── MongoDB 8.0 (localhost:27017/wisemindos)
+                └── MongoDB 8.0 (localhost:27017/orkestos)
 ```
 
 - **Acesso SSH:** ver `VPS-ORACLE/README.md` (arquivo local, nunca publicado)
@@ -24,11 +24,11 @@ api.orkest.pro  ──┘
 
 | O quê | Caminho |
 |-------|---------|
-| Código-fonte | `/opt/wisemindos` |
-| Frontend servido | `/var/www/wisemindos` |
-| Config Nginx | `/etc/nginx/sites-available/wisemindos` |
-| Backend `.env` | `/opt/wisemindos/backend/.env` |
-| Frontend `.env` | `/opt/wisemindos/frontend/.env` |
+| Código-fonte | `/opt/orkestos` |
+| Frontend servido | `/var/www/orkestos` |
+| Config Nginx | `/etc/nginx/sites-available/orkestos` |
+| Backend `.env` | `/opt/orkestos/backend/.env` |
+| Frontend `.env` | `/opt/orkestos/frontend/.env` |
 
 ---
 
@@ -59,25 +59,25 @@ ssh -i "VPS-ORACLE/ssh-key-2026-03-17 - privada.key" ubuntu@<IP_DO_VPS>
 ### 3. Atualizar código no servidor
 
 ```bash
-cd /opt/wisemindos
+cd /opt/orkestos
 git pull origin main
 ```
 
 ### 4. Build do frontend
 
 ```bash
-cd /opt/wisemindos/frontend
+cd /opt/orkestos/frontend
 npm install          # só se houver novos pacotes
 npm run build
-sudo cp -r dist/* /var/www/wisemindos/
+sudo cp -r dist/* /var/www/orkestos/
 ```
 
 ### 5. Reiniciar backend (se necessário)
 
 ```bash
-cd /opt/wisemindos/backend
+cd /opt/orkestos/backend
 npm install          # só se houver novos pacotes
-pm2 restart wisemindos-backend
+pm2 restart orkestos-backend
 pm2 status           # confirmar que está online
 ```
 
@@ -96,7 +96,7 @@ pm2 status
 sudo systemctl status nginx
 
 # Logs do backend
-pm2 logs wisemindos-backend
+pm2 logs orkestos-backend
 
 # Logs do Nginx
 sudo tail -f /var/log/nginx/access.log
@@ -134,6 +134,6 @@ Para atualizar uma variável: editar o `.env` no servidor e reiniciar com `pm2 r
 
 ## Notas
 
-- O frontend é um **SPA estático** — qualquer alteração de rota requer `cp dist/* /var/www/wisemindos/`
+- O frontend é um **SPA estático** — qualquer alteração de rota requer `cp dist/* /var/www/orkestos/`
 - O Nginx tem rewrite `try_files $uri /index.html` para suportar rotas do React Router
 - O MongoDB roda localmente no VPS (sem cloud) — backups manuais se necessário

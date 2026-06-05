@@ -1,0 +1,53 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Orkest OS Signal Depth mark</title>
+  <desc id="desc">Premium Signal Cut mark with layered depth for Orkest OS.</desc>
+  <defs>
+    <linearGradient id="outerBevel" x1="136" y1="118" x2="382" y2="394" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FCFDFF"/>
+      <stop offset="0.24" stop-color="#C8B9FF"/>
+      <stop offset="0.57" stop-color="#7657FF"/>
+      <stop offset="1" stop-color="#318FFF"/>
+    </linearGradient>
+    <linearGradient id="innerBevel" x1="177" y1="166" x2="342" y2="350" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#171526"/>
+      <stop offset="0.45" stop-color="#080810"/>
+      <stop offset="1" stop-color="#030306"/>
+    </linearGradient>
+    <linearGradient id="rimLight" x1="162" y1="148" x2="338" y2="348" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="0.42" stop-color="#9A7DFF" stop-opacity="0.68"/>
+      <stop offset="1" stop-color="#3B9EFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="signal" x1="278" y1="166" x2="362" y2="348" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFF"/>
+      <stop offset="0.48" stop-color="#A8D9FF"/>
+      <stop offset="1" stop-color="#3B9EFF"/>
+    </linearGradient>
+    <radialGradient id="ambient" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(256 256) rotate(90) scale(206)">
+      <stop stop-color="#7850FF" stop-opacity="0.26"/>
+      <stop offset="0.48" stop-color="#3B9EFF" stop-opacity="0.09"/>
+      <stop offset="1" stop-color="#06060A" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="depthShadow" x="70" y="70" width="372" height="386" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="30" stdDeviation="30" flood-color="#000000" flood-opacity="0.5"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="16" flood-color="#7850FF" flood-opacity="0.2"/>
+    </filter>
+    <filter id="signalGlow" x="230" y="130" width="174" height="260" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#3B9EFF" flood-opacity="0.34"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#FFFFFF" flood-opacity="0.48"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#06060A"/>
+  <circle cx="256" cy="256" r="198" fill="url(#ambient)"/>
+  <g filter="url(#depthShadow)">
+    <path d="M397 256C397 333.872 333.872 397 256 397C178.128 397 115 333.872 115 256C115 178.128 178.128 115 256 115C333.872 115 397 178.128 397 256ZM155 256C155 311.781 200.219 357 256 357C311.781 357 357 311.781 357 256C357 200.219 311.781 155 256 155C200.219 155 155 200.219 155 256Z" fill="url(#outerBevel)"/>
+    <path d="M358 256C358 312.333 312.333 358 256 358C199.667 358 154 312.333 154 256C154 199.667 199.667 154 256 154C312.333 154 358 199.667 358 256Z" fill="url(#innerBevel)"/>
+    <path d="M397 256C397 333.872 333.872 397 256 397C178.128 397 115 333.872 115 256C115 178.128 178.128 115 256 115C333.872 115 397 178.128 397 256ZM155 256C155 311.781 200.219 357 256 357C311.781 357 357 311.781 357 256C357 200.219 311.781 155 256 155C200.219 155 155 200.219 155 256Z" fill="url(#rimLight)" opacity="0.36"/>
+    <path d="M246 163H279V238L349 163H393L309 254L397 349H352L279 270V349H246V163Z" fill="#06060A"/>
+    <path d="M279 238L349 163H393L309 254L397 349H352L279 270V238Z" fill="#000000" fill-opacity="0.34"/>
+    <g filter="url(#signalGlow)">
+      <path d="M283 242L354 166" stroke="url(#signal)" stroke-width="18" stroke-linecap="round"/>
+      <path d="M284 270L357 347" stroke="url(#signal)" stroke-width="18" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>

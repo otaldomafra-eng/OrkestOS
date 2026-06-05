@@ -8,12 +8,12 @@ export const DailyPlanProvider = ({ children }) => {
   const { refetchTasks, refetchHabits } = useData();
 
   const [dailyTasks, setDailyTasks] = useState(() => {
-    const saved = localStorage.getItem('wisemind_daily_tasks');
+    const saved = localStorage.getItem('orkest_daily_tasks');
     return saved ? JSON.parse(saved) : [];
   });
 
   const [dailyPlan, setDailyPlan] = useState(() => {
-    const saved = localStorage.getItem('wisemind_daily_plan');
+    const saved = localStorage.getItem('orkest_daily_plan');
     if (saved) {
       const parsed = JSON.parse(saved);
       const today = new Date().toISOString().split('T')[0];
@@ -31,12 +31,12 @@ export const DailyPlanProvider = ({ children }) => {
   const saveStatsTimerRef = useRef(null);
 
   const [scores, setScores] = useState(() => {
-    const saved = localStorage.getItem('wisemind_scores');
+    const saved = localStorage.getItem('orkest_scores');
     return saved ? JSON.parse(saved) : { productivity: 0, discipline: 0 };
   });
 
   useEffect(() => {
-    localStorage.setItem('wisemind_daily_plan', JSON.stringify(dailyPlan));
+    localStorage.setItem('orkest_daily_plan', JSON.stringify(dailyPlan));
   }, [dailyPlan]);
 
   const setDailyTasksList = (tasksList) => {

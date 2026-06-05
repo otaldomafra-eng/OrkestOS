@@ -65,7 +65,7 @@ const Signup = () => {
       if(response.success){
         // Store token
         setToken(response.token);
-        localStorage.setItem('wisemind_token', response.token);
+        localStorage.setItem('orkest_token', response.token);
         
         // Save user data
         const userData = response.user || { 
@@ -75,7 +75,7 @@ const Signup = () => {
           bio: response.bio,
         };
         setUser(userData);
-        localStorage.setItem('wisemind_user', JSON.stringify(userData));
+        localStorage.setItem('orkest_user', JSON.stringify(userData));
         showToast({ message: response.message || 'Conta criada com sucesso!', status: 'success' })
         navigate('/onboarding')
       } else{

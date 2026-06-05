@@ -12,7 +12,7 @@ const axiosInstance = axios.create({
 // Request interceptor to attach token
 axiosInstance.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('wisemind_token');
+        const token = localStorage.getItem('orkest_token');
         if (token) {
             config.headers.Authorization = 'Bearer ' + token;
         }
@@ -32,7 +32,7 @@ axiosInstance.interceptors.response.use(
     (error) => {
         if (error.response?.status === 401) {
             // Token expired or invalid
-            localStorage.removeItem('wisemind_token');
+            localStorage.removeItem('orkest_token');
             window.dispatchEvent(new CustomEvent('auth:unauthorized'));
         }
         return Promise.reject(error);

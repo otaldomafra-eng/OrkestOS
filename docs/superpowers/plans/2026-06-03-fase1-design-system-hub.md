@@ -415,7 +415,7 @@ export default function Sidebar() {
           className="text-sm font-bold tracking-tight text-white"
           style={{ textShadow: '0 0 20px rgba(255,255,255,0.2)' }}
         >
-          WiseMindOS
+          OrkestOS
         </div>
         <div className="text-[11px] text-white/25 mt-0.5 tracking-wide">
           Sistema de Produtividade

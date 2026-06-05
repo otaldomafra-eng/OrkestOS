@@ -52,7 +52,7 @@ app.use('/api/futuretwin', futureTwinRouter);
 
 
 app.get('/', (req, res)=>{
-    res.send("WiseMindOS API v1.0");
+    res.send("OrkestOS API v1.0");
 })
 
 app.use(globalErrorHandler);

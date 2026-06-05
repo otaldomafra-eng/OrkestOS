@@ -33,8 +33,8 @@ const Entrar = () => {
 
     setToken(demoToken);
     setUser(demoUser);
-    localStorage.setItem('wisemind_token', demoToken);
-    localStorage.setItem('wisemind_user', JSON.stringify(demoUser));
+    localStorage.setItem('orkest_token', demoToken);
+    localStorage.setItem('orkest_user', JSON.stringify(demoUser));
     showToast({ message: 'Modo demo iniciado', status: 'success' });
     navigate('/dashboard');
   };
@@ -69,7 +69,7 @@ const Entrar = () => {
         // Store token
         console.log('Setting token:', response.token);
         setToken(response.token);
-        localStorage.setItem('wisemind_token', response.token);
+        localStorage.setItem('orkest_token', response.token);
 
         // Save user data
         const userData = response.user || {
@@ -81,7 +81,7 @@ const Entrar = () => {
         };
         console.log('Setting user:', userData);
         setUser(userData);
-        localStorage.setItem('wisemind_user', JSON.stringify(userData));
+        localStorage.setItem('orkest_user', JSON.stringify(userData));
 
         showToast({ message: response.message || 'Login realizado com sucesso', status: "success" })
       } else {
@@ -195,7 +195,7 @@ rounded-xl p-6
                   if (response.success) {
                     // 2. Store the custom token in memory and localStorage 
                     setToken(response.token);
-                    localStorage.setItem('wisemind_token', response.token);
+                    localStorage.setItem('orkest_token', response.token);
 
                     // 3. Save user data in context and localStorage
                     const userData = response.user || {
@@ -206,7 +206,7 @@ rounded-xl p-6
                       profile_picture: response.profile_picture
                     };
                     setUser(userData);
-                    localStorage.setItem('wisemind_user', JSON.stringify(userData));
+                    localStorage.setItem('orkest_user', JSON.stringify(userData));
 
                     // 4. Show success message and navigate to dashboard
                     showToast({ message: response.message || 'Login realizado com sucesso', status: "success" });

@@ -1,0 +1,42 @@
+<svg width="800" height="220" viewBox="0 0 800 220" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Orkest OS Signal Depth lockup</title>
+  <desc id="desc">Premium Orkest OS lockup with refined Signal Cut mark.</desc>
+  <defs>
+    <linearGradient id="outerBevel" x1="38" y1="31" x2="161" y2="169" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FCFDFF"/>
+      <stop offset="0.24" stop-color="#C8B9FF"/>
+      <stop offset="0.57" stop-color="#7657FF"/>
+      <stop offset="1" stop-color="#318FFF"/>
+    </linearGradient>
+    <linearGradient id="innerBevel" x1="58" y1="55" x2="142" y2="149" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#171526"/>
+      <stop offset="0.45" stop-color="#080810"/>
+      <stop offset="1" stop-color="#030306"/>
+    </linearGradient>
+    <linearGradient id="signal" x1="102" y1="62" x2="143" y2="152" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFF"/>
+      <stop offset="0.48" stop-color="#A8D9FF"/>
+      <stop offset="1" stop-color="#3B9EFF"/>
+    </linearGradient>
+    <linearGradient id="wordOS" x1="425" y1="73" x2="545" y2="132" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FCFDFF"/>
+      <stop offset="0.42" stop-color="#9A7DFF"/>
+      <stop offset="1" stop-color="#3B9EFF"/>
+    </linearGradient>
+    <filter id="shadow" x="8" y="0" width="190" height="208" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000000" flood-opacity="0.48"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="9" flood-color="#7850FF" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <rect width="800" height="220" rx="36" fill="#06060A"/>
+  <g filter="url(#shadow)">
+    <path d="M170 100C170 138.66 138.66 170 100 170C61.34 170 30 138.66 30 100C30 61.34 61.34 30 100 30C138.66 30 170 61.34 170 100ZM50 100C50 127.614 72.386 150 100 150C127.614 150 150 127.614 150 100C150 72.386 127.614 50 100 50C72.386 50 50 72.386 50 100Z" fill="url(#outerBevel)"/>
+    <circle cx="100" cy="100" r="50" fill="url(#innerBevel)"/>
+    <path d="M95 54H112V91L147 54H170L128 100L172 147H149L112 108V147H95V54Z" fill="#06060A"/>
+    <path d="M114 93L149 55" stroke="url(#signal)" stroke-width="9" stroke-linecap="round"/>
+    <path d="M114 107L151 146" stroke="url(#signal)" stroke-width="9" stroke-linecap="round"/>
+  </g>
+  <text x="220" y="116" fill="#FCFDFF" font-family="Outfit, Inter, Arial, sans-serif" font-size="62" font-weight="650" letter-spacing="-1.2">Orkest</text>
+  <text x="430" y="116" fill="url(#wordOS)" font-family="Outfit, Inter, Arial, sans-serif" font-size="62" font-weight="780" letter-spacing="0">OS</text>
+  <text x="224" y="149" fill="#B8BCBD" font-family="Outfit, Inter, Arial, sans-serif" font-size="14" font-weight="650" letter-spacing="3.6">SISTEMA OPERACIONAL PESSOAL</text>
+</svg>
