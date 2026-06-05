@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import fs from 'fs'
 import { OAuth2Client } from 'google-auth-library';
-import { asyncHandler } from '../utils/asyncHandler.js'
+import asyncHandler from '../utils/asyncHandler.js'
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
