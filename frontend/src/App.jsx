@@ -37,12 +37,12 @@ import { ToastContainer } from 'react-toastify';
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/onboarding" element={<Onboarding />} />
-          <Route path="/report" element={<Relatorios />} />
-          <Route path="/roadmap" element={<Roadmap />} />
 
           {/* Protected Routes with AppLayout */}
           <Route element={<AppLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/report" element={<Relatorios />} />
+            <Route path="/roadmap" element={<Roadmap />} />
             <Route path="/trackers" element={<Trackers />} />
             <Route path="/trackers/goals" element={<GoalTracker />} />
             <Route path="/trackers/projects" element={<ProjectTracker />} />
@@ -51,7 +51,6 @@ import { ToastContainer } from 'react-toastify';
             <Route path="/trackers/daily-tasks" element={<DailyTaskTracker />} />
             <Route path="/focus-room" element={<FocusRoom />} />
             <Route path="/future-twin" element={<FutureTwin />} />
-            <Route path="/future" element={<FutureTwin />} />
             <Route path="/library" element={<Library />} />
             <Route path="/integrations" element={<Integrations />} />
             <Route path="/achievements" element={<Achievements />} />

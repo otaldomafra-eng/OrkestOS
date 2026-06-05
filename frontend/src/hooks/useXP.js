@@ -1,8 +1,3 @@
-import { useContext } from 'react';
-import { GamificationContext } from '../context/GamificationContext';
+// Alias de compatibilidade — use useGamification em código novo
+export { useGamification as useXP } from './useGamification';
 
-export function useXP() {
-  const ctx = useContext(GamificationContext);
-  if (!ctx) throw new Error('useXP deve ser usado dentro de GamificationProvider');
-  return ctx;
-}

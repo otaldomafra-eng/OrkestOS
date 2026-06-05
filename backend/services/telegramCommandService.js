@@ -1,5 +1,6 @@
 import crypto from 'node:crypto';
 
+import { getTodayStr, isCompletedToday } from '../utils/dateUtils.js';
 import dailyPlanModel from '../models/dailyPlanModel.js';
 import habitModel from '../models/habitModel.js';
 import taskModel from '../models/taskModel.js';
@@ -75,13 +76,8 @@ function formatItems(items, formatter, emptyText) {
     return items.map((item, index) => `${index + 1}. ${formatter(item)}`).join('\n');
 }
 
-function isCompletedToday(date) {
-    if (!date) return false;
-    return new Date(date).toISOString().split('T')[0] === new Date().toISOString().split('T')[0];
-}
-
 async function getTodayPlanText(userId) {
-    const today = new Date().toISOString().split('T')[0];
+    const today = getTodayStr();
     const plan = await dailyPlanModel.findOne({ userId, date: today });
     const plannedTasks = plan?.plannedTasks || [];
     const doneCount = plannedTasks.filter((task) => task.completed).length;
@@ -264,22 +260,26 @@ async function sendTelegramMessage(chatId, text) {
         };
     }
 
-    const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            chat_id: chatId,
-            text,
-            disable_web_page_preview: true
-        })
-    });
+    try {
+        const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: chatId,
+                text,
+                disable_web_page_preview: true
+            })
+        });
 
-    const payload = await response.json();
+        const payload = await response.json();
 
-    return {
-        success: response.ok,
-        payload
-    };
+        return {
+            success: response.ok,
+            payload
+        };
+    } catch (e) {
+        return { success: false, error: e.message };
+    }
 }
 
 async function sendDailyBriefings({ sendMessage = sendTelegramMessage } = {}) {

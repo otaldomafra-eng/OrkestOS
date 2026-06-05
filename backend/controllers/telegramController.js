@@ -19,7 +19,7 @@ const createLinkCode = async (req, res) => {
 const telegramWebhook = async (req, res) => {
     try {
         const expectedSecret = process.env.TELEGRAM_WEBHOOK_SECRET;
-        const receivedSecret = req.headers['x-telegram-webhook-secret'] || req.query.secret;
+        const receivedSecret = req.headers['x-telegram-webhook-secret'];
 
         if (expectedSecret && receivedSecret !== expectedSecret) {
             return res.status(401).json({ success: false, message: 'Invalid Telegram webhook secret' });
@@ -53,7 +53,7 @@ const telegramWebhook = async (req, res) => {
 const runDailyBriefings = async (req, res) => {
     try {
         const expectedSecret = process.env.TELEGRAM_CRON_SECRET || process.env.TELEGRAM_WEBHOOK_SECRET;
-        const receivedSecret = req.headers['x-telegram-cron-secret'] || req.query.secret;
+        const receivedSecret = req.headers['x-telegram-cron-secret'];
 
         if (expectedSecret && receivedSecret !== expectedSecret) {
             return res.status(401).json({ success: false, message: 'Segredo do cron Telegram inválido' });

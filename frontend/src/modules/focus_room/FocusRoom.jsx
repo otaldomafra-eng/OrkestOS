@@ -1,4 +1,3 @@
-import { useState, useEffect, useRef } from 'react';
 import { Play, Pause, RotateCcw, CheckCircle2, CalendarDays, LucideTrophy } from 'lucide-react';
 import { useDailyPlan } from '../../hooks/useDailyPlan';
 import Card from '../../components/Card';
@@ -6,102 +5,22 @@ import { motion } from 'framer-motion'
 import Bag from '../../components/Bag';
 import GradientButton from '../../components/GradientButton';
 import { Link } from 'react-router-dom';
-import { useXP } from '../../hooks/useXP';
-import { XP_VALUES } from '../../data/gamification';
+import { usePomodoroTimer } from '../../hooks/usePomodoroTimer';
+import { getSourceBadge } from '../../utils/dailyPlanHelpers';
 
 const FocusRoom = () => {
   const { dailyPlan, toggleDailyPlanTaskCompletion } = useDailyPlan();
 
-  // Pomodoro Timer State
-  const [minutes, setMinutes] = useState(25);
-  const [seconds, setSeconds] = useState(0);
-  const [isActive, setIsActive] = useState(false);
-  const [mode, setModo] = useState('work'); // work, shortBreak, longBreak
-  const [pomodoroCount, setPomodoroCount] = useState(0);
-
-  const { addXP } = useXP();
-  const pomodoroCountRef = useRef(pomodoroCount);
-
-  useEffect(() => {
-    if (pomodoroCount > pomodoroCountRef.current) {
-      addXP(XP_VALUES.pomodoro, 'pomodoro');
-    }
-    pomodoroCountRef.current = pomodoroCount;
-  }, [pomodoroCount, addXP]);
-
-  useEffect(() => {
-    const handleTimerComplete = () => {
-      setIsActive(false);
-
-      if (mode === 'work') {
-        const newCount = pomodoroCount + 1;
-        setPomodoroCount(newCount);
-
-        if (newCount % 4 === 0) {
-          setModo('longBreak');
-          setMinutes(15);
-        } else {
-          setModo('shortBreak');
-          setMinutes(5);
-        }
-      } else {
-        setModo('work');
-        setMinutes(25);
-      }
-
-      setSeconds(0);
-
-      if ('Notification' in window && Notification.permission === 'granted') {
-        new Notification('Timer Completo!', {
-          body: mode === 'work' ? 'Hora de fazer uma pausa!' : 'Hora de trabalhar!',
-        });
-      }
-    };
-
-    let interval = null;
-    if (isActive) {
-      interval = setInterval(() => {
-        if (seconds === 0) {
-          if (minutes === 0) {
-            handleTimerComplete();
-          } else {
-            setMinutes(minutes - 1);
-            setSeconds(59);
-          }
-        } else {
-          setSeconds(seconds - 1);
-        }
-      }, 1000);
-    } else if (!isActive && seconds !== 0) {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [isActive, minutes, seconds, mode, pomodoroCount]);
-
-  const toggleTimer = () => {
-    setIsActive(!isActive);
-
-    if ('Notification' in window && Notification.permission === 'default') {
-      Notification.requestPermission();
-    }
-  };
-
-  const resetTimer = () => {
-    setIsActive(false);
-    setSeconds(0);
-    if (mode === 'work') setMinutes(25);
-    else if (mode === 'shortBreak') setMinutes(5);
-    else setMinutes(15);
-  };
-
-  const switchModo = (newModo) => {
-    setIsActive(false);
-    setModo(newModo);
-    setSeconds(0);
-    if (newModo === 'work') setMinutes(25);
-    else if (newModo === 'shortBreak') setMinutes(5);
-    else setMinutes(15);
-  };
+  const {
+    mode,
+    setMode,
+    minutes,
+    seconds,
+    isActive,
+    pomodoroCount,
+    toggleTimer,
+    reset: resetTimer,
+  } = usePomodoroTimer();
 
   // Get today's planned tasks from dailyPlan
   const todayPlannedTasks = dailyPlan?.plannedTasks || [];
@@ -118,12 +37,6 @@ const FocusRoom = () => {
     if (mode === 'work') return 'Tempo de Foco';
     if (mode === 'shortBreak') return 'Pausa Curta';
     return 'Pausa Longa';
-  };
-
-  const getSourceBadge = (source) => {
-    if (source === 'task') return { label: 'Tarefa', color: 'bg-blue-500/20 text-blue-400' };
-    if (source === 'habit') return { label: 'Hábito', color: 'bg-green-500/20 text-green-400' };
-    return { label: 'Manual', color: 'bg-accent-blue/20 text-accent-blue' };
   };
 
   return (
@@ -154,7 +67,7 @@ const FocusRoom = () => {
               {/* Modo Selector */}
               <div className="flex justify-center gap-2 mb-6">
                 <button
-                  onClick={() => switchModo('work')}
+                  onClick={() => setMode('work')}
                   aria-label="Modo Foco"
                   aria-pressed={mode === 'work'}
                   className={`px-4 py-2 rounded-lg border cursor-pointer border-hairline-strong transition-all duration-300 ${mode === 'work'
@@ -166,7 +79,7 @@ const FocusRoom = () => {
                   Foco
                 </button>
                 <button
-                  onClick={() => switchModo('shortBreak')}
+                  onClick={() => setMode('shortBreak')}
                   aria-label="Modo Pausa Curta"
                   aria-pressed={mode === 'shortBreak'}
                   className={`px-4 py-2 rounded-lg border cursor-pointer border-hairline-strong transition-all duration-300 ${mode === 'shortBreak'
@@ -178,7 +91,7 @@ const FocusRoom = () => {
                   Pausa Curta
                 </button>
                 <button
-                  onClick={() => switchModo('longBreak')}
+                  onClick={() => setMode('longBreak')}
                   aria-label="Modo Pausa Longa"
                   aria-pressed={mode === 'longBreak'}
                   className={`px-4 py-2 rounded-lg border cursor-pointer border-hairline-strong transition-all duration-300 ${mode === 'longBreak'
@@ -251,7 +164,7 @@ hover:scale-110 active:scale-95 cursor-pointer transition-all"
               className="mt-6"
             >
 
-              {/* 🧠 BAG (MAIN AREA) */}
+              {/* BAG (MAIN AREA) */}
               <div>
                 <div className="bg-surface-card border border-hairline-strong rounded-xl p-4 min-h-[92vh] flex flex-col">
 
@@ -302,7 +215,7 @@ hover:scale-110 active:scale-95 cursor-pointer transition-all"
                           <h4 className={`text-sm font-medium ${item.completed ? 'line-through text-charcoal' : 'text-ink'}`}>
                             {item.title}
                           </h4>
-                          <span className={`text-xs px-2 py-0.5 rounded-full ${getSourceBadge(item.source).color} inline-block mt-1`}>
+                          <span className={`text-xs px-2 py-0.5 rounded-full ${getSourceBadge(item.source).className} inline-block mt-1`}>
                             {getSourceBadge(item.source).label}
                           </span>
                         </div>

@@ -9,8 +9,8 @@ const TaskItem = ({ task, onToggle, onDelete }) => {
 
   const handleToggle = () => {
     if (!task.completed) {
-      const amount = task.important ? XP_VALUES.task_important : XP_VALUES.task_normal;
-      addXP(amount, task.important ? 'tarefa importante' : 'tarefa');
+      const amount = task.isImportant ? XP_VALUES.task_important : XP_VALUES.task_normal;
+      addXP(amount, task.isImportant ? 'tarefa importante' : 'tarefa');
     }
     onToggle(task.id);
   };

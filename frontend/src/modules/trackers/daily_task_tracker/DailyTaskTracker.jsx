@@ -14,6 +14,8 @@ import { showToast } from '../../../utils/toastHelper';
 import { PlannerSkeleton } from '../../../components/LoadingSkeleton';
 import { useXP } from '../../../hooks/useXP';
 import { XP_VALUES } from '../../../data/gamification';
+import { getSourceBadge } from '../../../utils/dailyPlanHelpers';
+import { validateMinDuration } from '../../../utils/timeHelpers';
 
 const DailyTaskTracker = () => {
   const { tasks, habits, loading } = useData();
@@ -103,15 +105,10 @@ const DailyTaskTracker = () => {
     if (!endTime) {
       const newEnd = new Date(start.getTime() + 30 * 60 * 1000); // 30 min
       endTime = format(newEnd, 'HH:mm');
-    } else {
-      const end = new Date(`2000-01-01T${endTime}:00`);
-      const diffMinutes = (end - start) / (1000 * 60);
-
-      if (diffMinutes < 30) {
-        const newEnd = new Date(start.getTime() + 30 * 60 * 1000);
-        endTime = format(newEnd, 'HH:mm');
-        showToast({ message: "Mínimo de 30 minutos aplicado" });
-      }
+    } else if (!validateMinDuration(habit.startTime, endTime)) {
+      const newEnd = new Date(start.getTime() + 30 * 60 * 1000);
+      endTime = format(newEnd, 'HH:mm');
+      showToast({ message: "Mínimo de 30 minutos aplicado" });
     }
     addToDailyPlan({
       source: 'habit',
@@ -128,15 +125,11 @@ const DailyTaskTracker = () => {
   const handleCreateManualTask = (e) => {
     e.preventDefault();
     if (!manualTaskForm.title.trim()) {
-      alert('Por favor, insira um título para a tarefa');
+      showToast({ message: 'Por favor, insira um título para a tarefa', status: 'error' });
       return;
     }
-    const start = new Date(`2000-01-01T${manualTaskForm.startTime}:00`);
-    const end = new Date(`2000-01-01T${manualTaskForm.endTime}:00`);
 
-    const diffMinutes = (end - start) / (1000 * 60);
-
-    if (diffMinutes < 30) {
+    if (!validateMinDuration(manualTaskForm.startTime, manualTaskForm.endTime)) {
       showToast({ message: "A duração mínima da tarefa deve ser de 30 minutos", status: "error" });
       return;
     }
@@ -153,13 +146,7 @@ const DailyTaskTracker = () => {
   const handleAddTaskToPlan = async () => {
     if (!selectedTask) return;
 
-    const start = new Date(`2000-01-01T${timeForm.startTime}:00`);
-    const end = new Date(`2000-01-01T${timeForm.endTime}:00`);
-
-    const diffMinutes = (end - start) / (1000 * 60);
-
-    if (diffMinutes < 30) {
-      // alert("Minimum task duration should be 30 minutes");
+    if (!validateMinDuration(timeForm.startTime, timeForm.endTime)) {
       showToast({ message: "A duração mínima da tarefa deve ser de 30 minutos", status: "error" });
       return;
     }
@@ -176,12 +163,6 @@ const DailyTaskTracker = () => {
 
     setSelectedTask(null);
     setShowTimeModal(false);
-  };
-
-  const getSourceBadge = (source) => {
-    if (source === 'task') return { label: 'Task', color: 'bg-blue-500/20 text-blue-400 border-blue-500/30' };
-    if (source === 'habit') return { label: 'Habit', color: 'bg-green-500/20 text-green-400 border-green-500/30' };
-    return { label: 'Manual', color: 'bg-purple-500/20 text-purple-400 border-purple-500/30' };
   };
 
   if (loading) {
@@ -522,7 +503,7 @@ const DailyTaskTracker = () => {
                                       {item.title}
                                     </h4>
                                     <div className="flex items-center gap-2 mt-1">
-                                      <span className={`text-xs px-2 py-0.5 rounded-full border ${getSourceBadge(item.source).color}`}>
+                                      <span className={`text-xs px-2 py-0.5 rounded-full border ${getSourceBadge(item.source).className}`}>
                                         {getSourceBadge(item.source).label}
                                       </span>
                                       {item.isImportant && (
@@ -645,26 +626,6 @@ const DailyTaskTracker = () => {
                   data-testid="add-from-habits-tab"
                 >
                   Hábitos sugeridos ({suggestedHabits.length})
-                </button>
-                <button
-                  onClick={() => setAddModo('manual')}
-                  className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all ${addModo === 'manual'
-                    ? 'bg-surface-elevated text-ink border border-hairline-strong'
-                    : 'bg-surface-deep text-mute hover:bg-surface-elevated'
-                    }`}
-                  data-testid="create-manual-task-tab"
-                >
-                  Criar Manual
-                </button>
-                <button
-                  onClick={() => setAddModo('habits')}
-                  className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all ${addModo === 'habits'
-                    ? 'bg-surface-elevated text-ink border border-hairline-strong'
-                    : 'bg-surface-deep text-mute hover:bg-surface-elevated'
-                    }`}
-                  data-testid="add-from-habits-tab"
-                >
-                  H�bitos sugeridos ({suggestedHabits.length})
                 </button>
                 <button
                   onClick={() => setAddModo('manual')}

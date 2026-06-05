@@ -2,6 +2,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LabelList } from 'recharts';
 import { TrendingUp, Target, CheckCircle, Zap, ArrowRight, Camera, CalendarDays, Star, AlertTriangle, UserPen, LucideTrophy, Pencil, Activity, Flame, BarChart3, Brain, Trophy, BookOpen, DollarSign } from 'lucide-react';
 import { useApp } from '../hooks/useApp';
+import { useAuth } from '../hooks/useAuth';
+import { useData } from '../hooks/useData';
+import { useDailyPlan } from '../hooks/useDailyPlan';
 import Card from '../components/Card';
 import ClockWidget from '../components/ClockWidget';
 import DonutChart from '../components/DonutChart';
@@ -28,27 +31,24 @@ const Painel = () => {
   const [showEditProfile, setShowEditProfile] = useState(false);
   const [showEditProfilePic, setShowEditProfilePic] = useState(false);
 
+  const { toggleTaskCompletion } = useApp();
+  const { user, updateUser, updateUserProfilePic } = useAuth();
   const {
     goals,
-    user,
     loading,
     projects,
     tasks,
     habits,
-    dailyPlan,
     notebooks,
     pages,
-    updateUser,
-    updateUserProfilePic,
     calculateGoalProgress,
     calculateProjectProgress,
-    toggleDailyPlanTaskCompletion,
     getImportantTasks,
     getBehindTasks,
-    toggleTaskCompletion,
     calculateProductivityScore,
-    calculateDisciplineScore
-  } = useApp();
+    calculateDisciplineScore,
+  } = useData();
+  const { dailyPlan, toggleDailyPlanTaskCompletion } = useDailyPlan();
 
   const [newProfile, setNewProfile] = useState({ name: user.name, username: user.username, bio: user.bio });
   const [newProfilePic, setNewProfilePic] = useState(null);

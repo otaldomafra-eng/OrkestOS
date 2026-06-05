@@ -1,4 +1,4 @@
-﻿import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 const habitSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true },
@@ -9,8 +9,9 @@ const habitSchema = new mongoose.Schema({
     streak: { type: Number, default: 0 },
     mode: { type: String, default: '21-day' },
     lastCompleted: { type: Date, default: null },
-    createdAt: { type: Date, default: Date.now }
-}, { minimize: false });
+}, { minimize: false, timestamps: true });
+
+habitSchema.index({ userId: 1 });
 
 const habitModel = mongoose.models.habit || mongoose.model('habit', habitSchema);
 

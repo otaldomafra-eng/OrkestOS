@@ -7,8 +7,9 @@ const projectSchema = new mongoose.Schema({
     deadline: { type: Date },
     description: { type: String, default: '' },
     createdFrom: { type: String, default: 'manual' },
-    createdAt: { type: Date, default: Date.now }
-}, { minimize: false });
+}, { minimize: false, timestamps: true });
+
+projectSchema.index({ userId: 1 });
 
 const projectModel = mongoose.models.project || mongoose.model('project', projectSchema);
 

@@ -1,43 +1,33 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { Plus, Filter } from 'lucide-react';
 import { useApp } from '../../../hooks/useApp';
+import { useData } from '../../../hooks/useData';
 import Card from '../../../components/Card';
 import TaskItem from '../../../components/TaskItem';
-import Button from '../../../components/GradientButton';
-import InputField from '../../../components/InputField';
-import Modal from '../../../components/Modal';
+import TrackerPageHeader from '../../../components/TrackerPageHeader';
+import EmptyState from '../../../components/EmptyState';
+import AddTaskModal from '../../../components/AddTaskModal';
 import { motion } from 'framer-motion';
 
 const SoloTaskTracker = () => {
+  const { toggleTaskCompletion } = useApp();
   const {
     tasks,
     goals,
     projects,
     addTask,
-    toggleTaskCompletion,
-    deleteTask
-  } = useApp();
+    deleteTask,
+  } = useData();
 
   const [showAddTask, setShowAddTask] = useState(false);
   const [filterGoal, setFilterGoal] = useState('');
   const [filterProject, setFilterProject] = useState('');
-  const [newTask, setNewTask] = useState({
-    title: '',
-    deadline: '',
-    goalId: '',
-    projectId: '',
-    isImportant: false
-  });
 
-  const handleAddTask = () => {
-    if (!newTask.title.trim()) return;
-    addTask({ ...newTask, createdFrom: 'solo' });
-    setNewTask({ title: '', deadline: '', goalId: '', projectId: '', isImportant: false });
-    setShowAddTask(false);
+  const handleAddTask = ({ title, deadline, isImportant }) => {
+    addTask({ title, deadline, isImportant, goalId: '', projectId: '', createdFrom: 'solo' });
   };
 
   let filteredTasks = tasks;
-
 
   if (filterGoal) {
     filteredTasks = filteredTasks.filter(task => task.goalId === filterGoal);
@@ -56,19 +46,14 @@ const SoloTaskTracker = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex justify-between items-center mb-6"
         >
-          <div>
-            <h1 className="text-3xl font-bold young-serif-regular text-ink">Tarefas avulsas</h1>
-            <p className="text-mute">Acompanhe tarefas individuais e afazeres</p>
-          </div>
-          <Button
-            variant="primary"
-            onClick={() => setShowAddTask(true)}
-            data-testid="add-task-btn"
-          >
-            <Plus size={24} />
-          </Button>
+          <TrackerPageHeader
+            title="Tarefas avulsas"
+            subtitle="Acompanhe tarefas individuais e afazeres"
+            actionLabel="Nova tarefa"
+            actionIcon={<Plus size={16} />}
+            onAction={() => setShowAddTask(true)}
+          />
         </motion.div>
 
         {/* Filters */}
@@ -182,96 +167,22 @@ const SoloTaskTracker = () => {
         )}
 
         {filteredTasks.length === 0 && (
-          <Card className="text-center">
-            <div className="text-center py-16">
-              <div className="text-5xl mb-4">📋</div>
-
-              <p className="text-mute text-lg mb-2">
-                Nenhuma tarefa ainda.
-              </p>
-
-              <p className="text-accent-blue text-sm mb-6">
-                Comece a organizar seu dia como um profissional 🚀
-              </p>
-
-              <Button variant="primary" onClick={() => setShowAddTask(true)}>
-                Adicionar Primeira Tarefa
-              </Button>
-            </div>
-          </Card>
+          <EmptyState
+            icon={<span className="text-5xl">📋</span>}
+            title="Nenhuma tarefa ainda."
+            description="Comece a organizar seu dia como um profissional 🚀"
+            actionLabel="Adicionar Primeira Tarefa"
+            onAction={() => setShowAddTask(true)}
+          />
         )}
       </div>
 
-      {/* Adicionar tarefa Modal */}
-      <Modal isOpen={showAddTask} onClose={() => setShowAddTask(false)} title="Criar nova tarefa">
-        <div className="space-y-5">
-          <InputField
-            label="Titulo da tarefa"
-            value={newTask.title}
-            onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-            placeholder="Digite o título da tarefa"
-            required
-            data-testid="task-title-input"
-          />
-
-            <InputField
-              label="Prazo (Opcional)"
-              type="date"
-              value={newTask.deadline}
-              onChange={(e) => setNewTask({ ...newTask, deadline: e.target.value })}
-              data-testid="task-deadline-input"
-            />
-
-            <div>
-              <label className="block text-charcoal text-sm font-medium mb-2">Vincular à Meta (Opcional)</label>
-              <select
-                value={newTask.goalId}
-                onChange={(e) => setNewTask({ ...newTask, goalId: e.target.value })}
-                className="w-full bg-surface-elevated text-ink border border-hairline-strong rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-blue"
-                data-testid="task-goal-select"
-              >
-                <option value="">Sem meta</option>
-                {goals.map(goal => (
-                  <option key={goal.id} value={goal.id}>{goal.title}</option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-charcoal text-sm font-medium mb-2">Vincular ao Projeto (Opcional)</label>
-              <select
-                value={newTask.projectId}
-                onChange={(e) => setNewTask({ ...newTask, projectId: e.target.value })}
-                className="w-full bg-surface-elevated text-ink border border-hairline-strong rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-blue"
-                data-testid="task-project-select"
-              >
-                <option value="">Sem projeto</option>
-                {projects.map(project => (
-                  <option key={project.id} value={project.id}>{project.title}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="flex items-center justify-between bg-surface-card border border-hairline-strong rounded-lg px-4 py-3">
-              <label htmlFor="important" className="text-charcoal text-sm">
-                Marcar como Importante
-              </label>
-
-            <input
-              type="checkbox"
-              id="important"
-              checked={newTask.isImportant}
-              onChange={(e) => setNewTask({ ...newTask, isImportant: e.target.checked })}
-              className="w-5 h-5 accent-yellow-500"
-              data-testid="task-important-checkbox"
-            />
-          </div>
-
-          <Button variant="primary" onClick={handleAddTask} className="w-full" data-testid="submit-task-btn">
-            Criar Tarefa
-          </Button>
-        </div>
-      </Modal>
+      <AddTaskModal
+        isOpen={showAddTask}
+        onClose={() => setShowAddTask(false)}
+        onSubmit={handleAddTask}
+        title="Criar nova tarefa"
+      />
     </div>
   );
 };

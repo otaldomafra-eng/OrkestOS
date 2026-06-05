@@ -36,7 +36,7 @@ afterEach(() => {
 test('createGoal returns a validation response when title is missing', async () => {
     const res = mockResponse();
 
-    await createGoal({ body: { userId: 'user-1' } }, res);
+    await createGoal({ body: {}, user: { id: 'user-1' } }, res, () => {});
 
     assert.deepEqual(res.body, {
         success: false,
@@ -53,11 +53,9 @@ test('createGoal persists default values for a valid goal', async () => {
     });
 
     await createGoal({
-        body: {
-            userId: '507f1f77bcf86cd799439011',
-            title: 'Ship open-source work'
-        }
-    }, res);
+        body: { title: 'Ship open-source work' },
+        user: { id: '507f1f77bcf86cd799439011' }
+    }, res, () => {});
 
     assert.equal(res.body.success, true);
     assert.equal(res.body.message, 'Goal Created Successfully !');
@@ -80,7 +78,7 @@ test('getGoals calculates progress from completed goal tasks', async () => {
         { completed: true }
     ]);
 
-    await getGoals({ body: { userId: 'user-1' } }, res);
+    await getGoals({ user: { id: 'user-1' } }, res, () => {});
 
     assert.equal(res.body.success, true);
     assert.equal(res.body.goals[0].progress, 67);
@@ -108,11 +106,9 @@ test('toggleTaskCompletion updates task source of truth and daily plan mirror', 
     replaceProperty(dailyPlanModel, 'findOne', async () => dailyPlan);
 
     await toggleTaskCompletion({
-        body: {
-            userId: 'user-1',
-            taskId: 'task-1'
-        }
-    }, res);
+        body: { taskId: 'task-1' },
+        user: { id: 'user-1' }
+    }, res, () => {});
 
     assert.equal(res.body.success, true);
     assert.equal(task.completed, true);
@@ -125,32 +121,26 @@ test('authUser rejects requests without a token', async () => {
     const res = mockResponse();
     let nextCalled = false;
 
-    await authUser({ headers: {}, body: {} }, res, () => {
+    await authUser({ headers: {} }, res, () => {
         nextCalled = true;
     });
 
     assert.equal(nextCalled, false);
     assert.deepEqual(res.body, {
         success: false,
-        message: 'Not Authorized, Entrar Again'
+        message: 'Não autorizado. Faça login novamente.'
     });
 });
 
 test('authUser stores decoded user id and calls next for a valid token', async () => {
-    const previousSecret = process.env.JWT_SECRET;
-    process.env.JWT_SECRET = 'test-secret';
     const token = jwt.sign({ id: 'user-123' }, process.env.JWT_SECRET);
-    const req = { headers: { token }, body: {} };
+    const req = { headers: { authorization: `Bearer ${token}` } };
     let nextCalled = false;
 
-    try {
-        await authUser(req, mockResponse(), () => {
-            nextCalled = true;
-        });
-    } finally {
-        process.env.JWT_SECRET = previousSecret;
-    }
+    await authUser(req, mockResponse(), () => {
+        nextCalled = true;
+    });
 
     assert.equal(nextCalled, true);
-    assert.equal(req.body.userId, 'user-123');
+    assert.equal(req.user.id, 'user-123');
 });

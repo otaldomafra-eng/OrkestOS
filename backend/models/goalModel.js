@@ -6,8 +6,9 @@ const goalSchema = new mongoose.Schema({
     type: { type: String, default: 'personal' },
     description: { type: String, default: '' },
     deadline: { type: Date },
-    createdAt: { type: Date, default: Date.now }
-}, { minimize: false });
+}, { minimize: false, timestamps: true });
+
+goalSchema.index({ userId: 1 });
 
 const goalModel = mongoose.models.goal || mongoose.model('goal', goalSchema);
 

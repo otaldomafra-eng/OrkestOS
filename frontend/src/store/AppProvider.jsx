@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from 'react';
 import { taskAPI, dailyPlanAPI } from '../api/apiService';
 import { showToast } from '../utils/toastHelper';
 import { AppContext } from './AppContext';
@@ -10,7 +11,7 @@ export const AppProvider = ({ children }) => {
   const data = useData();
   const dailyPlan = useDailyPlan();
 
-  const toggleTaskCompletion = async (taskId) => {
+  const toggleTaskCompletion = useCallback(async (taskId) => {
     try {
       const isInDailyPlan = dailyPlan.dailyPlan.plannedTasks.some(pt => pt.taskId === taskId);
       if (isInDailyPlan) {
@@ -51,9 +52,9 @@ export const AppProvider = ({ children }) => {
       console.error('Erro alternando tarefa:', error);
       showToast({ message: error.message || 'Falha ao atualizar tarefa', status: 'error' });
     }
-  };
+  }, [dailyPlan, data]);
 
-  const handleCompleteHabit = async (habitId) => {
+  const handleCompleteHabit = useCallback(async (habitId) => {
     const response = await data.handleCompleteHabit(habitId);
     if (response && response.success) {
       const dailyPlanRes = await dailyPlanAPI.getToday();
@@ -70,9 +71,9 @@ export const AppProvider = ({ children }) => {
     } else if (response && !response.success) {
       showToast({ message: response.message || 'Falha ao concluir hábito', status: 'error' });
     }
-  };
+  }, [data, dailyPlan]);
 
-  const clearAllData = () => {
+  const clearAllData = useCallback(() => {
     data.clearDataOnly();
     dailyPlan.setDailyPlan({
       date: new Date().toISOString().split('T')[0],
@@ -81,16 +82,13 @@ export const AppProvider = ({ children }) => {
     dailyPlan.setDailyTasks([]);
     dailyPlan.updateScores({ productivity: 0, discipline: 0 });
     auth.setUser(null);
-  };
+  }, [auth, data, dailyPlan]);
 
-  const value = {
-    ...auth,
-    ...data,
-    ...dailyPlan,
+  const value = useMemo(() => ({
     toggleTaskCompletion,
     handleCompleteHabit,
     clearAllData,
-  };
+  }), [toggleTaskCompletion, handleCompleteHabit, clearAllData]);
 
   return (
     <AppContext.Provider value={value}>

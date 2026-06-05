@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { goalAPI, projectAPI, taskAPI, habitAPI, notebookAPI, pageAPI } from '../api/apiService';
 import { showToast } from '../utils/toastHelper';
 import { DataContext } from './DataContext';
@@ -11,22 +11,22 @@ export const DataProvider = ({ children }) => {
   const [pages, setPages] = useState([]);
 
   const [goals, setGoals] = useState(() => {
-    const saved = localStorage.getItem('Orkest_goals');
+    const saved = localStorage.getItem('wisemind_goals');
     return saved ? JSON.parse(saved) : [];
   });
 
   const [projects, setProjects] = useState(() => {
-    const saved = localStorage.getItem('Orkest_projects');
+    const saved = localStorage.getItem('wisemind_projects');
     return saved ? JSON.parse(saved) : [];
   });
 
   const [tasks, setTasks] = useState(() => {
-    const saved = localStorage.getItem('Orkest_tasks');
+    const saved = localStorage.getItem('wisemind_tasks');
     return saved ? JSON.parse(saved) : [];
   });
 
   const [habits, setHabits] = useState(() => {
-    const saved = localStorage.getItem('Orkest_habits');
+    const saved = localStorage.getItem('wisemind_habits');
     return saved ? JSON.parse(saved) : [];
   });
 
@@ -329,26 +329,26 @@ export const DataProvider = ({ children }) => {
     if (res.success) setPages(prev => prev.filter(p => p.id !== pageId));
   };
 
-  const calculateGoalProgress = (goalId) => {
+  const calculateGoalProgress = useCallback((goalId) => {
     const goalTasks = tasks.filter(task => task.goalId === goalId);
     if (goalTasks.length === 0) return 0;
     const completedTasks = goalTasks.filter(task => task.completed).length;
     return Math.round((completedTasks / goalTasks.length) * 100);
-  };
+  }, [tasks]);
 
-  const calculateProjectProgress = (projectId) => {
+  const calculateProjectProgress = useCallback((projectId) => {
     const projectTasks = tasks.filter(task => task.projectId === projectId);
     if (projectTasks.length === 0) return 0;
     const completedTasks = projectTasks.filter(task => task.completed).length;
     return Math.round((completedTasks / projectTasks.length) * 100);
-  };
+  }, [tasks]);
 
-  const getTasksByGoal = (goalId) => tasks.filter(task => task.goalId === goalId);
-  const getTasksByProject = (projectId) => tasks.filter(task => task.projectId === projectId);
-  const getProjectsByGoal = (goalId) => projects.filter(project => project.goalId === goalId);
-  const getImportantTasks = () => tasks.filter(task => !task.completed && task.isImportant);
+  const getTasksByGoal = useCallback((goalId) => tasks.filter(task => task.goalId === goalId), [tasks]);
+  const getTasksByProject = useCallback((projectId) => tasks.filter(task => task.projectId === projectId), [tasks]);
+  const getProjectsByGoal = useCallback((goalId) => projects.filter(project => project.goalId === goalId), [projects]);
+  const getImportantTasks = useCallback(() => tasks.filter(task => !task.completed && task.isImportant), [tasks]);
 
-  const getBehindTasks = () => {
+  const getBehindTasks = useCallback(() => {
     const now = new Date();
     return tasks.filter(task => {
       if (task.completed || !task.deadline) return false;
@@ -362,7 +362,11 @@ export const DataProvider = ({ children }) => {
       }
       return false;
     });
-  };
+  }, [tasks]);
+
+  const refetchAll = useCallback(async () => {
+    await Promise.all([refetchTasks(), refetchHabits()]);
+  }, [refetchTasks, refetchHabits]);
 
   const clearDataOnly = () => {
     setGoals([]);
@@ -381,12 +385,6 @@ export const DataProvider = ({ children }) => {
     notebooks,
     pages,
     loading,
-    setGoals,
-    setProjects,
-    setTasks,
-    setHabits,
-    setNotebooks,
-    setPages,
     addGoal,
     updateGoal,
     deleteGoal,
@@ -409,6 +407,7 @@ export const DataProvider = ({ children }) => {
     deletePage,
     refetchTasks,
     refetchHabits,
+    refetchAll,
     calculateGoalProgress,
     calculateProjectProgress,
     getTasksByGoal,

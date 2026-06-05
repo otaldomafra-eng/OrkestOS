@@ -1,15 +1,20 @@
 import { useState } from 'react';
 import { Plus, TrendingUp, TrendingDown, Flame } from 'lucide-react';
 import { useApp } from '../../../hooks/useApp';
+import { useData } from '../../../hooks/useData';
 import Card from '../../../components/Card';
 import HabitCard from '../../../components/HabitCard';
 import Button from '../../../components/GradientButton';
 import InputField from '../../../components/InputField';
 import Modal from '../../../components/Modal';
 import { motion } from 'framer-motion';
+import { showToast } from '../../../utils/toastHelper';
+import TrackerPageHeader from '../../../components/TrackerPageHeader';
+import EmptyState from '../../../components/EmptyState';
 
 const HabitTracker = () => {
-  const { habits, addHabit, handleCompleteHabit, deleteHabit } = useApp();
+  const { handleCompleteHabit } = useApp();
+  const { habits, addHabit, deleteHabit } = useData();
   const [showAddHabit, setShowAddHabit] = useState(false);
   const [newHabit, setNewHabit] = useState({
     name: '',
@@ -21,7 +26,7 @@ const HabitTracker = () => {
 
   const handleAddHabit = () => {
     if (!newHabit.name.trim() || !newHabit.startTime || !newHabit.endTime) {
-      alert('Por favor, preencha todos os campos obrigatórios');
+      showToast({ message: 'Por favor, preencha todos os campos obrigatórios', status: 'error' });
       return;
     }
     addHabit(newHabit);
@@ -38,19 +43,14 @@ const HabitTracker = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex justify-between items-center mb-6"
         >
-          <div>
-            <h1 className="text-3xl font-bold text-ink young-serif-regular">Rastreador de hábitos</h1>
-            <p className="text-mute">Construa bons hábitos e reduza os ruins</p>
-          </div>
-          <Button
-            variant="primary"
-            onClick={() => setShowAddHabit(true)}
-            data-testid="add-habit-btn"
-          >
-            <Plus size={24} />
-          </Button>
+          <TrackerPageHeader
+            title="Rastreador de hábitos"
+            subtitle="Construa bons hábitos e reduza os ruins"
+            actionLabel="Novo hábito"
+            onAction={() => setShowAddHabit(true)}
+            actionIcon={<Plus size={18} />}
+          />
         </motion.div>
 
         {/* Overall Stats */}
@@ -158,23 +158,13 @@ const HabitTracker = () => {
 
 
         {habits.length === 0 && (
-          <Card className="text-center">
-            <div className="text-center py-16">
-              <Flame size={64} className="text-accent-yellow mx-auto mb-4 animate-pulse" />
-
-              <p className="text-mute text-lg mb-2">
-                Nenhum hábito ainda.
-              </p>
-
-              <p className="text-accent-blue text-sm mb-6">
-                Comece a construir seu sistema de disciplina 🚀
-              </p>
-
-              <Button variant="primary" onClick={() => setShowAddHabit(true)}>
-                Adicionar primeiro hábito
-              </Button>
-            </div>
-          </Card>
+          <EmptyState
+            icon={<Flame size={64} className="animate-pulse" />}
+            title="Nenhum hábito ainda."
+            description="Comece a construir seu sistema de disciplina"
+            actionLabel="Adicionar primeiro hábito"
+            onAction={() => setShowAddHabit(true)}
+          />
         )}
       </div>
 

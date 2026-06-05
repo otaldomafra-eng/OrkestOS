@@ -12,9 +12,9 @@ const axiosInstance = axios.create({
 // Request interceptor to attach token
 axiosInstance.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('wisemind_token');
         if (token) {
-            config.headers.token = token;
+            config.headers.Authorization = 'Bearer ' + token;
         }
         if (config.data instanceof FormData) {
             delete config.headers['Content-Type'];
@@ -32,9 +32,8 @@ axiosInstance.interceptors.response.use(
     (error) => {
         if (error.response?.status === 401) {
             // Token expired or invalid
-            localStorage.removeItem('token');
-            localStorage.removeItem('orkestos_user');
-            window.location.href = '/login';
+            localStorage.removeItem('wisemind_token');
+            window.dispatchEvent(new CustomEvent('auth:unauthorized'));
         }
         return Promise.reject(error);
     }

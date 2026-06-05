@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { dailyPlanAPI, statsAPI } from '../api/apiService';
 import { showToast } from '../utils/toastHelper';
 import { DailyPlanContext } from './DailyPlanContext';
@@ -8,12 +8,12 @@ export const DailyPlanProvider = ({ children }) => {
   const { refetchTasks, refetchHabits } = useData();
 
   const [dailyTasks, setDailyTasks] = useState(() => {
-    const saved = localStorage.getItem('Orkest_daily_tasks');
+    const saved = localStorage.getItem('wisemind_daily_tasks');
     return saved ? JSON.parse(saved) : [];
   });
 
   const [dailyPlan, setDailyPlan] = useState(() => {
-    const saved = localStorage.getItem('Orkest_daily_plan');
+    const saved = localStorage.getItem('wisemind_daily_plan');
     if (saved) {
       const parsed = JSON.parse(saved);
       const today = new Date().toISOString().split('T')[0];
@@ -28,13 +28,15 @@ export const DailyPlanProvider = ({ children }) => {
     };
   });
 
+  const saveStatsTimerRef = useRef(null);
+
   const [scores, setScores] = useState(() => {
-    const saved = localStorage.getItem('Orkest_scores');
+    const saved = localStorage.getItem('wisemind_scores');
     return saved ? JSON.parse(saved) : { productivity: 0, discipline: 0 };
   });
 
   useEffect(() => {
-    localStorage.setItem('Orkest_daily_plan', JSON.stringify(dailyPlan));
+    localStorage.setItem('wisemind_daily_plan', JSON.stringify(dailyPlan));
   }, [dailyPlan]);
 
   const setDailyTasksList = (tasksList) => {
@@ -203,7 +205,8 @@ export const DailyPlanProvider = ({ children }) => {
 
   useEffect(() => {
     if (!dailyPlan) return;
-    const saveStats = async () => {
+    clearTimeout(saveStatsTimerRef.current);
+    saveStatsTimerRef.current = setTimeout(async () => {
       try {
         const productivity = calculateProductivityScore();
         const discipline = calculateDisciplineScore();
@@ -211,8 +214,7 @@ export const DailyPlanProvider = ({ children }) => {
       } catch (error) {
         console.log('Falha ao salvar stats:', error);
       }
-    };
-    saveStats();
+    }, 5000);
   }, [dailyPlan, calculateProductivityScore, calculateDisciplineScore]);
 
   const value = {

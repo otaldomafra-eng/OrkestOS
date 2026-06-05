@@ -7,16 +7,16 @@ import { AuthContext } from './AuthContext';
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
-  const [token, setToken] = useState(() => localStorage.getItem('token') || '');
+  const [token, setToken] = useState(() => localStorage.getItem('wisemind_token') || '');
   const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem('orkestos_user');
+    const saved = localStorage.getItem('wisemind_user');
     return saved ? JSON.parse(saved) : null;
   });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem('orkestos_user', JSON.stringify(user));
+      localStorage.setItem('wisemind_user', JSON.stringify(user));
     }
   }, [user]);
 
@@ -91,8 +91,8 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setToken('');
     setUser(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('orkestos_user');
+    localStorage.removeItem('wisemind_token');
+    localStorage.removeItem('wisemind_user');
     navigate('/login');
     showToast({
       message: 'Você foi desconectado',
@@ -100,13 +100,20 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
+  useEffect(() => {
+    const handleUnauthorized = () => logout();
+    window.addEventListener('auth:unauthorized', handleUnauthorized);
+    return () => {
+      window.removeEventListener('auth:unauthorized', handleUnauthorized);
+    };
+  }, []);
+
   const value = {
     token,
     setToken,
     user,
     setUser,
     loading,
-    navigate,
     updateUser,
     updateUserProfilePic,
     logout,

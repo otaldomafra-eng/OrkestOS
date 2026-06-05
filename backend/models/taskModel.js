@@ -1,4 +1,4 @@
-﻿import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 const taskSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true },
@@ -9,8 +9,10 @@ const taskSchema = new mongoose.Schema({
     isImportant: { type: Boolean, default: false },
     deadline: { type: Date },
     createdFrom: { type: String, default: 'manual' },
-    createdAt: { type: Date, default: Date.now }
-}, { minimize: false });
+}, { minimize: false, timestamps: true });
+
+taskSchema.index({ userId: 1 });
+taskSchema.index({ userId: 1, completed: 1 });
 
 const taskModel = mongoose.models.task || mongoose.model('task', taskSchema);
 
