@@ -28,9 +28,15 @@ const FocusRoom = () => {
   const hasPlannedTasks = todayPlannedTasks.length > 0;
 
   const getModoColor = () => {
-    if (mode === 'work') return 'from-[#7850ff] to-[#3b9eff]';
-    if (mode === 'shortBreak') return 'from-[#11ff99] to-[#3b9eff]';
-    return 'from-[#3b9eff] to-[#7850ff]';
+    if (mode === 'work') return 'bg-surface-elevated border border-accent-purple/30';
+    if (mode === 'shortBreak') return 'bg-surface-elevated border border-accent-green/30';
+    return 'bg-surface-elevated border border-accent-blue/30';
+  };
+
+  const getModoButtonColor = () => {
+    if (mode === 'work') return 'bg-accent-purple/10 border border-accent-purple/50 text-accent-purple hover:bg-accent-purple/20';
+    if (mode === 'shortBreak') return 'bg-accent-green/10 border border-accent-green/50 text-accent-green hover:bg-accent-green/20';
+    return 'bg-accent-blue/10 border border-accent-blue/50 text-accent-blue hover:bg-accent-blue/20';
   };
 
   const getModoText = () => {
@@ -70,9 +76,9 @@ const FocusRoom = () => {
                   onClick={() => setMode('work')}
                   aria-label="Modo Foco"
                   aria-pressed={mode === 'work'}
-                  className={`px-4 py-2 rounded-lg border cursor-pointer border-hairline-strong transition-all duration-300 ${mode === 'work'
-                    ? 'bg-[#7850ff] text-ink'
-                    : 'bg-surface-elevated text-charcoal hover:bg-surface-card'
+                  className={`px-4 py-2 rounded-lg cursor-pointer transition-all duration-300 ${mode === 'work'
+                    ? 'bg-accent-purple/10 border border-accent-purple/50 text-accent-purple'
+                    : 'bg-surface-elevated text-charcoal border border-hairline-strong hover:border-accent-purple/30'
                     }`}
                   data-testid="mode-work"
                 >
@@ -82,9 +88,9 @@ const FocusRoom = () => {
                   onClick={() => setMode('shortBreak')}
                   aria-label="Modo Pausa Curta"
                   aria-pressed={mode === 'shortBreak'}
-                  className={`px-4 py-2 rounded-lg border cursor-pointer border-hairline-strong transition-all duration-300 ${mode === 'shortBreak'
-                    ? 'bg-[#11ff99] text-canvas'
-                    : 'bg-surface-elevated text-charcoal hover:bg-surface-card'
+                  className={`px-4 py-2 rounded-lg cursor-pointer transition-all duration-300 ${mode === 'shortBreak'
+                    ? 'bg-accent-green/10 border border-accent-green/50 text-accent-green'
+                    : 'bg-surface-elevated text-charcoal border border-hairline-strong hover:border-accent-green/30'
                     }`}
                   data-testid="mode-short-break"
                 >
@@ -94,9 +100,9 @@ const FocusRoom = () => {
                   onClick={() => setMode('longBreak')}
                   aria-label="Modo Pausa Longa"
                   aria-pressed={mode === 'longBreak'}
-                  className={`px-4 py-2 rounded-lg border cursor-pointer border-hairline-strong transition-all duration-300 ${mode === 'longBreak'
-                    ? 'bg-[#3b9eff] text-canvas'
-                    : 'bg-surface-elevated text-charcoal hover:bg-surface-card'
+                  className={`px-4 py-2 rounded-lg cursor-pointer transition-all duration-300 ${mode === 'longBreak'
+                    ? 'bg-accent-blue/10 border border-accent-blue/50 text-accent-blue'
+                    : 'bg-surface-elevated text-charcoal border border-hairline-strong hover:border-accent-blue/30'
                     }`}
                   data-testid="mode-long-break"
                 >
@@ -109,14 +115,12 @@ const FocusRoom = () => {
                 animate={{ scale: isActive ? [1, 1.02, 1] : 1 }}
                 transition={{ duration: 1, repeat: isActive ? Infinity : 0 }}
               >
-                {/* Timer */}
-
-                <div className={`bg-gradient-to-r flex flex-col items-center ${getModoColor()} rounded-2xl p-12 mb-6`}>
-                  <p className="text-ink text-xl mb-4">{getModoText()}</p>
-                  <div className="text-8xl font-bold text-ink mb-4" data-testid="timer-display">
+                <div className={`flex flex-col items-center rounded-2xl p-12 mb-6 ${getModoColor()}`}>
+                  <p className="text-charcoal text-xl mb-4">{getModoText()}</p>
+                  <div className="text-8xl font-bold bg-gradient-to-r from-accent-purple to-accent-blue bg-clip-text text-transparent mb-4" data-testid="timer-display">
                     {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
                   </div>
-                  <p className="text-ink mt-4 text-sm">
+                  <p className="text-charcoal mt-4 text-sm">
                     Sessões Concluídas: <span className="text-ink font-semibold">{pomodoroCount}</span>
                   </p>
                 </div>
@@ -128,8 +132,13 @@ const FocusRoom = () => {
                   onClick={toggleTimer}
                   aria-label={isActive ? 'Pausar timer' : 'Iniciar timer'}
                   data-testid="timer-toggle"
-                  className={`bg-gradient-to-r ${getModoColor()} hover:opacity-90 text-ink px-8 py-4 rounded-xl
-hover:scale-105 cursor-pointer active:scale-95 transition-all flex items-center gap-2 text-lg font-semibold`}
+                  className={`px-8 py-4 rounded-xl cursor-pointer active:scale-95 transition-all flex items-center gap-2 text-lg font-semibold border
+                    ${mode === 'work'
+                      ? 'bg-accent-purple/10 border-accent-purple/50 text-accent-purple hover:bg-accent-purple/20'
+                      : mode === 'shortBreak'
+                      ? 'bg-accent-green/10 border-accent-green/50 text-accent-green hover:bg-accent-green/20'
+                      : 'bg-accent-blue/10 border-accent-blue/50 text-accent-blue hover:bg-accent-blue/20'
+                    }`}
                 >
                   {isActive ? (
                     <>
@@ -147,8 +156,8 @@ hover:scale-105 cursor-pointer active:scale-95 transition-all flex items-center 
                   onClick={resetTimer}
                   aria-label="Reiniciar timer"
                   data-testid="timer-reset"
-                  className="bg-surface-elevated hover:bg-surface-card text-ink px-6 py-4 rounded-xl
-hover:scale-110 active:scale-95 cursor-pointer transition-all"
+                  className="bg-surface-elevated hover:bg-surface-elevated border border-hairline-strong text-charcoal px-6 py-4 rounded-xl
+hover:border-accent-purple/30 active:scale-95 cursor-pointer transition-all"
                 >
                   <RotateCcw size={24} />
                 </button>
