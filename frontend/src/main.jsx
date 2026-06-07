@@ -14,11 +14,11 @@ createRoot(document.getElementById('root')).render(
         <AuthProvider>
           <DataProvider>
             <DailyPlanProvider>
-              <AppProvider>
-                <GamificationProvider>
+              <GamificationProvider>
+                <AppProvider>
                   <App />
-                </GamificationProvider>
-              </AppProvider>
+                </AppProvider>
+              </GamificationProvider>
             </DailyPlanProvider>
           </DataProvider>
         </AuthProvider>
