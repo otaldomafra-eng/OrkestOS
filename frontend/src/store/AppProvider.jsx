@@ -52,7 +52,7 @@ export const AppProvider = ({ children }) => {
       console.error('Erro alternando tarefa:', error);
       showToast({ message: error.message || 'Falha ao atualizar tarefa', status: 'error' });
     }
-  }, [dailyPlan, data]);
+  }, [dailyPlan.dailyPlan.plannedTasks, dailyPlan.setDailyPlan, dailyPlan.setDailyTasks, data.tasks, data.setTasks]);
 
   const handleCompleteHabit = useCallback(async (habitId) => {
     const response = await data.handleCompleteHabit(habitId);
@@ -71,7 +71,7 @@ export const AppProvider = ({ children }) => {
     } else if (response && !response.success) {
       showToast({ message: response.message || 'Falha ao concluir hábito', status: 'error' });
     }
-  }, [data, dailyPlan]);
+  }, [data.handleCompleteHabit, dailyPlan.setDailyPlan]);
 
   const clearAllData = useCallback(() => {
     data.clearDataOnly();
@@ -82,7 +82,7 @@ export const AppProvider = ({ children }) => {
     dailyPlan.setDailyTasks([]);
     dailyPlan.updateScores({ productivity: 0, discipline: 0 });
     auth.setUser(null);
-  }, [auth, data, dailyPlan]);
+  }, [data.clearDataOnly, dailyPlan.setDailyPlan, dailyPlan.setDailyTasks, dailyPlan.updateScores, auth.setUser]);
 
   const value = useMemo(() => ({
     toggleTaskCompletion,
