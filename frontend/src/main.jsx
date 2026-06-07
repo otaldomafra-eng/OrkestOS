@@ -15,9 +15,7 @@ createRoot(document.getElementById('root')).render(
           <DataProvider>
             <DailyPlanProvider>
               <GamificationProvider>
-                <AppProvider>
-                  <App />
-                </AppProvider>
+                <App />
               </GamificationProvider>
             </DailyPlanProvider>
           </DataProvider>
