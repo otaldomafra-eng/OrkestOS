@@ -1,5 +1,5 @@
 ﻿import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import InputField from '../components/InputField';
 import GradientButton from '../components/GradientButton';
 import Card from '../components/Card';
@@ -10,7 +10,8 @@ import { showToast } from '../utils/toastHelper';
 import { GoogleLogin } from '@react-oauth/google';
 
 const Entrar = () => {
-  const { token, setToken, user, setUser, navigate } = useAuth()
+  const navigate = useNavigate();
+  const { token, setToken, user, setUser } = useAuth()
   const [formData, setFormData] = useState({
     identifier: '',
     password: ''
