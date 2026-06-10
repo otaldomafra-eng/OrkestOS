@@ -45,10 +45,8 @@ const Painel = () => {
     calculateProjectProgress,
     getImportantTasks,
     getBehindTasks,
-    calculateProductivityScore,
-    calculateDisciplineScore,
   } = useData();
-  const { dailyPlan, toggleDailyPlanTaskCompletion } = useDailyPlan();
+  const { dailyPlan, toggleDailyPlanTaskCompletion, calculateProductivityScore, calculateDisciplineScore } = useDailyPlan();
 
   const [newProfile, setNewProfile] = useState({ name: user.name, username: user.username, bio: user.bio });
   const [newProfilePic, setNewProfilePic] = useState(null);
