@@ -5,7 +5,11 @@ import { upload } from '../config/multer.js';
 
 const userRouter = express.Router();
 
-userRouter.post('/register', registerUser);
+// Registro desabilitado para sistema single-user — ativar com ALLOW_REGISTRATION=true
+userRouter.post('/register', (req, res, next) => {
+    if (process.env.ALLOW_REGISTRATION === 'true') return next();
+    return res.status(403).json({ success: false, message: 'Registro desabilitado neste sistema.' });
+}, registerUser);
 userRouter.post('/google', googleLogin);
 userRouter.post('/login', loginUser);
 userRouter.post('/update', authUser, updateUser);

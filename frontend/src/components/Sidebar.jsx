@@ -4,8 +4,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useXP } from '../hooks/useXP';
 import {
-  Home, Target, Zap, Brain, Trophy, BookOpen, Link2,
-  Wallet, Salad, LogOut,
+  Home, Target, Zap, Brain, Trophy, BookOpen, Link2, LogOut,
 } from 'lucide-react';
 
 const NAV_GROUPS = [
@@ -24,13 +23,6 @@ const NAV_GROUPS = [
       { to: '/achievements', icon: Trophy,   label: 'Conquistas' },
       { to: '/library',      icon: BookOpen, label: 'Biblioteca' },
       { to: '/integrations', icon: Link2,    label: 'Integrações' },
-    ],
-  },
-  {
-    label: 'Em breve',
-    items: [
-      { to: null, icon: Wallet, label: 'Finanças', disabled: true },
-      { to: null, icon: Salad,  label: 'Dieta',   disabled: true },
     ],
   },
 ];
