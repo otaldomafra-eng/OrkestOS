@@ -2,14 +2,12 @@ import { useState } from 'react';
 import { Plus, Target } from 'lucide-react';
 import { useApp } from '../../../hooks/useApp';
 import { useData } from '../../../hooks/useData';
-import Card from '../../../components/Card';
 import ProjectCard from '../../../components/ProjectCard';
 import { motion } from 'framer-motion';
 import { useXP } from '../../../hooks/useXP';
 import { XP_VALUES } from '../../../data/gamification';
 import { showToast } from '../../../utils/toastHelper';
-import ProjectDetailView from '../../../components/ProjectDetailView';
-import AddTaskModal from '../../../components/AddTaskModal';
+import ProjectWorkflowView from '../../../components/ProjectWorkflowView';
 import AddProjectModal from '../../../components/AddProjectModal';
 import TrackerPageHeader from '../../../components/TrackerPageHeader';
 import EmptyState from '../../../components/EmptyState';
@@ -20,6 +18,7 @@ const ProjectTracker = () => {
     projects,
     goals,
     addProject,
+    updateProject,
     calculateProjectProgress,
     getTasksByProject,
     addTask,
@@ -27,7 +26,6 @@ const ProjectTracker = () => {
 
   const [selectedProject, setSelectedProject] = useState(null);
   const [showAddProject, setShowAddProject] = useState(false);
-  const [showAddTask, setShowAddTask] = useState(false);
   const { addXP, stats } = useXP();
 
   const handleCompleteProject = (project) => {
@@ -55,7 +53,11 @@ const ProjectTracker = () => {
       goalId: selectedProject.goalId,
       createdFrom: 'project'
     });
-    setShowAddTask(false);
+  };
+
+  const handleUpdateProject = (projectId, data) => {
+    updateProject(projectId, data);
+    setSelectedProject(prev => prev ? { ...prev, ...data } : prev);
   };
 
   if (selectedProject) {
@@ -64,27 +66,18 @@ const ProjectTracker = () => {
     const linkedGoal = goals.find(g => g.id === selectedProject.goalId);
 
     return (
-      <>
-        <ProjectDetailView
-          project={selectedProject}
-          tasks={projectTasks}
-          linkedGoal={linkedGoal}
-          progress={progress}
-          onBack={() => setSelectedProject(null)}
-          backLabel="Voltar aos Projetos"
-          onAddTask={handleAddTask}
-          onToggleTask={toggleTaskCompletion}
-          onCompleteProject={handleCompleteProject}
-          showXP={true}
-        />
-
-        <AddTaskModal
-          isOpen={showAddTask}
-          onClose={() => setShowAddTask(false)}
-          onSubmit={handleAddTask}
-          title="Adicionar tarefa ao Projeto"
-        />
-      </>
+      <ProjectWorkflowView
+        project={selectedProject}
+        tasks={projectTasks}
+        linkedGoal={linkedGoal}
+        progress={progress}
+        onBack={() => setSelectedProject(null)}
+        onAddTask={handleAddTask}
+        onToggleTask={toggleTaskCompletion}
+        onCompleteProject={handleCompleteProject}
+        onUpdateProject={handleUpdateProject}
+        showXP={true}
+      />
     );
   }
 

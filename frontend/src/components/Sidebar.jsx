@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useXP } from '../hooks/useXP';
 import {
-  Home, Target, Zap, Brain, Trophy, BookOpen, Link2, LogOut,
+  Home, Target, Zap, Brain, Trophy, BookOpen, Link2, LogOut, Users,
 } from 'lucide-react';
 
 const NAV_GROUPS = [
@@ -15,6 +15,12 @@ const NAV_GROUPS = [
       { to: '/trackers',    icon: Target,  label: 'Rastreadores' },
       { to: '/focus-room',  icon: Zap,     label: 'Sala de Foco' },
       { to: '/future-twin', icon: Brain,   label: 'FutureTwin AI', dot: true },
+    ],
+  },
+  {
+    label: 'Projetos',
+    items: [
+      { to: '/clients', icon: Users, label: 'Clientes' },
     ],
   },
   {

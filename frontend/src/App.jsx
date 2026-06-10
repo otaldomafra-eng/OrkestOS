@@ -18,6 +18,7 @@ import HabitTracker from './modules/trackers/habit_tracker/HabitTracker';
 import DailyTaskTracker from './modules/trackers/daily_task_tracker/DailyTaskTracker';
 import FocusRoom from './modules/focus_room/FocusRoom';
 import Library from './modules/library_room/Library';
+import Clients from './pages/Clients';
 
 import { useAuth } from './hooks/useAuth';
 import { ToastContainer } from 'react-toastify';
@@ -48,6 +49,7 @@ function App() {
           <Route path="/library" element={<Library />} />
           <Route path="/integrations" element={<Integrations />} />
           <Route path="/achievements" element={<Achievements />} />
+          <Route path="/clients" element={<Clients />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />

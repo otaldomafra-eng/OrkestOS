@@ -206,6 +206,50 @@ export const futureTwinAPI = {
   }
 };
 
+// ============ CLIENT APIs ============
+export const clientAPI = {
+    getAll: async () => {
+        const response = await axiosInstance.get('/api/clients/list');
+        return response.data;
+    },
+    create: async (data) => {
+        const response = await axiosInstance.post('/api/clients/create', data);
+        return response.data;
+    },
+    update: async (data) => {
+        const response = await axiosInstance.post('/api/clients/update', data);
+        return response.data;
+    },
+    delete: async (clientId) => {
+        const response = await axiosInstance.post('/api/clients/delete', { clientId });
+        return response.data;
+    },
+};
+
+// ============ DRAWING APIs ============
+export const drawingAPI = {
+    getByProject: async (projectId) => {
+        const response = await axiosInstance.get(`/api/drawings/list?projectId=${projectId}`);
+        return response.data;
+    },
+    create: async (data) => {
+        const response = await axiosInstance.post('/api/drawings/create', data);
+        return response.data;
+    },
+    update: async (data) => {
+        const response = await axiosInstance.post('/api/drawings/update', data);
+        return response.data;
+    },
+    delete: async (drawingId) => {
+        const response = await axiosInstance.post('/api/drawings/delete', { drawingId });
+        return response.data;
+    },
+    addRevision: async (data) => {
+        const response = await axiosInstance.post('/api/drawings/add-revision', data);
+        return response.data;
+    },
+};
+
 // ============ AREA APIs ============
 export const areaAPI = {
     getAll: async () => {
