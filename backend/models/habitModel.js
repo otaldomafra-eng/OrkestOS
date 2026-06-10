@@ -9,6 +9,7 @@ const habitSchema = new mongoose.Schema({
     streak: { type: Number, default: 0 },
     mode: { type: String, default: '21-day' },
     lastCompleted: { type: Date, default: null },
+    areaId: { type: mongoose.Schema.Types.ObjectId, ref: 'area', default: null },
 }, { minimize: false, timestamps: true });
 
 habitSchema.index({ userId: 1 });

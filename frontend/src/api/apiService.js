@@ -206,6 +206,30 @@ export const futureTwinAPI = {
   }
 };
 
+// ============ AREA APIs ============
+export const areaAPI = {
+    getAll: async () => {
+        const response = await axiosInstance.get('/api/areas/list');
+        return response.data;
+    },
+    create: async (data) => {
+        const response = await axiosInstance.post('/api/areas/create', data);
+        return response.data;
+    },
+    update: async (data) => {
+        const response = await axiosInstance.post('/api/areas/update', data);
+        return response.data;
+    },
+    delete: async (areaId) => {
+        const response = await axiosInstance.post('/api/areas/delete', { areaId });
+        return response.data;
+    },
+    reorder: async (order) => {
+        const response = await axiosInstance.post('/api/areas/reorder', { order });
+        return response.data;
+    },
+};
+
 // ============ TELEGRAM APIs ============
 export const telegramAPI = {
     createLinkCode: async () => {

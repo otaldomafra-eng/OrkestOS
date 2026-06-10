@@ -1,6 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import { AuthProvider } from './context/AuthProvider.jsx'
+import { AreaProvider } from './context/AreaProvider.jsx'
 import { DataProvider } from './context/DataProvider.jsx'
 import { DailyPlanProvider } from './context/DailyPlanProvider.jsx'
 import { AppProvider } from './store/AppProvider.jsx'
@@ -12,15 +13,17 @@ createRoot(document.getElementById('root')).render(
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
       <BrowserRouter>
         <AuthProvider>
-          <DataProvider>
-            <DailyPlanProvider>
-              <GamificationProvider>
-                <AppProvider>
-                  <App />
-                </AppProvider>
-              </GamificationProvider>
-            </DailyPlanProvider>
-          </DataProvider>
+          <AreaProvider>
+            <DataProvider>
+              <DailyPlanProvider>
+                <GamificationProvider>
+                  <AppProvider>
+                    <App />
+                  </AppProvider>
+                </GamificationProvider>
+              </DailyPlanProvider>
+            </DataProvider>
+          </AreaProvider>
         </AuthProvider>
       </BrowserRouter>
     </GoogleOAuthProvider>

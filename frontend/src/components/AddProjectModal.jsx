@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import Modal from './Modal';
 import InputField from './InputField';
 import Button from './GradientButton';
+import AreaSelector from './AreaSelector';
 
-const EMPTY_FORM = { title: '', goalId: '', deadline: '', description: '' };
+const EMPTY_FORM = { title: '', goalId: '', deadline: '', description: '', areaId: null };
 
 export const AddProjectModal = ({
   isOpen,
@@ -33,6 +34,7 @@ export const AddProjectModal = ({
       goalId: form.goalId || null,
       deadline: form.deadline,
       description: form.description.trim(),
+      areaId: form.areaId,
     });
     setForm(EMPTY_FORM);
     onClose();
@@ -68,6 +70,11 @@ export const AddProjectModal = ({
             </select>
           </div>
         )}
+
+        <div>
+          <label className="block text-charcoal text-sm font-medium mb-2">Área</label>
+          <AreaSelector value={form.areaId} onChange={(id) => setForm({ ...form, areaId: id })} />
+        </div>
 
         <InputField
           label="Prazo (Opcional)"

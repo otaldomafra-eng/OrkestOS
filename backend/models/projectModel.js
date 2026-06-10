@@ -7,6 +7,7 @@ const projectSchema = new mongoose.Schema({
     deadline: { type: Date },
     description: { type: String, default: '' },
     createdFrom: { type: String, default: 'manual' },
+    areaId: { type: mongoose.Schema.Types.ObjectId, ref: 'area', default: null },
 }, { minimize: false, timestamps: true });
 
 projectSchema.index({ userId: 1 });

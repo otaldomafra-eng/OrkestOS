@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import Modal from './Modal';
 import InputField from './InputField';
 import Button from './GradientButton';
+import AreaSelector from './AreaSelector';
 
-const EMPTY_FORM = { title: '', deadline: '', isImportant: false };
+const EMPTY_FORM = { title: '', deadline: '', isImportant: false, areaId: null };
 
 export const AddTaskModal = ({
   isOpen,
@@ -27,7 +28,7 @@ export const AddTaskModal = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.title.trim()) return;
-    onSubmit({ title: form.title.trim(), deadline: form.deadline, isImportant: form.isImportant });
+    onSubmit({ title: form.title.trim(), deadline: form.deadline, isImportant: form.isImportant, areaId: form.areaId });
     setForm(EMPTY_FORM);
     onClose();
   };
@@ -49,6 +50,11 @@ export const AddTaskModal = ({
           value={form.deadline}
           onChange={(e) => setForm({ ...form, deadline: e.target.value })}
         />
+
+        <div>
+          <label className="block text-charcoal text-sm font-medium mb-2">Área</label>
+          <AreaSelector value={form.areaId} onChange={(id) => setForm({ ...form, areaId: id })} />
+        </div>
 
         <div className="flex items-center justify-between bg-surface-card border border-hairline-strong rounded-lg px-4 py-3">
           <label htmlFor="add-task-important" className="text-charcoal text-sm cursor-pointer">

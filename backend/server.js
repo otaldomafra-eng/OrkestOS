@@ -15,6 +15,7 @@ import pageRouter from './routes/pageRoute.js';
 import weeklyStatRouter from './routes/weeklyStatRoute.js';
 import telegramRouter from './routes/telegramRoute.js';
 import futureTwinRouter from './routes/futuretwinRoute.js';
+import areaRouter from './routes/areaRoute.js';
 import { globalErrorHandler } from './utils/errorHandler.js';
 
 const app = express();
@@ -48,6 +49,7 @@ app.use('/api/pages', pageRouter);
 app.use('/api/stats', weeklyStatRouter);
 app.use('/api/telegram', telegramRouter);
 app.use('/api/futuretwin', futureTwinRouter);
+app.use('/api/areas', areaRouter);
 
 
 

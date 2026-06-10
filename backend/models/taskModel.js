@@ -9,6 +9,7 @@ const taskSchema = new mongoose.Schema({
     isImportant: { type: Boolean, default: false },
     deadline: { type: Date },
     createdFrom: { type: String, default: 'manual' },
+    areaId: { type: mongoose.Schema.Types.ObjectId, ref: 'area', default: null },
 }, { minimize: false, timestamps: true });
 
 taskSchema.index({ userId: 1 });

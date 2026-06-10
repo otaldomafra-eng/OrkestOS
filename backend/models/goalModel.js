@@ -6,6 +6,7 @@ const goalSchema = new mongoose.Schema({
     type: { type: String, default: 'personal' },
     description: { type: String, default: '' },
     deadline: { type: Date },
+    areaId: { type: mongoose.Schema.Types.ObjectId, ref: 'area', default: null },
 }, { minimize: false, timestamps: true });
 
 goalSchema.index({ userId: 1 });
