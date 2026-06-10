@@ -8,8 +8,8 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-dist
 dist-ssr
+# dist tracked intentionally — deploy via git pull + cp to /var/www/orkestos
 *.local
 
 # Editor directories and files
